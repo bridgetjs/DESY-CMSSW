@@ -730,7 +730,7 @@ DemoAnalyzer::DemoAnalyzer(const edm::ParameterSet& iConfig)
                     histset[206]  =   fs->make<TH1D>("h_D0mass", "", 200, 1.5, 2); //D0 mass histogram
                     histset[208]  =   fs->make<TH1D>("h_deltaM", "", 100, 0.138, 0.17); //Mass difference histogram for 'right charge' paring
                     histset[209]  =   fs->make<TH1D>("h_deltaMwrongcharge", "", 100, 0.14, 0.17); //Mass difference histogram for 'wrong charge' pairing
-                    histset[210]  =   fs->make<TH1D>("h_z","",100,0,1);
+                    histset[210]  =   fs->make<TH1D>("h_z","",100,0,0.5);
 }
 
 
@@ -2011,26 +2011,10 @@ histset[105]->Fill(electrons->size());
                                                                 double z=ptD0/sumpt; // calculate z after loop
                                                                 histset[210]->Fill(z);
                                                                 //Fill deltaM histograms depending on Charge flag cf and z values
-                                                                if      (cf==1 && z>0.2)  histset[208]->Fill(MDstar-MD0);
-                                                                else if (cf==-1 && z>0.2) histset[209]->Fill(MDstar-MD0);
+                                                                if      (cf==1 && z>0.02)  histset[208]->Fill(MDstar-MD0);
+                                                                else if (cf==-1 && z>0.02) histset[209]->Fill(MDstar-MD0);
                                                             }
-                                                            
-                                                            
-                                                            //4th loop for z cut
-                                                            /*
-                                                            scalar sum of pt of all tracks with origin close to vcD0 
-                                                             
-                                                            sumpt += abs(pt)
-                                                             
-                                                             
-                                                            */
-                                                            //calculate ptD0/sumpt
-                                                            
-                                                            //apply another cut for z > 0.2
-                                                            
-                                                            
-                                                            
-                                                            
+                                       
                                                     }//end of Pi Slow vertex check.
                                                 }//end of PS3 vs K1 charge and iterators check
                                             }//end of PS3 loop

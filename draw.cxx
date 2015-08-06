@@ -61,25 +61,27 @@ void draw(){
             TDirectory *dir=(TDirectory*) f->Get("demo");
             f->cd("demo"); //Change to directory containing histograms
     
-    //Set palette for 2D plots
-    gStyle->SetPalette(1);
     
-    // Get pointers to the histograms
+    
+    //global style preferences
+    gStyle->SetPalette(1); //Set palette for 2D plots
+    gStyle->SetOptStat(11); //Print name and no of entries
  
     TCanvas *c4 = new TCanvas("c4","",600,400);
     TH1D *hdeltaM=(TH1D*)dir->Get("h_deltaM");
-    Th1D *hdeltaMwrongcharge=(TH1D*)dir->Get("h_deltaMwrongcharge")
+    TH1D *hdeltaMwrongcharge=(TH1D*)dir->Get("h_deltaMwrongcharge")
     hdeltaM->SetStats(1);
     hdeltaM->SetLineColor(kBlue);
-    hdeltaM->GetXaxis()->SetTitle(" Mass [#frac{GeV}{c^{2}}]");
+    hdeltaM->GetXaxis()->SetTitle(" Mass [GeVc^{2}]");
     hdeltaM->GetYaxis()->SetTitle("Number of Entries");
     hdeltaM->Draw("E");
     hdeltaMwrongcharge->SetLineColor(kRed);
     hdeltaMwrongcharge->Draw("E same");
-    TLegend* legc4 = new TLegend(0.8, 0.1, .89, .3);
-    leg->AddEntry(hdeltaM, "Right Charge", "E");
-    leg->AddEntry(hdeltaMwrongcharge, "Wrong Charge", "E");
-    leg->Draw();
+    TLegend* legc4 = new TLegend(0.7, 0.1, .9, .3);
+    legc4->AddEntry(hdeltaM, "Right Charge", "l");
+    legc4->AddEntry(hdeltaMwrongcharge, "Wrong Charge", "l");
+    legc4->Draw();
+    legc4->SetBorderSize(0);
     c4->SaveAs("./Plots/DeltaD0Mass.png");
     
     
@@ -112,7 +114,6 @@ void draw(){
    TCanvas *c1 = new TCanvas("c1","",600,400);
    TH2D* hPaircount=(TH2D*)dir->Get("h_Paircount");
    hPaircount->SetStats(1);                           // Add/Remove the statistics box 1||0
-   gStyle->SetOptStat(11); //Print name and no of entries
    hPaircount->GetXaxis()->SetTitle("y^{J/#psi}");    // add axis titles
    hPaircount->GetYaxis()->SetTitle("p_{T}^{J/#psi} [GeV/c]");
    hPaircount->Draw("colz");// draw with a colour scale
@@ -120,7 +121,6 @@ void draw(){
    
    TCanvas *c5 = new TCanvas("c5","",600,400);
    h_Paircount2->SetStats(1);                           // Add/Remove the statistics box 1||0
-   gStyle->SetOptStat(11); //Print name and no of entries
    h_Paircount2->GetXaxis()->SetTitle("y^{J/#psi}");    // add axis titles
    h_Paircount2->GetYaxis()->SetTitle("p_{T}^{J/#psi} [GeV/c]");
    h_Paircount2->Draw("colz");// draw with a colour scale
