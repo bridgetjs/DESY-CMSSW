@@ -69,7 +69,7 @@ void draw(){
  
     TCanvas *c4 = new TCanvas("c4","",600,400);
     TH1D *hdeltaM=(TH1D*)dir->Get("h_deltaM");
-    TH1D *hdeltaMwrongcharge=(TH1D*)dir->Get("h_deltaMwrongcharge")
+    TH1D *hdeltaMwrongcharge=(TH1D*)dir->Get("h_deltaMwrongcharge");
     hdeltaM->SetStats(1);
     hdeltaM->SetLineColor(kBlue);
     hdeltaM->GetXaxis()->SetTitle(" Mass [GeVc^{2}]");
@@ -89,12 +89,18 @@ void draw(){
     TCanvas *c6=new TCanvas("c6","" 600,400);
     TH1D *hz=(TH1D*)dir->Get("h_z");
     hz->SetStats(0);
-    hz->GetXaxis()->SetTitle("z")
-    hz->GetYaxis()->SetTitle("Number of Entries")
+    hz->GetXaxis()->SetTitle("z");
+    hz->GetYaxis()->SetTitle("Number of Entries");
     hz->Draw();
-    c6->SaveAs("./Plots/DAnalysis/z.png");
+    c6->SaveAs("./Plots/D0z.png");
     
-    
+    TCanvas *c7=new TCanvas("c7","" 600,400);
+    TH1D *hn=(TH1D*)dir->Get("h_n");
+    hn->SetStats(0);
+    hn->GetXaxis()->SetTitle("z");
+    hn->GetYaxis()->SetTitle("Number of Entries");
+    hn->Draw();
+    //cn->SaveAs("./Plots/D0z.png");
  return;
 }
 

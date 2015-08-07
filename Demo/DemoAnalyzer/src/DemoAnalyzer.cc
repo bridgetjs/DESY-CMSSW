@@ -138,7 +138,7 @@ double MD0Actual=1.86484;  // [PDG]
 double MDstarActual=2.01022;
 
 double binsy[43]={1};
-
+double binsz[101];
 
 
 
@@ -731,6 +731,8 @@ DemoAnalyzer::DemoAnalyzer(const edm::ParameterSet& iConfig)
                     histset[208]  =   fs->make<TH1D>("h_deltaM", "", 100, 0.138, 0.17); //Mass difference histogram for 'right charge' paring
                     histset[209]  =   fs->make<TH1D>("h_deltaMwrongcharge", "", 100, 0.14, 0.17); //Mass difference histogram for 'wrong charge' pairing
                     histset[210]  =   fs->make<TH1D>("h_z","",100,0,0.5);
+                    histset[211]  =   fs->make<TH1D>("h_n","",100);
+    
 }
 
 
@@ -1996,7 +1998,8 @@ histset[105]->Fill(electrons->size());
                                                                 
                                                              //Start of z cut
                                                                 
-                                                                double sumpt=0; //declare varriable
+                                                                double sumpt=0;
+                                                                int n=0;     //declare varriable
                                                                 //Loop over all tracks
                                                                 for( reco::TrackCollection::const_iterator itSum = tracks->begin(); itSum!=tracks->end(); itSum++) {
                                                                     
@@ -2004,15 +2007,19 @@ histset[105]->Fill(electrons->size());
                                                                 double vc3[3] ={abs(vcD0[0]-itSum->vx()), abs(vcD0[1]- itSum->vy()), abs(vcD0[2]-itSum->vz())};
                                                                     if (sqrt(vc3[0]*vc3[0] + vc3[1]*vc3[1])<0.1 && vc3[2] <0.1){
                                                                         sumpt += abs(itSum->pt()); // sum pt for all tracks
+                                                                        n++ //Fill a counter histogram to see how many tracks are present here?!
                                                                     }// end of Sumpt vertex check
                                                                     
                                                                     
-                                                                }//end of sum loop
+                                                                }
+                                                                //end of sum loop
                                                                 double z=ptD0/sumpt; // calculate z after loop
                                                                 histset[210]->Fill(z);
+                                                                histset[211]->Fill(n);
                                                                 //Fill deltaM histograms depending on Charge flag cf and z values
-                                                                if      (cf==1 && z>0.02)  histset[208]->Fill(MDstar-MD0);
-                                                                else if (cf==-1 && z>0.02) histset[209]->Fill(MDstar-MD0);
+                                                                if      (cf==1 && z>0.05)  histset[208]->Fill(MDstar-MD0);
+                                                                else if (cf==-1 && z>0.05) histset[209]->Fill(MDstar-MD0);
+                                                               
                                                             }
                                        
                                                     }//end of Pi Slow vertex check.
