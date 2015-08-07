@@ -1116,7 +1116,7 @@ else {
  histset[26]->Fill(Primvertex->size());
 
  // loop over tracks
-
+/*
   for( reco::TrackCollection::const_iterator it = tracks->begin(); it !=
  tracks->end(); it++) {
     // LogInfo("Demo")<<"track p"<<it->p()<< "  track reference position"<<it->referencePoint()<< "   track vertex position"<<it->vertex();
@@ -1126,10 +1126,10 @@ else {
     histset[81]->Fill(it->phi());
 
       
-/*
-    if (it->eta() < 0) {hxhy[0]->Fill((-1)*(it->eta()), it->pt());}
-	else {hxhy[0]->Fill(it->eta(), it->pt());}
-  */
+
+  //  if (it->eta() < 0) {hxhy[0]->Fill((-1)*(it->eta()), it->pt());}
+//	else {hxhy[0]->Fill(it->eta(), it->pt());}
+
   
    // histset[23]->Fill(it->vx());
    //histset[24]->Fill(it->vy());
@@ -1688,13 +1688,15 @@ for (MuonCollection::const_iterator itMuon = muons->begin(); itMuon != muons->en
 
  }// Muon Collection for loop ends
 
+*/
+
 
 /*------------------------------------------------------------------------------------------------------------------------------------------------
   -----------------------------------------------ELECTRON COLLECTION--------------------------------------------------------------------------------
   ---------------------------------------------------------------------------------------------------------------------------------------------------*/
 
 
-
+/*
 
 
 
@@ -1919,7 +1921,7 @@ histset[105]->Fill(electrons->size());
 
  }//for(reco::GsfElectronCollection........) ends
     
-    
+    */
     
 //////////////// ------------------------------ D* Meson Analysis ------------------------------ ////////////////
     
