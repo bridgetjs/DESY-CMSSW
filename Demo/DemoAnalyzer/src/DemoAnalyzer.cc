@@ -731,7 +731,7 @@ DemoAnalyzer::DemoAnalyzer(const edm::ParameterSet& iConfig)
                     histset[208]  =   fs->make<TH1D>("h_deltaM", "", 100, 0.138, 0.17); //Mass difference histogram for 'right charge' paring
                     histset[209]  =   fs->make<TH1D>("h_deltaMwrongcharge", "", 100, 0.14, 0.17); //Mass difference histogram for 'wrong charge' pairing
                     histset[210]  =   fs->make<TH1D>("h_z","",100,0,0.5);
-                    histset[211]  =   fs->make<TH1D>("h_n","",100);
+                    histset[211]  =   fs->make<TH1D>("h_n","",100, 0 ,200);
     
 }
 
