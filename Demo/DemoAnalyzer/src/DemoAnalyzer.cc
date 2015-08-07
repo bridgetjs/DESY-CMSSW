@@ -1920,7 +1920,7 @@ histset[105]->Fill(electrons->size());
 	    }
 
  }//for(reco::GsfElectronCollection........) ends
-   COMMENT  
+   COMMENT
     */
     
 //////////////// ------------------------------ D* Meson Analysis ------------------------------ ////////////////
@@ -2009,7 +2009,7 @@ histset[105]->Fill(electrons->size());
                                                                 double vc3[3] ={abs(vcD0[0]-itSum->vx()), abs(vcD0[1]- itSum->vy()), abs(vcD0[2]-itSum->vz())};
                                                                     if (sqrt(vc3[0]*vc3[0] + vc3[1]*vc3[1])<0.1 && vc3[2] <0.1){
                                                                         sumpt += abs(itSum->pt()); // sum pt for all tracks
-                                                                        n++ //Fill a counter histogram to see how many tracks are present here?!
+                                                                        n++; //Fill a counter histogram to see how many tracks are present here?!
                                                                     }// end of Sumpt vertex check
                                                                     
                                                                     
