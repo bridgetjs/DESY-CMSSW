@@ -736,8 +736,8 @@ DemoAnalyzer::DemoAnalyzer(const edm::ParameterSet& iConfig)
     
                 //// ------------- Y cut implementation ------------ ////
     
-                histset[250]  =  fs->make<TH1D>("h_Upsilon",80, 8, 12);
-                histset[251]  =  fs->make<TH1D>("h_Upsilon_eta",80, 8, 12);
+                histset[250]  =  fs->make<TH1D>("h_Upsilon","",80, 8, 12);
+                histset[251]  =  fs->make<TH1D>("h_Upsilon_eta","",80, 8, 12);
     
     
 }
@@ -1618,7 +1618,7 @@ for (MuonCollection::const_iterator itMuon = muons->begin(); itMuon != muons->en
     //Cuts for Upsilon [arXiv 1012.5545 §3.3]
     if (ValidHits1>=12 && PixelHits1>=1 && (itM->track())->normalizedChi2()<5 && sqrt(dref[0]*dref[0] + dref[1]*dref[1])<=0.2 && dref[2]<=5 && muon::isGoodMuon(*itM,muon::TMLastStationAngTight) && muon::isGoodMuon(*itM,muon::TrackerMuonArbitrated) && itM->isTrackerMuon())
               {
-                  if (abs (itM->eta()) < 1.6 && abs(itMuon->eta()) <1.6 && itM->pt()>3.5 && itMuon->pt()>3.5 || abs(abs(itM->eta())-2) < 0.4  && abs(abs(itMuon->eta())-2) < 0.4  && itM->pt()>2.5 && itMuon->pt()>2.5 ) Yflag=1;
+                  if ((abs (itM->eta()) < 1.6 && abs(itMuon->eta()) <1.6 && itM->pt()>3.5 && itMuon->pt()>3.5) || ( abs(abs(itM->eta())-2) < 0.4  && abs(abs(itMuon->eta())-2) < 0.4  && itM->pt()>2.5 && itMuon->pt()>2.5 )) Yflag=1;
                   
               }
 
