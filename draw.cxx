@@ -77,7 +77,7 @@ void draw(){
     hUpsilon->Draw();
     //cn->SaveAs("./Plots/D0z.png");
     
-    TCanvas *c8=new TCanvas("c8","", 600,400);
+    TCanvas *c9=new TCanvas("c9","", 600,400);
     TH1D *hUpsiloneta=(TH1D*)dir->Get("h_Upsilon_eta");
     hUpsiloneta->SetStats(0);
     hUpsiloneta->GetYaxis()->SetTitleOffset(0.05);
