@@ -1679,7 +1679,7 @@ for (MuonCollection::const_iterator itMuon = muons->begin(); itMuon != muons->en
             //--------------------------upsilon range--------------------------------------------------------//
             
             
-            if (Yflag=1 && (abs(rap) < 2 )&& (abs(M-11)<3 )) {
+            if (Yflag==1 && (abs(rap) < 2 )&& (abs(M-11)<3 )) {
                 histset[250]->Fill(M);
                 if (abs(itM->eta())<1 && abs(itMuon->eta())<1) histset[251]->Fill(M);
             }
