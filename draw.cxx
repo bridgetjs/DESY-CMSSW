@@ -71,7 +71,7 @@ void draw(){
     TCanvas *c8=new TCanvas("c8","", 600,400);
     TH1D *hUpsilon=(TH1D*)dir->Get("h_Upsilon");
     hUpsilon->SetStats(0);
-    hUpsilon->GetYaxis()->SetTitleOffset(0.05);
+    hUpsilon->GetYaxis()->SetTitleOffset(-0.05);
     hUpsilon->GetXaxis()->SetTitle("#mu^{+} #mu^{-} mass (Gev/c^{2})");
     hUpsilon->GetYaxis()->SetTitle("Events");
     hUpsilon->Draw();
@@ -80,7 +80,7 @@ void draw(){
     TCanvas *c9=new TCanvas("c9","", 600,400);
     TH1D *hUpsiloneta=(TH1D*)dir->Get("h_Upsilon_eta");
     hUpsiloneta->SetStats(0);
-    hUpsiloneta->GetYaxis()->SetTitleOffset(0.05);
+    hUpsiloneta->GetYaxis()->SetTitleOffset(-0.05);
     hUpsiloneta->GetXaxis()->SetTitle("#mu^{+} #mu^{-} mass (Gev/c^{2})");
     hUpsiloneta->GetYaxis()->SetTitle("Events");
     hUpsiloneta->Draw();
