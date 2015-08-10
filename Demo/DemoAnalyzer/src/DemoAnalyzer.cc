@@ -1405,7 +1405,9 @@ for (MuonCollection::const_iterator itMuon = muons->begin(); itMuon != muons->en
  int Wflag2=1;
  int goodhit=0;//GM_Z Muon Chamber hits
  double relIso=1.;// relative Isolation for muons(Z paper);
-
+ 
+    
+ int Yflag=0;
 
  math::XYZPoint point(beamSpot.position());
 
@@ -1551,7 +1553,7 @@ for (MuonCollection::const_iterator itMuon = muons->begin(); itMuon != muons->en
     
         //Upisilon Varriables
             double dref[3]={abs((itMuon->track())->vx()-(itM->track())->vx()),abs((itMuon->track())->vy()-(itM->track())->vy()),abs((itMuon->track())->vz()-(itM->track())->vz())};
-            int     Yflag=0;
+        
             
             
             
