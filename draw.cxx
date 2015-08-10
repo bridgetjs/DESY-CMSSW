@@ -73,6 +73,7 @@ void draw(){
     hdeltaM->SetStats(1);
     hdeltaM->SetLineColor(kBlue);
     hdeltaM->GetXaxis()->SetTitle("M(K#pi#pi)- M(K#pi) [GeV/c^{2}]");
+    hdeltaM->GetYaxis()->SetTitleOffset(0.05);
     hdeltaM->GetYaxis()->SetTitle("Number of Entries");
     hdeltaM->Draw();
     hdeltaMwrongcharge->SetLineColor(kRed);
@@ -86,18 +87,20 @@ void draw(){
     
     
     
-    TCanvas *c6=new TCanvas("c6","" 600,400);
+    TCanvas *c6=new TCanvas("c6","" ,600,400);
     TH1D *hz=(TH1D*)dir->Get("h_z");
     hz->SetStats(0);
     hz->GetXaxis()->SetTitle("z");
+    hz->GetYaxis()->SetTitleOffset(0.05);
     hz->GetYaxis()->SetTitle("Number of Entries");
     hz->Draw();
     c6->SaveAs("./Plots/D0z.png");
     
-    TCanvas *c7=new TCanvas("c7","" 600,400);
+    TCanvas *c7=new TCanvas("c7","", 600,400);
     TH1D *hn=(TH1D*)dir->Get("h_n");
     hn->SetStats(0);
-    hn->GetXaxis()->SetTitle("z");
+    hn->GetYaxis()->SetTitleOffset(0.05);
+    hn->GetXaxis()->SetTitle("Number of Tracks from D0 region");
     hn->GetYaxis()->SetTitle("Number of Entries");
     hn->Draw();
     //cn->SaveAs("./Plots/D0z.png");
