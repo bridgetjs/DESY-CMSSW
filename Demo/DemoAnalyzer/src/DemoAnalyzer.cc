@@ -155,7 +155,7 @@ DemoAnalyzer::DemoAnalyzer(const edm::ParameterSet& iConfig)
 {
   //now do what ever initialization is needed
   edm::Service<TFileService> fs;
-
+//Loop for
     for (int i=0; i!=43; i++){
         
         if (i>=0 && i<=19) binsy[i]= 0.1*i;
@@ -736,8 +736,8 @@ DemoAnalyzer::DemoAnalyzer(const edm::ParameterSet& iConfig)
     
                 //// ------------- Y cut implementation ------------ ////
     
-                    histset[250]  =  fs->make<TH1D>("h_Upsilon",80, 8, 12)
-                    histset[251]  =  fs->make<TH1D>("h_Upsilon_eta",80, 8, 12)
+                histset[250]  =  fs->make<TH1D>("h_Upsilon",80, 8, 12);
+                histset[251]  =  fs->make<TH1D>("h_Upsilon_eta",80, 8, 12);
     
     
 }
