@@ -31,8 +31,8 @@ To produce a plot one should carry out the following
 4. Copy the block below replacing names and options as required:
  
             TCanvas *cN = new TCanvas("cN","",600,400); //Change N to a number
-            newhistoname->GetXaxis()->SetTitle("Axis title [Units]");
-            newhistoname->GetYaxis()->SetTitle("Axis title [Units]");
+            newhistoname->GetXaxis()->SetTitle("Axis title (Units)");
+            newhistoname->GetYaxis()->SetTitle("Axis title (Units)");
             newhistoname->Draw("Some Option");
             // Save the canvas
             c1->SaveAs("imagename.extension");
@@ -67,42 +67,23 @@ void draw(){
     gStyle->SetPalette(1); //Set palette for 2D plots
     gStyle->SetOptStat(11); //Print name and no of entries
  
-    TCanvas *c4 = new TCanvas("c4","",600,400);
-    TH1D *hdeltaM=(TH1D*)dir->Get("h_deltaM");
-    TH1D *hdeltaMwrongcharge=(TH1D*)dir->Get("h_deltaMwrongcharge");
-    hdeltaM->SetStats(1);
-    hdeltaM->SetLineColor(kBlue);
-    hdeltaM->GetXaxis()->SetTitle("M(K#pi#pi)- M(K#pi) [GeV/c^{2}]");
-    hdeltaM->GetYaxis()->SetTitleOffset(0.05);
-    hdeltaM->GetYaxis()->SetTitle("Number of Entries");
-    hdeltaM->Draw();
-    hdeltaMwrongcharge->SetLineColor(kRed);
-    hdeltaMwrongcharge->Draw("same");
-    TLegend* legc4 = new TLegend(0.7, 0.1, .9, .3);
-    legc4->AddEntry(hdeltaM, "Right Charge", "l");
-    legc4->AddEntry(hdeltaMwrongcharge, "Wrong Charge", "l");
-    legc4->Draw();
-    legc4->SetBorderSize(0);
-    c4->SaveAs("./Plots/DeltaD0Mass.png");
     
+    TCanvas *c8=new TCanvas("c8","", 600,400);
+    TH1D *hUpsilon=(TH1D*)dir->Get("h_Upsilon");
+    hUpsilon->SetStats(0);
+    hUpsilon->GetYaxis()->SetTitleOffset(0.05);
+    hUpsilon->GetXaxis()->SetTitle("#mu^{+} #mu^{-} mass (Gev/c^{2})");
+    hUpsilon->GetYaxis()->SetTitle("Events");
+    hUpsilon->Draw();
+    //cn->SaveAs("./Plots/D0z.png");
     
-    
-    TCanvas *c6=new TCanvas("c6","" ,600,400);
-    TH1D *hz=(TH1D*)dir->Get("h_z");
-    hz->SetStats(0);
-    hz->GetXaxis()->SetTitle("z");
-    hz->GetYaxis()->SetTitleOffset(0.05);
-    hz->GetYaxis()->SetTitle("Number of Entries");
-    hz->Draw();
-    c6->SaveAs("./Plots/D0z.png");
-    
-    TCanvas *c7=new TCanvas("c7","", 600,400);
-    TH1D *hn=(TH1D*)dir->Get("h_n");
-    hn->SetStats(0);
-    hn->GetYaxis()->SetTitleOffset(0.05);
-    hn->GetXaxis()->SetTitle("Number of Tracks from D0 region");
-    hn->GetYaxis()->SetTitle("Number of Entries");
-    hn->Draw();
+    TCanvas *c8=new TCanvas("c8","", 600,400);
+    TH1D *hUpsiloneta=(TH1D*)dir->Get("h_Upsilon_eta");
+    hUpsiloneta->SetStats(0);
+    hUpsiloneta->GetYaxis()->SetTitleOffset(0.05);
+    hUpsiloneta->GetXaxis()->SetTitle("#mu^{+} #mu^{-} mass (Gev/c^{2})");
+    hUpsiloneta->GetYaxis()->SetTitle("Events");
+    hUpsiloneta->Draw();
     //cn->SaveAs("./Plots/D0z.png");
  return;
 }
@@ -148,6 +129,45 @@ void draw(){
    h_D0mass->GetYaxis()->SetTitle("Number of Entries");
    h_D0mass->Draw();
    c3->SaveAs("./Plots/D0Mass.png");
+   
+   TCanvas *c4 = new TCanvas("c4","",600,400);
+   TH1D *hdeltaM=(TH1D*)dir->Get("h_deltaM");
+   TH1D *hdeltaMwrongcharge=(TH1D*)dir->Get("h_deltaMwrongcharge");
+   hdeltaM->SetStats(1);
+   hdeltaM->SetLineColor(kBlue);
+   hdeltaM->GetXaxis()->SetTitle("M(K#pi#pi)- M(K#pi) [GeV/c^{2}]");
+   hdeltaM->GetYaxis()->SetTitleOffset(0.05);
+   hdeltaM->GetYaxis()->SetTitle("Number of Entries");
+   hdeltaM->Draw();
+   hdeltaMwrongcharge->SetLineColor(kRed);
+   hdeltaMwrongcharge->Draw("same");
+   TLegend* legc4 = new TLegend(0.7, 0.1, .9, .3);
+   legc4->AddEntry(hdeltaM, "Right Charge", "l");
+   legc4->AddEntry(hdeltaMwrongcharge, "Wrong Charge", "l");
+   legc4->Draw();
+   legc4->SetBorderSize(0);
+   c4->SaveAs("./Plots/DeltaD0Mass.png");
+   
+   
+   
+   TCanvas *c6=new TCanvas("c6","" ,600,400);
+   TH1D *hz=(TH1D*)dir->Get("h_z");
+   hz->SetStats(0);
+   hz->GetXaxis()->SetTitle("z");
+   hz->GetYaxis()->SetTitleOffset(0.05);
+   hz->GetYaxis()->SetTitle("Number of Entries");
+   hz->Draw();
+   c6->SaveAs("./Plots/D0z.png");
+   
+   TCanvas *c7=new TCanvas("c7","", 600,400);
+   TH1D *hn=(TH1D*)dir->Get("h_n");
+   hn->SetStats(0);
+   hn->GetYaxis()->SetTitleOffset(0.05);
+   hn->GetXaxis()->SetTitle("Number of Tracks from D0 region");
+   hn->GetYaxis()->SetTitle("Number of Entries");
+   hn->Draw();
+   //cn->SaveAs("./Plots/D0z.png");
+
    
 
    

@@ -1734,7 +1734,7 @@ for (MuonCollection::const_iterator itMuon = muons->begin(); itMuon != muons->en
 
 
 
-
+/*
 
 histset[105]->Fill(electrons->size());
  for( reco::GsfElectronCollection::const_iterator it = electrons->begin(); it !=
@@ -1957,7 +1957,7 @@ histset[105]->Fill(electrons->size());
 
  }//for(reco::GsfElectronCollection........) ends
  
-    
+  
 //////////////// ------------------------------ D* Meson Analysis ------------------------------ ////////////////
     
     //Loop over all non zero tracks with an iteractor K
@@ -2070,7 +2070,7 @@ histset[105]->Fill(electrons->size());
             }//end of K loop
     }//end of track size cut
 
-    
+    */
 
 }//DemoAnalyzer ends
 
