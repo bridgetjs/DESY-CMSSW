@@ -72,11 +72,11 @@ void draw(){
     TH1D *hdeltaMwrongcharge=(TH1D*)dir->Get("h_deltaMwrongcharge");
     hdeltaM->SetStats(1);
     hdeltaM->SetLineColor(kBlue);
-    hdeltaM->GetXaxis()->SetTitle(" Mass [GeVc^{2}]");
+    hdeltaM->GetXaxis()->SetTitle("M(K#pi#pi)- M(K#pi) [GeV/c^{2}]");
     hdeltaM->GetYaxis()->SetTitle("Number of Entries");
-    hdeltaM->Draw("E");
+    hdeltaM->Draw();
     hdeltaMwrongcharge->SetLineColor(kRed);
-    hdeltaMwrongcharge->Draw("E same");
+    hdeltaMwrongcharge->Draw("same");
     TLegend* legc4 = new TLegend(0.7, 0.1, .9, .3);
     legc4->AddEntry(hdeltaM, "Right Charge", "l");
     legc4->AddEntry(hdeltaMwrongcharge, "Wrong Charge", "l");
