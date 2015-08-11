@@ -79,7 +79,7 @@ void draw(){
     
     TCanvas *c8=new TCanvas("c8","", 600,500);
     TH1D *hUpsilon=(TH1D*)dir->Get("h_Upsilon");
-    cryst1->SetParameter(0,9);
+    cryst1->SetParameter(0,1);
     
     hUpsilon->Fit("cryst1","R");
     hUpsilon->SetStats(1);
