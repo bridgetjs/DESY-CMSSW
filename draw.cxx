@@ -3,7 +3,7 @@
 Description: This is a root macro to draw histograms produced by the CMS Open Data analyzer.
  
 /----------------------------  Implementation  ----------------------------/
-TEST
+TEST2
  
 It may be executed, via the terminal, with the following commands:
     root -l
