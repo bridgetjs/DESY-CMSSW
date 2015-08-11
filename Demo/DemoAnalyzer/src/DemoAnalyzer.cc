@@ -1616,16 +1616,12 @@ for (MuonCollection::const_iterator itMuon = muons->begin(); itMuon != muons->en
 	 }
        
     //Cuts for Upsilon [arXiv 1012.5545 §3.3]
-    if (ValidHits1>=12 && PixelHits1>=1 && (itM->track())->normalizedChi2()<5 && sqrt(dref[0]*dref[0] + dref[1]*dref[1])<=0.2 && dref[2]<=5 && muon::isGoodMuon(*itM,muon::TMLastStationAngTight) && muon::isGoodMuon(*itM,muon::TrackerMuonArbitrated) && itM->isTrackerMuon())
-              {
+              if (ValidHits1>=12 && PixelHits1>=1 && (itM->track())->normalizedChi2()<5 && sqrt(dref[0]*dref[0] + dref[1]*dref[1])<=0.2 && dref[2]<=5){
+                        // section removed from if(.... ) as unclear: muon::isGoodMuon(*itM,muon::TMLastStationAngTight) && muon::isGoodMuon(*itM,muon::TrackerMuonArbitrated) && itM->isTrackerMuon()
+        
                   if ((abs (itM->eta()) < 1.6 && abs(itMuon->eta()) <1.6 && itM->pt()>3.5 && itMuon->pt()>3.5) || ( abs(abs(itM->eta())-2) < 0.4  && abs(abs(itMuon->eta())-2) < 0.4  && itM->pt()>2.5 && itMuon->pt()>2.5 )) Yflag=1;
                   
-              }
-
-              
-              
-              
-              
+              }//if valid hits ends
               
 	      }//isNonnull() ends
        if(itM->charge()==-itMuon->charge() )// unlike charges
@@ -1683,8 +1679,6 @@ for (MuonCollection::const_iterator itMuon = muons->begin(); itMuon != muons->en
                 histset[250]->Fill(M);
                 if (abs(itM->eta())<1 && abs(itMuon->eta())<1) histset[251]->Fill(M);
             }
-            
-            
             
 		  if(fabs(itM->eta())<2.4 && fabs(itMuon->eta())<2.4){ histset[43]->Fill(s);histset[72]->Fill(scorr);}
 		  if(fabs(itM->eta())<1. && fabs(itMuon->eta())<1.) {  histset[42]->Fill(s);histset[71]->Fill(scorr);}

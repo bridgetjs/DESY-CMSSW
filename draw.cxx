@@ -69,23 +69,23 @@ void draw(){
     gStyle->SetOptStat(11); //Print name and no of entries
  
     
-    TCanvas *c8=new TCanvas("c8","", 600,400);
+    TCanvas *c8=new TCanvas("c8","", 600,500);
     TH1D *hUpsilon=(TH1D*)dir->Get("h_Upsilon");
     hUpsilon->SetStats(1);
-    hUpsilon->GetYaxis()->SetTitleOffset(-0.05);
+    hUpsilon->GetYaxis()->SetTitleOffset(0.1);
     hUpsilon->GetXaxis()->SetTitle("#mu^{+} #mu^{-} mass (Gev/c^{2})");
     hUpsilon->GetYaxis()->SetTitle("Events");
-    hUpsilon->Draw();
-    //cn->SaveAs("./Plots/D0z.png");
+    hUpsilon->Draw("E");
+    c8->SaveAs("./Plots/Upsilon.png");
     
-    TCanvas *c9=new TCanvas("c9","", 600,400);
+    TCanvas *c9=new TCanvas("c9","", 600,500);
     TH1D *hUpsiloneta=(TH1D*)dir->Get("h_Upsilon_eta");
     hUpsiloneta->SetStats(1);
-    hUpsiloneta->GetYaxis()->SetTitleOffset(-0.05);
+    hUpsiloneta->GetYaxis()->SetTitleOffset(0.1);
     hUpsiloneta->GetXaxis()->SetTitle("#mu^{+} #mu^{-} mass (Gev/c^{2})");
     hUpsiloneta->GetYaxis()->SetTitle("Events");
-    hUpsiloneta->Draw();
-    //cn->SaveAs("./Plots/D0z.png");
+    hUpsiloneta->Draw("E");
+    c9->SaveAs("./Plots/Upsiloneta.png");
  return;
 }
 
@@ -123,6 +123,8 @@ void draw(){
    h_JpsiPT->GetYaxis()->SetTitle("Counts");
    h_JpsiPT->Draw();
    c2->SaveAs("./Plots/JpsiPT.png");
+   
+   ---------------------------- D analysis ----------------------------
    
    TCanvas *c3 = new TCanvas("c3","",600,400);
    h_D0mass->SetStats(1);
@@ -170,6 +172,6 @@ void draw(){
    //cn->SaveAs("./Plots/D0z.png");
 
    
-
+---------------------------- Upsilon Analysis ----------------------------
    
   */
