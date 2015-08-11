@@ -51,7 +51,7 @@ To produce a plot one should carry out the following
 #include "TFile.h"
 #include "TRandom3.h"
 #include "TTree.h"
-
+#include <iostream>
 double CrystalBall(double* x, double* par);
 
 void draw(){
@@ -79,7 +79,7 @@ void draw(){
     
     TCanvas *c8=new TCanvas("c8","", 600,500);
     TH1D *hUpsilon=(TH1D*)dir->Get("h_Upsilon");
-    cryst1->SetParameter(1,9);
+    cryst1->SetParameter(0,9);
     
     hUpsilon->Fit("cryst1","R");
     hUpsilon->SetStats(1);
@@ -122,7 +122,7 @@ double CrystalBall(double* x, double* par){
     double mu = par[2];
     double sigma = par[3];
     double N = par[4];
-    
+    cout<< " " << alpha << endl;
     TF1* exp = new TF1("exp","exp(x)",1e-20,1e20);
     double A;
     double B;
