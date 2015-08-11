@@ -124,7 +124,7 @@ double CrystalBall(double* x, double* par){
     TF1* exp = new TF1("exp","exp(x)",1e-20,1e20);
     double A;
     double B;
-    
+    double f;
     if (alpha < 0){
         A = pow((n/(-1*alpha)),n)*exp->Eval((-1)*alpha*alpha/2);
         B = n/(-1*alpha) + alpha;
@@ -132,7 +132,7 @@ double CrystalBall(double* x, double* par){
     else {
             A = pow((n/alpha),n)*exp->Eval((-1)*alpha*alpha/2); B = n/alpha - alpha;
     }
-    ￼double f;
+    ￼
     if ((xcur-mu)/sigma > (-1)*alpha)
         f = N*exp->Eval((-1)*(xcur-mu)*(xcur-mu)/ (2*sigma*sigma));
     else
