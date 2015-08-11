@@ -52,6 +52,7 @@ To produce a plot one should carry out the following
 #include "TRandom3.h"
 #include "TTree.h"
 
+double CrystalBall(double* x, double* par);
 
 void draw(){
 
@@ -66,8 +67,15 @@ void draw(){
     
     //global style preferences
     gStyle->SetPalette(1); //Set palette for 2D plots
-    gStyle->SetOptStat(11); //Print name and no of entries
+    gStyle->SetOptStat("eou"); //Print name and no of entries
  
+    //Define fitting functions
+    
+    TF1* crys1 = new TF1("cryst1",CrystalBall,8,12,7);
+    TF1* crys2 = new TF1("cryst2",CrystalBall,8,12,7);
+    TF1* crys3 = new TF1("cryst3",CrystalBall,8,12,7);
+    
+    
     
     TCanvas *c8=new TCanvas("c8","", 600,500);
     TH1D *hUpsilon=(TH1D*)dir->Get("h_Upsilon");
@@ -76,11 +84,12 @@ void draw(){
     hUpsilon->GetXaxis()->SetTitle("#mu^{+} #mu^{-} mass (Gev/c^{2})");
     hUpsilon->GetYaxis()->SetTitle("Events");
     hUpsilon->Draw("E");
+    hUpsilon->Fit("cryst1","R","",8,12)
     TLegend* legc8 = new TLegend(0.6, 0.6, .89, .89);
     legc8->SetBorderSize(0);
-    legc8->AddEntry((TObject*)0, "CMS #sqrt{s}= 7 TeV", "");
+    legc8->AddEntry((TObject*)0, "CMS,  #sqrt{s} = 7 TeV", "");
     legc8->AddEntry((TObject*)0, "L= n pb^{-1}", "");
-    legc8->AddEntry((TObject*)0, "#||{#eta} < 2.4 ", "");
+    legc8->AddEntry((TObject*)0, "#||{#eta}^{#mu} < 2.4 ", "");
     legc8->Draw();
     
     c8->SaveAs("./Plots/Upsilon.png");
@@ -94,15 +103,37 @@ void draw(){
     hUpsiloneta->Draw("E");
     TLegend* legc9 = new TLegend(0.6, 0.6, .89, .89);
     legc9->SetBorderSize(0);
-    legc9->AddEntry((TObject*)0, "CMS #sqrt{s}= 7 TeV", "");
+    legc9->AddEntry((TObject*)0, "CMS,  #sqrt{s} = 7 TeV", "");
     legc9->AddEntry((TObject*)0, "L= n pb^{-1}", "");
-    legc9->AddEntry((TObject*)0, "#||{#eta} < 1 ", "");
+    legc9->AddEntry((TObject*)0, "#||{#eta}^{#mu} < 1 ", "");
     legc9->Draw();
     c9->SaveAs("./Plots/Upsiloneta.png");
  return;
 }
 
+double CrystalBall(double* x, double* par){
+    
+    
+    double xcur = x[0];
+    double alpha = par[0];
+    double n = par[1];
+    double mu = par[2];
+    double sigma = par[3];
+    double N = par[4];
+    TF1* exp = new TF1("exp","exp(x)",1e-20,1e20); double A; double B;
+    if (alpha < 0){
+        A = pow((n/(-1*alpha)),n)*exp->Eval((-1)*alpha*alpha/2);
+        B = n/(-1*alpha) + alpha;} else {
+            A = pow((n/alpha),n)*exp->Eval((-1)*alpha*alpha/2); B = n/alpha - alpha;}
+    ￼double f;
+    if ((xcur-mu)/sigma > (-1)*alpha)
+        f = N*exp->Eval((-1)*(xcur-mu)*(xcur-mu)/ (2*sigma*sigma));
+    else
+        f = N*A*pow((B- (xcur-mu)/sigma),(-1*n));
+    delete exp;
+    return f;
 
+}
 
 
 
