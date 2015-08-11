@@ -84,7 +84,7 @@ void draw(){
     hUpsilon->GetXaxis()->SetTitle("#mu^{+} #mu^{-} mass (Gev/c^{2})");
     hUpsilon->GetYaxis()->SetTitle("Events");
     hUpsilon->Draw("E");
-    hUpsilon->Fit("cryst1","R","",8,12)
+    hUpsilon->Fit("cryst1","R","",8,12);
     TLegend* legc8 = new TLegend(0.6, 0.6, .89, .89);
     legc8->SetBorderSize(0);
     legc8->AddEntry((TObject*)0, "CMS,  #sqrt{s} = 7 TeV", "");
