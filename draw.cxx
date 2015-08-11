@@ -82,7 +82,6 @@ void draw(){
     cryst1->SetParameter(2,9.4630);
     
     hUpsilon->Fit("cryst1","VR");
-    hUpsilon->Fit("gaus");
     hUpsilon->SetStats(1);
     hUpsilon->GetYaxis()->SetTitleOffset(1.15);
     hUpsilon->GetXaxis()->SetTitle("#mu^{+} #mu^{-} mass (Gev/c^{2})");
