@@ -79,16 +79,18 @@ void draw(){
     
     TCanvas *c8=new TCanvas("c8","", 600,500);
     TH1D *hUpsilon=(TH1D*)dir->Get("h_Upsilon");
+    cryst1->SetParameter(1,9);
+    
+    hUpsilon->Fit("cryst1","R");
     hUpsilon->SetStats(1);
     hUpsilon->GetYaxis()->SetTitleOffset(1.15);
     hUpsilon->GetXaxis()->SetTitle("#mu^{+} #mu^{-} mass (Gev/c^{2})");
     hUpsilon->GetYaxis()->SetTitle("Events");
     hUpsilon->Draw("E");
-    hUpsilon->Fit("cryst1","R");
     TLegend* legc8 = new TLegend(0.6, 0.6, .89, .89);
     legc8->SetBorderSize(0);
     legc8->AddEntry((TObject*)0, "CMS,  #sqrt{s} = 7 TeV", "");
-    legc8->AddEntry((TObject*)0, "L= n pb^{-1}", "");
+    legc8->AddEntry((TObject*)0, "L = n pb^{-1}", "");
     legc8->AddEntry((TObject*)0, "#||{#eta}^{#mu} < 2.4 ", "");
     legc8->Draw();
     
@@ -104,8 +106,8 @@ void draw(){
     TLegend* legc9 = new TLegend(0.6, 0.6, .89, .89);
     legc9->SetBorderSize(0);
     legc9->AddEntry((TObject*)0, "CMS,  #sqrt{s} = 7 TeV", "");
-    legc9->AddEntry((TObject*)0, "L= n pb^{-1}", "");
-    legc9->AddEntry((TObject*)0, "#||{#eta}^{#mu} < 1 ", "");
+    legc9->AddEntry((TObject*)0, "L = n pb^{-1}", "");
+    legc9->AddEntry((TObject*)0, "#||{#eta^{#mu}} < 1 ", "");
     legc9->Draw();
     c9->SaveAs("./Plots/Upsiloneta.png");
  return;
