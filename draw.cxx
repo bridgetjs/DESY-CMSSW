@@ -71,9 +71,9 @@ void draw(){
  
     //Define fitting functions
     
-    TF1* crys1 = new TF1("cryst1",CrystalBall,8,12,7);
-    TF1* crys2 = new TF1("cryst2",CrystalBall,8,12,7);
-    TF1* crys3 = new TF1("cryst3",CrystalBall,8,12,7);
+    TF1* crys1 = new TF1("cryst1",&CrystalBall,8,12,7);
+  //  TF1* crys2 = new TF1("cryst2",CrystalBall,8,12,7);
+    //TF1* crys3 = new TF1("cryst3",CrystalBall,8,12,7);
     
     
     
@@ -120,14 +120,18 @@ double CrystalBall(double* x, double* par){
     double mu = par[2];
     double sigma = par[3];
     double N = par[4];
-    TF1* exp = new TF1("exp","exp(x)",1e-20,1e20); double A; double B;
+    
+    TF1* exp = new TF1("exp","exp(x)",1e-20,1e20);
+    double A;
+    double B;
+    
     if (alpha < 0){
         A = pow((n/(-1*alpha)),n)*exp->Eval((-1)*alpha*alpha/2);
         B = n/(-1*alpha) + alpha;
     }
     else {
             A = pow((n/alpha),n)*exp->Eval((-1)*alpha*alpha/2); B = n/alpha - alpha;
-        }
+    }
     ￼double f;
     if ((xcur-mu)/sigma > (-1)*alpha)
         f = N*exp->Eval((-1)*(xcur-mu)*(xcur-mu)/ (2*sigma*sigma));
