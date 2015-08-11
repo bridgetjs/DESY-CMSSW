@@ -77,6 +77,7 @@ void draw(){
     hUpsilon->GetYaxis()->SetTitle("Events");
     hUpsilon->Draw("E");
     TLegend* legc8 = new TLegend(0.7, 0.7, .9, .9);
+    legc9->SetBorderSize(0);
     legc8->AddEntry((TObject*)0, "CMS #sqrt{s}= 7 TeV", "");
     legc8->AddEntry((TObject*)0, "L= n pb^{-1}", "");
     legc8->AddEntry((TObject*)0, "#||{#eta} < 2.4 ", "");
@@ -92,6 +93,7 @@ void draw(){
     hUpsiloneta->GetYaxis()->SetTitle("Events");
     hUpsiloneta->Draw("E");
     TLegend* legc9 = new TLegend(0.7, 0.7, .9, .9);
+    legc9->SetBorderSize(0);
     legc9->AddEntry((TObject*)0, "CMS #sqrt{s}= 7 TeV", "");
     legc9->AddEntry((TObject*)0, "L= n pb^{-1}", "");
     legc9->AddEntry((TObject*)0, "#||{#eta} < 1 ", "");
