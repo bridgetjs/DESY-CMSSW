@@ -133,10 +133,12 @@ double CrystalBall(double* x, double* par){
             A = pow((n/alpha),n)*exp->Eval((-1)*alpha*alpha/2); B = n/alpha - alpha;
     }
     ￼
-    if ((xcur-mu)/sigma > (-1)*alpha)
+    if ((xcur-mu)/sigma > (-1)*alpha) {
         f = N*exp->Eval((-1)*(xcur-mu)*(xcur-mu)/ (2*sigma*sigma));
-    else
+    }
+    else {
         f = N*A*pow((B- (xcur-mu)/sigma),(-1*n));
+    }
     delete exp;
     return f;
 
