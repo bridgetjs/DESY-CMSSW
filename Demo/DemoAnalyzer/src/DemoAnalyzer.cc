@@ -729,8 +729,8 @@ DemoAnalyzer::DemoAnalyzer(const edm::ParameterSet& iConfig)
                 //// ------------- D* Anaylsis ------------ ////
     
                     histset[206]  =   fs->make<TH1D>("h_D0mass", "", 200, 1.5, 2); //D0 mass histogram
-                    histset[208]  =   fs->make<TH1D>("h_deltaM", "", 100, 0.138, 0.17); //Mass difference histogram for 'right charge' paring
-                    histset[209]  =   fs->make<TH1D>("h_deltaMwrongcharge", "", 100, 0.14, 0.17); //Mass difference histogram for 'wrong charge' pairing
+                    histset[208]  =   fs->make<TH1D>("h_deltaM", "", 50, 0.138, 0.17); //Mass difference histogram for 'right charge' paring
+                    histset[209]  =   fs->make<TH1D>("h_deltaMwrongcharge", "", 50, 0.138, 0.17); //Mass difference histogram for 'wrong charge' pairing
                     histset[210]  =   fs->make<TH1D>("h_z","",100,0,0.5);
                     histset[211]  =   fs->make<TH1D>("h_n","",100, 0 ,200);
     
@@ -2044,7 +2044,7 @@ histset[105]->Fill(electrons->size());
                                                                 double vc3[3] ={abs(vcD0[0]-itSum->vx()), abs(vcD0[1]- itSum->vy()), abs(vcD0[2]-itSum->vz())};
                                                                     if (sqrt(vc3[0]*vc3[0] + vc3[1]*vc3[1])<0.1 && vc3[2] <0.1){
                                                                         sumpt += abs(itSum->pt()); // sum pt for all tracks
-                                                                        n++; //Fill a counter histogram to see how many tracks are present here?!
+                                                                        n++; //Fill a counter histogram to see how many tracks are present
                                                                     }// end of Sumpt vertex check
                                                                     
                                                                     
@@ -2070,7 +2070,15 @@ histset[105]->Fill(electrons->size());
             }//end of K loop
     }//end of track size cut
 
-    */
+ */
+ /* Ideas:
+ 
+ Fill vcD0 and vc3 histograms (3D)
+ take wrong charge from right charge
+ Use actual D0 mass - D0 is a pure background plot!!!!
+ 
+ */
+
 
 }//DemoAnalyzer ends
 

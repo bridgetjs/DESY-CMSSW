@@ -71,7 +71,7 @@ void draw(){
     
     TCanvas *c8=new TCanvas("c8","", 600,400);
     TH1D *hUpsilon=(TH1D*)dir->Get("h_Upsilon");
-    hUpsilon->SetStats(0);
+    hUpsilon->SetStats(1);
     hUpsilon->GetYaxis()->SetTitleOffset(-0.05);
     hUpsilon->GetXaxis()->SetTitle("#mu^{+} #mu^{-} mass (Gev/c^{2})");
     hUpsilon->GetYaxis()->SetTitle("Events");
@@ -80,7 +80,7 @@ void draw(){
     
     TCanvas *c9=new TCanvas("c9","", 600,400);
     TH1D *hUpsiloneta=(TH1D*)dir->Get("h_Upsilon_eta");
-    hUpsiloneta->SetStats(0);
+    hUpsiloneta->SetStats(1);
     hUpsiloneta->GetYaxis()->SetTitleOffset(-0.05);
     hUpsiloneta->GetXaxis()->SetTitle("#mu^{+} #mu^{-} mass (Gev/c^{2})");
     hUpsiloneta->GetYaxis()->SetTitle("Events");
@@ -139,9 +139,9 @@ void draw(){
    hdeltaM->GetXaxis()->SetTitle("M(K#pi#pi)- M(K#pi) [GeV/c^{2}]");
    hdeltaM->GetYaxis()->SetTitleOffset(0.05);
    hdeltaM->GetYaxis()->SetTitle("Number of Entries");
-   hdeltaM->Draw();
+   hdeltaM->Draw("E");
    hdeltaMwrongcharge->SetLineColor(kRed);
-   hdeltaMwrongcharge->Draw("same");
+   hdeltaMwrongcharge->Draw("E same");
    TLegend* legc4 = new TLegend(0.7, 0.1, .9, .3);
    legc4->AddEntry(hdeltaM, "Right Charge", "l");
    legc4->AddEntry(hdeltaMwrongcharge, "Wrong Charge", "l");
