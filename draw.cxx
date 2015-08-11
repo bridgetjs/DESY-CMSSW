@@ -122,7 +122,7 @@ double CrystalBall(double* x, double* par){
     double mu = par[2];
     double sigma = par[3];
     double N = par[4];
-    cout<< " " << alpha << endl;
+  //  cout<< " " << alpha << endl;
     TF1* exp = new TF1("exp","exp(x)",1e-20,1e20);
     double A;
     double B;
