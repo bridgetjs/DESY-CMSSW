@@ -75,12 +75,13 @@ void draw(){
     hUpsilon->GetYaxis()->SetTitleOffset(1.15);
     hUpsilon->GetXaxis()->SetTitle("#mu^{+} #mu^{-} mass (Gev/c^{2})");
     hUpsilon->GetYaxis()->SetTitle("Events");
+    hUpsilon->Draw("E");
     TLegend* legc8 = new TLegend(0.7, 0.7, .9, .9);
     legc8->AddEntry((TObject*)0, "CMS #sqrt{s}= 7 TeV", "");
     legc8->AddEntry((TObject*)0, "L= n pb^{-1}", "");
     legc8->AddEntry((TObject*)0, "#||{#eta} < 2.4 ", "");
     legc8->Draw();
-    hUpsilon->Draw("E");
+    
     c8->SaveAs("./Plots/Upsilon.png");
     
     TCanvas *c9=new TCanvas("c9","", 600,500);
@@ -89,12 +90,12 @@ void draw(){
     hUpsiloneta->GetYaxis()->SetTitleOffset(1.15);
     hUpsiloneta->GetXaxis()->SetTitle("#mu^{+} #mu^{-} mass (Gev/c^{2})");
     hUpsiloneta->GetYaxis()->SetTitle("Events");
+    hUpsiloneta->Draw("E");
     TLegend* legc9 = new TLegend(0.7, 0.7, .9, .9);
     legc9->AddEntry((TObject*)0, "CMS #sqrt{s}= 7 TeV", "");
     legc9->AddEntry((TObject*)0, "L= n pb^{-1}", "");
     legc9->AddEntry((TObject*)0, "#||{#eta} < 1 ", "");
     legc9->Draw();
-    hUpsiloneta->Draw("E");
     c9->SaveAs("./Plots/Upsiloneta.png");
  return;
 }
