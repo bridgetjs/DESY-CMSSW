@@ -72,14 +72,14 @@ void draw(){
     //Define fitting functions
     
     TF1* cryst1 = new TF1("cryst1",&CrystalBall,8,12,7);
-  //  TF1* cryst2 = new TF1("cryst2",CrystalBall,8,12,7);
-    //TF1* cryst3 = new TF1("cryst3",CrystalBall,8,12,7);
+  //  TF1* cryst2 = new TF1("cryst2",&CrystalBall,8,12,7);
+    //TF1* cryst3 = new TF1("cryst3",&CrystalBall,8,12,7);
     
     
     
     TCanvas *c8=new TCanvas("c8","", 600,500);
     TH1D *hUpsilon=(TH1D*)dir->Get("h_Upsilon");
-    cryst1->FixParameter(2,9.4630);
+    cryst1->SetParameter(2,9.4630);
     
     hUpsilon->Fit("cryst1","R");
     hUpsilon->SetStats(1);
@@ -91,7 +91,7 @@ void draw(){
     legc8->SetBorderSize(0);
     legc8->AddEntry((TObject*)0, "CMS,  #sqrt{s} = 7 TeV", "");
     legc8->AddEntry((TObject*)0, "L = n pb^{-1}", "");
-    legc8->AddEntry((TObject*)0, "#||{#eta}^{#mu} < 2.4 ", "");
+    legc8->AddEntry((TObject*)0, "#||{#eta^{#mu}} < 2.4 ", "");
     legc8->Draw();
     
     c8->SaveAs("./Plots/Upsilon.png");
