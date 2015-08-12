@@ -75,41 +75,26 @@ void draw(){
   //  TF1* cryst2 = new TF1("cryst2",&CrystalBall,8,12,7);
     //TF1* cryst3 = new TF1("cryst3",&CrystalBall,8,12,7);
     
+    TCanvas *c4 = new TCanvas("c4","",600,400);
+    TH1D *hdeltaM=(TH1D*)dir->Get("h_deltaM");
+    TH1D *hdeltaMwrongcharge=(TH1D*)dir->Get("h_deltaMwrongcharge");
+    hdeltaM->SetStats(1);
+    hdeltaM->SetLineColor(kBlue);
+    hdeltaM->GetXaxis()->SetTitle("M(K#pi#pi)- M(K#pi) [GeV/c^{2}]");
+    hdeltaM->GetYaxis()->SetTitleOffset(0.05);
+    hdeltaM->GetYaxis()->SetTitle("Number of Entries");
+    hdeltaM->Draw("E");
+    hdeltaMwrongcharge->SetLineColor(kRed);
+    hdeltaMwrongcharge->Draw("E same");
+    TLegend* legc4 = new TLegend(0.7, 0.1, .9, .3);
+    legc4->AddEntry(hdeltaM, "Right Charge", "l");
+    legc4->AddEntry(hdeltaMwrongcharge, "Wrong Charge", "l");
+    legc4->Draw();
+    legc4->SetBorderSize(0);
+    c4->SaveAs("./Plots/DeltaD0Mass.png");
     
     
-    TCanvas *c8=new TCanvas("c8","", 600,500);
-    TH1D *hUpsilon=(TH1D*)dir->Get("h_Upsilon");
-    cryst1->SetParameter(2,9.4630);
-    
-    hUpsilon->Fit("cryst1","VR");
-    hUpsilon->SetStats(1);
-    hUpsilon->GetYaxis()->SetTitleOffset(1.15);
-    hUpsilon->GetXaxis()->SetTitle("#mu^{+} #mu^{-} mass (Gev/c^{2})");
-    hUpsilon->GetYaxis()->SetTitle("Events");
-    hUpsilon->Draw("E");
-    TLegend* legc8 = new TLegend(0.6, 0.6, .89, .89);
-    legc8->SetBorderSize(0);
-    legc8->AddEntry((TObject*)0, "CMS,  #sqrt{s} = 7 TeV", "");
-    legc8->AddEntry((TObject*)0, "L = n pb^{-1}", "");
-    legc8->AddEntry((TObject*)0, "#||{#eta^{#mu}} < 2.4 ", "");
-    legc8->Draw();
-    
-    c8->SaveAs("./Plots/Upsilon.png");
-    
-    TCanvas *c9=new TCanvas("c9","", 600,500);
-    TH1D *hUpsiloneta=(TH1D*)dir->Get("h_Upsilon_eta");
-    hUpsiloneta->SetStats(1);
-    hUpsiloneta->GetYaxis()->SetTitleOffset(1.15);
-    hUpsiloneta->GetXaxis()->SetTitle("#mu^{+} #mu^{-} mass (Gev/c^{2})");
-    hUpsiloneta->GetYaxis()->SetTitle("Events");
-    hUpsiloneta->Draw("E");
-    TLegend* legc9 = new TLegend(0.6, 0.6, .89, .89);
-    legc9->SetBorderSize(0);
-    legc9->AddEntry((TObject*)0, "CMS,  #sqrt{s} = 7 TeV", "");
-    legc9->AddEntry((TObject*)0, "L = n pb^{-1}", "");
-    legc9->AddEntry((TObject*)0, "#||{#eta^{#mu}} < 1 ", "");
-    legc9->Draw();
-    c9->SaveAs("./Plots/Upsiloneta.png");
+
  return;
 }
 
@@ -188,23 +173,7 @@ double CrystalBall(double* x, double* par){
    h_D0mass->Draw();
    c3->SaveAs("./Plots/D0Mass.png");
    
-   TCanvas *c4 = new TCanvas("c4","",600,400);
-   TH1D *hdeltaM=(TH1D*)dir->Get("h_deltaM");
-   TH1D *hdeltaMwrongcharge=(TH1D*)dir->Get("h_deltaMwrongcharge");
-   hdeltaM->SetStats(1);
-   hdeltaM->SetLineColor(kBlue);
-   hdeltaM->GetXaxis()->SetTitle("M(K#pi#pi)- M(K#pi) [GeV/c^{2}]");
-   hdeltaM->GetYaxis()->SetTitleOffset(0.05);
-   hdeltaM->GetYaxis()->SetTitle("Number of Entries");
-   hdeltaM->Draw("E");
-   hdeltaMwrongcharge->SetLineColor(kRed);
-   hdeltaMwrongcharge->Draw("E same");
-   TLegend* legc4 = new TLegend(0.7, 0.1, .9, .3);
-   legc4->AddEntry(hdeltaM, "Right Charge", "l");
-   legc4->AddEntry(hdeltaMwrongcharge, "Wrong Charge", "l");
-   legc4->Draw();
-   legc4->SetBorderSize(0);
-   c4->SaveAs("./Plots/DeltaD0Mass.png");
+
    
    
    
@@ -228,5 +197,37 @@ double CrystalBall(double* x, double* par){
 
    
 ---------------------------- Upsilon Analysis ----------------------------
+   TCanvas *c8=new TCanvas("c8","", 600,500);
+   TH1D *hUpsilon=(TH1D*)dir->Get("h_Upsilon");
+   cryst1->SetParameter(2,9.4630);
    
+   hUpsilon->Fit("cryst1","VR");
+   hUpsilon->SetStats(1);
+   hUpsilon->GetYaxis()->SetTitleOffset(1.15);
+   hUpsilon->GetXaxis()->SetTitle("#mu^{+} #mu^{-} mass (Gev/c^{2})");
+   hUpsilon->GetYaxis()->SetTitle("Events");
+   hUpsilon->Draw("E");
+   TLegend* legc8 = new TLegend(0.6, 0.6, .89, .89);
+   legc8->SetBorderSize(0);
+   legc8->AddEntry((TObject*)0, "CMS,  #sqrt{s} = 7 TeV", "");
+   legc8->AddEntry((TObject*)0, "L = n pb^{-1}", "");
+   legc8->AddEntry((TObject*)0, "#||{#eta^{#mu}} < 2.4 ", "");
+   legc8->Draw();
+   
+   c8->SaveAs("./Plots/Upsilon.png");
+   
+   TCanvas *c9=new TCanvas("c9","", 600,500);
+   TH1D *hUpsiloneta=(TH1D*)dir->Get("h_Upsilon_eta");
+   hUpsiloneta->SetStats(1);
+   hUpsiloneta->GetYaxis()->SetTitleOffset(1.15);
+   hUpsiloneta->GetXaxis()->SetTitle("#mu^{+} #mu^{-} mass (Gev/c^{2})");
+   hUpsiloneta->GetYaxis()->SetTitle("Events");
+   hUpsiloneta->Draw("E");
+   TLegend* legc9 = new TLegend(0.6, 0.6, .89, .89);
+   legc9->SetBorderSize(0);
+   legc9->AddEntry((TObject*)0, "CMS,  #sqrt{s} = 7 TeV", "");
+   legc9->AddEntry((TObject*)0, "L = n pb^{-1}", "");
+   legc9->AddEntry((TObject*)0, "#||{#eta^{#mu}} < 1 ", "");
+   legc9->Draw();
+   c9->SaveAs("./Plots/Upsiloneta.png");
   */

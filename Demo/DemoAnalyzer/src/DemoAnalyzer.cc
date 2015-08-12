@@ -1123,7 +1123,7 @@ else {
  histset[26]->Fill(Primvertex->size());
 
  // loop over tracks
-
+/*
   for( reco::TrackCollection::const_iterator it = tracks->begin(); it !=
  tracks->end(); it++) {
     // LogInfo("Demo")<<"track p"<<it->p()<< "  track reference position"<<it->referencePoint()<< "   track vertex position"<<it->vertex();
@@ -1719,7 +1719,7 @@ for (MuonCollection::const_iterator itMuon = muons->begin(); itMuon != muons->en
 }// Muon Collection for loop ends
 
 
-
+*/
 
 /*------------------------------------------------------------------------------------------------------------------------------------------------
   -----------------------------------------------ELECTRON COLLECTION--------------------------------------------------------------------------------
@@ -1951,7 +1951,7 @@ histset[105]->Fill(electrons->size());
 
  }//for(reco::GsfElectronCollection........) ends
  Comment
-  
+  */
 //////////////// ------------------------------ D* Meson Analysis ------------------------------ ////////////////
     
     //Loop over all non zero tracks with an iteractor K
@@ -2021,7 +2021,7 @@ histset[105]->Fill(electrons->size());
                                                         if (sqrt(vc2[0]*vc2[0] + vc2[1]*vc2[1])<0.1 && vc2[2] <0.1){ // Check the slow pion originates from the same region as the D0
                                                             
                                                             //Now Calculate D* mass
-                                                            double MDstar= invMass(pD0,paxisD0[0],paxisD0[1],paxisD0[2],MD0, itPS3->p(), itPS3->px(), itPS3->py(), itPS3->pz(),Pimass);
+                                                            double MDstar= invMass(pD0,paxisD0[0],paxisD0[1],paxisD0[2],MD0Actual, itPS3->p(), itPS3->px(), itPS3->py(), itPS3->pz(),Pimass);
                                                             
                                                             //D* mass diff cut <0.17 to reduce overflow of histogram
                                                             if (MDstar-MD0 <0.17) {
@@ -2064,7 +2064,7 @@ histset[105]->Fill(electrons->size());
             }//end of K loop
     }//end of track size cut
 
- */
+ 
  /* Ideas:
  
  Fill vcD0 and vc3 histograms (3D)
