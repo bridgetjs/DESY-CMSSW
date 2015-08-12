@@ -155,7 +155,7 @@ DemoAnalyzer::DemoAnalyzer(const edm::ParameterSet& iConfig)
 {
   //now do what ever initialization is needed
   edm::Service<TFileService> fs;
-//Loop for
+
     for (int i=0; i!=43; i++){
         
         if (i>=0 && i<=19) binsy[i]= 0.1*i;
@@ -718,27 +718,20 @@ DemoAnalyzer::DemoAnalyzer(const edm::ParameterSet& iConfig)
 } //Fold for I's Histograms
     
                 //// ---------- Check InvMass Function ---------- ////
-    
                     histset[207]  =   fs->make<TH1D>("h_Jspimass" , "" ,90 ,2.6 , 3.5 );
     
                 //// ---------- J/Psi Acceptance ---------- ////
-    
                     hxhy[1]       =   fs->make<TH2D>("h_Paircount", "", 100,0, 2.4, 100, 0,30);
+    
+    
                     histset[205]  =   fs->make<TH1D>("h_JpsiPT", "", 100, 0, 30);
                     hxhy[2]       =   fs->make<TH2D>("h_Paircount2", "", 24, 0, 2.4, 42, binsy );
                 //// ------------- D* Anaylsis ------------ ////
-    
                     histset[206]  =   fs->make<TH1D>("h_D0mass", "", 200, 1.5, 2); //D0 mass histogram
-                    histset[208]  =   fs->make<TH1D>("h_deltaM", "", 50, 0.138, 0.17); //Mass difference histogram for 'right charge' paring
-                    histset[209]  =   fs->make<TH1D>("h_deltaMwrongcharge", "", 50, 0.138, 0.17); //Mass difference histogram for 'wrong charge' pairing
+                    histset[208]  =   fs->make<TH1D>("h_deltaM", "", 100, 0.138, 0.17); //Mass difference histogram for 'right charge' paring
+                    histset[209]  =   fs->make<TH1D>("h_deltaMwrongcharge", "", 100, 0.14, 0.17); //Mass difference histogram for 'wrong charge' pairing
                     histset[210]  =   fs->make<TH1D>("h_z","",100,0,0.5);
                     histset[211]  =   fs->make<TH1D>("h_n","",100, 0 ,200);
-    
-                //// ------------- Y cut implementation ------------ ////
-    
-                histset[250]  =  fs->make<TH1D>("h_Upsilon","",80, 8, 12);
-                histset[251]  =  fs->make<TH1D>("h_Upsilon_eta","",80, 8, 12);
-    
     
 }
 
@@ -1123,7 +1116,7 @@ else {
  histset[26]->Fill(Primvertex->size());
 
  // loop over tracks
-
+/*
   for( reco::TrackCollection::const_iterator it = tracks->begin(); it !=
  tracks->end(); it++) {
     // LogInfo("Demo")<<"track p"<<it->p()<< "  track reference position"<<it->referencePoint()<< "   track vertex position"<<it->vertex();
@@ -1405,9 +1398,7 @@ for (MuonCollection::const_iterator itMuon = muons->begin(); itMuon != muons->en
  int Wflag2=1;
  int goodhit=0;//GM_Z Muon Chamber hits
  double relIso=1.;// relative Isolation for muons(Z paper);
- 
-    
- int Yflag=0;
+
 
  math::XYZPoint point(beamSpot.position());
 
@@ -1550,14 +1541,8 @@ for (MuonCollection::const_iterator itMuon = muons->begin(); itMuon != muons->en
 		dx=(itMuon->track())->vx()-(itM->track())->vx();// for j_psi
 		dy=(itMuon->track())->vy()-(itM->track())->vy();// for j_psi
 		dz=(itMuon->track())->vz()-(itM->track())->vz();// for j_psi
-    
-        //Upisilon Varriables
-            double dref[3]={abs((itMuon->track())->vx()-(itM->track())->vx()),abs((itMuon->track())->vy()-(itM->track())->vy()),abs((itMuon->track())->vz()-(itM->track())->vz())};
-        
-            
-            
-            
-            
+
+
 		const reco::HitPattern& p1 = (itM->track())->hitPattern();
 	 
 		// loop over the hits of the track
@@ -1614,15 +1599,6 @@ for (MuonCollection::const_iterator itMuon = muons->begin(); itMuon != muons->en
 	    else if(fabs(itM->eta())>1.3 && fabs(itM->eta())<2.2 && itM->p()>2.9)jpsi_flag2=1;
 	    else if(fabs(itM->eta())>2.2 && fabs(itM->eta())<2.4 && itM->pt()>0.8)jpsi_flag2=1;
 	 }
-       
-    //Cuts for Upsilon [arXiv 1012.5545 §3.3]
-              if (ValidHits1>=12 && PixelHits1>=1 && (itM->track())->normalizedChi2()<5 && sqrt(dref[0]*dref[0] + dref[1]*dref[1])<=0.2 && dref[2]<=5){
-                        // section removed from if(.... ) as unclear: muon::isGoodMuon(*itM,muon::TMLastStationAngTight) && muon::isGoodMuon(*itM,muon::TrackerMuonArbitrated) && itM->isTrackerMuon()
-        
-                  if ((abs (itM->eta()) < 1.6 && abs(itMuon->eta()) <1.6 && itM->pt()>3.5 && itMuon->pt()>3.5) || ( abs(abs(itM->eta())-2) < 0.4  && abs(abs(itMuon->eta())-2) < 0.4  && itM->pt()>2.5 && itMuon->pt()>2.5 )) Yflag=1;
-                  
-              }//if valid hits ends
-              
 	      }//isNonnull() ends
        if(itM->charge()==-itMuon->charge() )// unlike charges
 		{
@@ -1673,13 +1649,7 @@ for (MuonCollection::const_iterator itMuon = muons->begin(); itMuon != muons->en
                 hxhy[2]->Fill(  rap, pt_jpsi );
             }
             //--------------------------upsilon range--------------------------------------------------------//
-            
-            
-            if (Yflag==1 && (abs(rap) < 2 )&& (abs(M-11)<3 )) {
-                histset[250]->Fill(M);
-                if (abs(itM->eta())<1 && abs(itMuon->eta())<1) histset[251]->Fill(M);
-            }
-            
+		  
 		  if(fabs(itM->eta())<2.4 && fabs(itMuon->eta())<2.4){ histset[43]->Fill(s);histset[72]->Fill(scorr);}
 		  if(fabs(itM->eta())<1. && fabs(itMuon->eta())<1.) {  histset[42]->Fill(s);histset[71]->Fill(scorr);}
 		}
@@ -1716,9 +1686,9 @@ for (MuonCollection::const_iterator itMuon = muons->begin(); itMuon != muons->en
 	      histset[137]->Fill((pfmets->front()).pt());
 	    }
 
-}// Muon Collection for loop ends
+ }// Muon Collection for loop ends
 
-
+*/
 
 
 /*------------------------------------------------------------------------------------------------------------------------------------------------
@@ -1726,9 +1696,9 @@ for (MuonCollection::const_iterator itMuon = muons->begin(); itMuon != muons->en
   ---------------------------------------------------------------------------------------------------------------------------------------------------*/
 
 
-
-
 /*
+
+
 
 histset[105]->Fill(electrons->size());
  for( reco::GsfElectronCollection::const_iterator it = electrons->begin(); it !=
@@ -1950,8 +1920,9 @@ histset[105]->Fill(electrons->size());
 	    }
 
  }//for(reco::GsfElectronCollection........) ends
- Comment
-  
+   COMMENT
+    */
+    
 //////////////// ------------------------------ D* Meson Analysis ------------------------------ ////////////////
     
     //Loop over all non zero tracks with an iteractor K
@@ -2023,7 +1994,7 @@ histset[105]->Fill(electrons->size());
                                                             //Now Calculate D* mass
                                                             double MDstar= invMass(pD0,paxisD0[0],paxisD0[1],paxisD0[2],MD0, itPS3->p(), itPS3->px(), itPS3->py(), itPS3->pz(),Pimass);
                                                             
-                                                            //D* mass diff cut <0.17 to reduce overflow of histogram
+                                                            //D* mass diff cut <0.17
                                                             if (MDstar-MD0 <0.17) {
                                                                 
                                                                 
@@ -2038,7 +2009,7 @@ histset[105]->Fill(electrons->size());
                                                                 double vc3[3] ={abs(vcD0[0]-itSum->vx()), abs(vcD0[1]- itSum->vy()), abs(vcD0[2]-itSum->vz())};
                                                                     if (sqrt(vc3[0]*vc3[0] + vc3[1]*vc3[1])<0.1 && vc3[2] <0.1){
                                                                         sumpt += abs(itSum->pt()); // sum pt for all tracks
-                                                                        n++; //Fill a counter histogram to see how many tracks are present
+                                                                        n++; //Fill a counter histogram to see how many tracks are present here?!
                                                                     }// end of Sumpt vertex check
                                                                     
                                                                     
@@ -2064,15 +2035,7 @@ histset[105]->Fill(electrons->size());
             }//end of K loop
     }//end of track size cut
 
- */
- /* Ideas:
- 
- Fill vcD0 and vc3 histograms (3D)
- take wrong charge from right charge
- Use actual D0 mass - D0 is a pure background plot!!!!
- 
- */
-
+    
 
 }//DemoAnalyzer ends
 
