@@ -58,8 +58,8 @@ void draw(){
 
   //Open the output file as it is called in line of "demoanalyzer_cfg.py"
 
-            //TFile *f = new TFile("OutputD0.root");
-            TFile *f = new TFile("OutputMuoniaUpsilon.root");
+            TFile *f = new TFile("OutputD0.root");
+            //TFile *f = new TFile("OutputMuoniaUpsilon.root");
             TDirectory *dir=(TDirectory*) f->Get("demo");
             f->cd("demo"); //Change to directory containing histograms
     
