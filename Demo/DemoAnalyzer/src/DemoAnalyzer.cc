@@ -169,542 +169,584 @@ DemoAnalyzer::DemoAnalyzer(const edm::ParameterSet& iConfig)
     }
 
   ////////------------------------------------ Book Histograms ------------------------------------////////
-    {
-        
-    //-------------------------Minimum Bias---------------------------------//
+    // define subfolders;
+    TFileDirectory muon       = fs->mkdir( "Muons" );
+    TFileDirectory TMmuon     = fs->mkdir( "TMuons" );
+    TFileDirectory Gmuon      = fs->mkdir( "GMuons" );
+    TFileDirectory pfjetsF    = fs->mkdir( "PFJets" );
+    TFileDirectory PrVertex   = fs->mkdir( "PrVertex" );
+    TFileDirectory tracks     = fs->mkdir( "Tracks" );
+    TFileDirectory electron   = fs->mkdir( "Electrons" );
+    TFileDirectory acceptance = fs->mkdir( "Acceptance");
+    TFileDirectory dmesons    = fs->mkdir( "DMesons" );
+    TFileDirectory upsilon    = fs->mkdir( "Upsilons");
+    // book two - dimentional histos:
     
-  histset[6]  = fs->make<TH1D>("tracks" , "Tracks" , 300 , 0 , 300 ); 					// Track Multiplicity
-
-  histset[34] = fs->make<TH1D>("momentum", "Momentum",200, 0,20.0); 					// Track momentum
-  histset[35] = fs->make<TH1D>("pt", "PT",200, 0,4.0); 							// Track pt
-  histset[36] = fs->make<TH1D>("posx", "Position X",100, 0.0,.2); 					// Track position x
-  histset[37] = fs->make<TH1D>("posy", "Position Y",100, -.1,.1);					// track position y
-  histset[7]  = fs->make<TH1D>("posz", "Position Z",100, -25.0,25.0); 					// Track position z
-  histset[38] = fs->make<TH1D>("eta", "Eta",100, -3.5,3.5); 						// Track eta
-  histset[81] = fs->make<TH1D>("track_phi", "Track_Phi",314, -3.15,3.15); 				// Track phi
-  histset[8]  = fs->make<TH1D>("propvertex" , "ProperVertices" , 20 , 0 , 20 ); 			// Proper vertices, i.e.after checking the number of tracks for the vertex
-  histset[9]  = fs->make<TH1D>("0.2pt" , "0.2pt" , 100 , 0 , 4.0 );					// Tracks with absolute value of eta less than 0.2
-  histset[10] = fs->make<TH1D>("0.4pt" , "0.4pt" , 100 , 0 , 4.0 );					// Tracks with absolute value mof eta between 0.2 and 0.4
-  histset[11] = fs->make<TH1D>("0.6pt" , "0.6pt" , 100 , 0 , 4.0 );					// and so on...
-  histset[12] = fs->make<TH1D>("0.8pt" , "0.8pt" , 100 , 0 , 4.0 );
-  histset[13] = fs->make<TH1D>("1.0pt" , "1.0pt" , 100 , 0 , 4.0 );
-  histset[14] = fs->make<TH1D>("1.2pt" , "1.2pt" , 100 , 0 , 4.0 );
-  histset[15] = fs->make<TH1D>("1.4pt" , "1.4pt" , 100 , 0 , 4.0 );
-  histset[16] = fs->make<TH1D>("1.6pt" , "1.6pt" , 100 , 0 , 4.0 );
-  histset[17] = fs->make<TH1D>("1.8pt" , "1.8pt" , 100 , 0 , 4.0 );
-  histset[18] = fs->make<TH1D>("2.0pt" , "2.0pt" , 100 , 0 , 4.0 );
-  histset[19] = fs->make<TH1D>("2.2pt" , "2.2pt" , 100 , 0 , 4.0 );
-  histset[20] = fs->make<TH1D>("2.4pt" , "2.4pt" , 100 , 0 , 4.0 );
-  histset[21] = fs->make<TH1D>("2.6pt" , "2.6pt" , 100 , 0 , 4.0 );
-  histset[22] = fs->make<TH1D>("deltaz" , "DeltaZ" , 300 , 0 , 30.0 );	// the absolute value of the distance in the z coordinate of all vertices from Primvertex->begin()
-//histset[23] = fs->make<TH1D>("track_vertex_x" , "TrackVertexX" , 100 , -30.0 , 30.0 );
-//histset[24] = fs->make<TH1D>("track_vertex_y" , "TrackVertexY" , 100 , -30.0 , 30.0 );
-//histset[25] = fs->make<TH1D>("track_vertex_z" , "TrackVertexZ" , 100 , -30.0 , 30.0 );
-  histset[26] = fs->make<TH1D>("vertex" , "Vertices" , 20 , 0 , 20 ); 					// Just vertex multiplicity, without any corrections
-
-  histset[27] = fs->make<TH1D>("VertexTrack_pt", "Vertex.Track_Pt",200,0,4.0); 				// Pt of tracks associated with a particular vertex
-  histset[28] = fs->make<TH1D>("VertexTrack_momentum", "VertexTrack_Momentum",200, 0,20.0); 		// Track momentum
-  histset[82] = fs->make<TH1D>("Vertex.Track_phi", "Vertex.Track_Phi",100, -3.5,3.5); 			//Track phi
-  
-// set axis labels
+    
+    // book histograms
+    //-------------------------Minimum Bias---------------------------------//
     {
-  histset[34]->GetXaxis()->SetTitle("Momentum (in GeV/c)");
-  histset[34]->GetYaxis()->SetTitle("Number of Events");
+    histset[300]  = pfjetsF.make<TH1D>("PFJets_PT" , "PFJets_PT" , 200 , 0 , 20 );
+    histset[300]->GetXaxis()->SetTitle("PFJets PT");
+    histset[300]->GetYaxis()->SetTitle("Number of PFJets");
+    
+    histset[301]  = pfjetsF.make<TH1D>("PFJets_Eta" , "PFJets_Eta" , 100 , -7.0 , 7.0 );
+    histset[301]->GetXaxis()->SetTitle("Eta (in radians)");
+    histset[301]->GetYaxis()->SetTitle("Number of PFJets");
+    
+    histset[302]  = pfjetsF.make<TH1D>("TrackJets_PT" , "TrackJet_PT" , 200 , 0 , 20 );
+    histset[302]->GetXaxis()->SetTitle("TrackJets PT");
+    histset[302]->GetYaxis()->SetTitle("Number of PFJets");
+    
+    histset[303]  = pfjetsF.make<TH1D>("TrackJets_Eta" , "TrackJets_Eta" , 100 , -7.0 , 7.0 );
+    histset[303]->GetXaxis()->SetTitle("Eta (in radians)");
+    histset[303]->GetYaxis()->SetTitle("Number of PFJets");
+    
+    histset[304]  = pfjetsF.make<TH1D>("TrackJet.Ntracks" , "TrackJet.Ntracks" , 35 , 0 , 35.0 );
+    histset[304]->GetXaxis()->SetTitle("Ntracks");
+    histset[304]->GetYaxis()->SetTitle("Number of TrackJets");
+    
+    histset[305]  = pfjetsF.make<TH1D>("TrackJet.fromHardVertex" , "TrackJet.fromHardVertex" , 20 , -5 , 5.0 );
+    histset[305]->GetXaxis()->SetTitle("FromHardVertex");
+    histset[305]->GetYaxis()->SetTitle("Number of TrackJets");
+    
+    histset[306]  = pfjetsF.make<TH1D>("TrackJet.primaryVertex.tracksSize" , "TrackJet.primaryVertex.tracksSize" , 100 , 0 ,200.0 );
+    histset[306]->GetXaxis()->SetTitle("N tracks in the assosiated Primary Vertex");
+    histset[306]->GetYaxis()->SetTitle("Number of TrackJets");
+    
+    
+    //----------------------------------------------------------------------//
+    histset[6]  = tracks.make<TH1D>("tracks" , "Tracks" , 300 , 0 , 300 ); 					// Track Multiplicity
+    
+    histset[34] = tracks.make<TH1D>("momentum", "Momentum",200, 0,20.0); 					// Track momentum
+    histset[35] = tracks.make<TH1D>("pt", "PT",200, 0,4.0); 							// Track pt
+    histset[36] = tracks.make<TH1D>("posx", "Position X",100, 0.0,.2); 					// Track position x
+    histset[37] = tracks.make<TH1D>("posy", "Position Y",100, -.1,.1);					// track position y
+    histset[7]  = tracks.make<TH1D>("posz", "Position Z",100, -25.0,25.0); 					// Track position z
+    histset[38] = tracks.make<TH1D>("eta", "Eta",100, -3.5,3.5); 						// Track eta
+    histset[81] = tracks.make<TH1D>("track_phi", "Track_Phi",314, -3.15,3.15); 				// Track phi
+    histset[8]  = PrVertex.make<TH1D>("propvertex" , "ProperVertices" , 20 , 0 , 20 ); 			// Proper vertices, i.e.after checking the number of tracks for the vertex
+    histset[9]  = tracks.make<TH1D>("0.2pt" , "0.2pt" , 100 , 0 , 4.0 );					// Tracks with absolute value of eta less than 0.2
+    histset[10] = tracks.make<TH1D>("0.4pt" , "0.4pt" , 100 , 0 , 4.0 );					// Tracks with absolute value mof eta between 0.2 and 0.4
+    histset[11] = tracks.make<TH1D>("0.6pt" , "0.6pt" , 100 , 0 , 4.0 );					// and so on...
+    histset[12] = tracks.make<TH1D>("0.8pt" , "0.8pt" , 100 , 0 , 4.0 );
+    histset[13] = tracks.make<TH1D>("1.0pt" , "1.0pt" , 100 , 0 , 4.0 );
+    histset[14] = tracks.make<TH1D>("1.2pt" , "1.2pt" , 100 , 0 , 4.0 );
+    histset[15] = tracks.make<TH1D>("1.4pt" , "1.4pt" , 100 , 0 , 4.0 );
+    histset[16] = tracks.make<TH1D>("1.6pt" , "1.6pt" , 100 , 0 , 4.0 );
+    histset[17] = tracks.make<TH1D>("1.8pt" , "1.8pt" , 100 , 0 , 4.0 );
+    histset[18] = tracks.make<TH1D>("2.0pt" , "2.0pt" , 100 , 0 , 4.0 );
+    histset[19] = tracks.make<TH1D>("2.2pt" , "2.2pt" , 100 , 0 , 4.0 );
+    histset[20] = tracks.make<TH1D>("2.4pt" , "2.4pt" , 100 , 0 , 4.0 );
+    histset[21] = tracks.make<TH1D>("2.6pt" , "2.6pt" , 100 , 0 , 4.0 );
+    histset[22] = PrVertex.make<TH1D>("deltaz" , "DeltaZ" , 300 , 0 , 30.0 );				// the absolute value of the distance in the z coordinate of all vertices from Primvertex->begin()
+    //histset[23] = fs->make<TH1D>("track_vertex_x" , "TrackVertexX" , 100 , -30.0 , 30.0 );
+    //histset[24] = fs->make<TH1D>("track_vertex_y" , "TrackVertexY" , 100 , -30.0 , 30.0 );
+    //histset[25] = fs->make<TH1D>("track_vertex_z" , "TrackVertexZ" , 100 , -30.0 , 30.0 );
+    histset[26] = PrVertex.make<TH1D>("vertex" , "Vertices" , 20 , 0 , 20 ); 				// Just vertex multiplicity, without any corrections
+    
+    histset[27] = PrVertex.make<TH1D>("VertexTrack_pt", "Vertex.Track_Pt",200,0,4.0); 			// Pt of tracks associated with a particular vertex
+    histset[28] = PrVertex.make<TH1D>("VertexTrack_momentum", "VertexTrack_Momentum",200, 0,20.0); 	// Track momentum
+    histset[82] = PrVertex.make<TH1D>("Vertex.Track_phi", "Vertex.Track_Phi",100, -3.5,3.5); 		//Track phi
+    
+    // set axis labels
+    
+    histset[34]->GetXaxis()->SetTitle("Momentum (in GeV/c)");
+    histset[34]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[35]->GetXaxis()->SetTitle("Transverse Momentum (in GeV/c)");
+    histset[35]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[36]->GetXaxis()->SetTitle("Position X of Vertices (in cm)");
+    histset[36]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[37]->GetXaxis()->SetTitle("Position Y of Vertices (in cm)");
+    histset[37]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[7]->GetXaxis()->SetTitle("Position z of Vertices (in cm)");
+    histset[7]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[38]->GetXaxis()->SetTitle("Eta (in radians)");
+    histset[38]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[8]->GetXaxis()->SetTitle("Number of vertices with a non zero number of tracks associated to it");
+    histset[8]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[9]->GetXaxis()->SetTitle("Transverse Momentum for |eta|<0.2(in GeV/c)");
+    histset[9]->GetYaxis()->SetTitle("Number of Events");
+    histset[9]->SetLineColor(kRed);
+    
+    histset[10]->GetXaxis()->SetTitle("Transverse Momentum for |eta|<0.4 and |eta|>=0.2(in GeV/c)");
+    histset[10]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[11]->GetXaxis()->SetTitle("Transverse Momentum for |eta|<0.6 and |eta|>=0.4(in GeV/c)");
+    histset[11]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[12]->GetXaxis()->SetTitle("Transverse Momentum for |eta|<0.8 and |eta|>=0.6(in GeV/c)");
+    histset[12]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[13]->GetXaxis()->SetTitle("Transverse Momentum for |eta|<1.0 and |eta|>=0.8(in GeV/c)");
+    histset[13]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[14]->GetXaxis()->SetTitle("Transverse Momentum for |eta|<1.2 and |eta|>=1.0(in Gev/c)");
+    histset[14]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[15]->GetXaxis()->SetTitle("Transverse Momentum for |eta|<1.4 and |eta|>=1.2(in GeV/c)");
+    histset[15]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[16]->GetXaxis()->SetTitle("Transverse Momentum for |eta|<1.6 and |eta|>=1.4(in GeV/c)");
+    histset[16]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[17]->GetXaxis()->SetTitle("Transverse Momentum for |eta|<1.8 and |eta|>=1.6(in Gev/c)");
+    histset[17]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[18]->GetXaxis()->SetTitle("Transverse Momentum for |eta|<2.0 and |eta|>=1.8(in GeV/c)");
+    histset[18]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[19]->GetXaxis()->SetTitle("Transverse Momentum for |eta|<2.2 and |eta|>=2.0(in Gev/c)");
+    histset[19]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[20]->GetXaxis()->SetTitle("Transverse Momentum for |eta|<2.4 and |eta|>=2.2(in GeV/c)");
+    histset[20]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[21]->GetXaxis()->SetTitle("Transverse Momentum for |eta|<2.6 and |eta|>=2.4(in GeV/c)");
+    histset[21]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[22]->GetXaxis()->SetTitle("Absolute value of the z distance of Vertices from the first primary vertex (in cm)");
+    histset[22]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[26]->GetXaxis()->SetTitle("Vertex multiplicity");
+    histset[26]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[28]->GetXaxis()->SetTitle("Momentum of tracks associated with a vertex (in GeV/c)");
+    histset[28]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[27]->GetXaxis()->SetTitle("Transverse Momentum of tracks associated with a vertex (in GeV/c)");
+    histset[27]->GetYaxis()->SetTitle("Number of Events");
+    
+    
+    //------------------------------Muons and Onia--------------------------------------//
+    // use either global muons from inclusive Mu sample
+    // or tracker muons from Onia sample (preselected 2.5<m<4.1 GeV)
+    
+    
+    histset[1] = Gmuon.make<TH1D>("GMmomentum" , "GM_Momentum" , 240 , 0. , 120. );				//TrackCollection_GMuon momentum
+    histset[2] = Gmuon.make<TH1D>("GM_Transverse_momentum" , "TransverseMomentum" , 240 , 0. , 120. );	//TrackCollection_GMuon Transverse_momentum
+    histset[3] = Gmuon.make<TH1D>("GM_eta" , "GM_Eta" , 140 ,-3.5 , 3.5 );					//TrackColletion_GMuon eta
+    histset[83]= Gmuon.make<TH1D>("GM_phi", "GM_phi",314, -3.15,3.15);
+    histset[4] = Gmuon.make<TH1D>("GMmultiplicty" , "GMmultiplicity" , 8 , 0 , 8 );				//TrackCollection_GMuon multiplicity
+    histset[5] = Gmuon.make<TH1D>("GMmass" , "GMmass" ,120 , 0. , 12. );					//TrackCollection_GMuon mas
+    histset[44]= Gmuon.make<TH1D>("GMmass_extended" , "GMmass" ,120 , 0. , 120. );				//TrackCollection_GMuon mass
+    histset[29]= muon.make<TH1D>("Muon_momentum" , "Muon_momentum" ,100 , 0. , 20. );			//MuonCollection_ momentum
+    histset[30]= muon.make<TH1D>("Muon_pt" , "Muon_PT" ,100 , 0. , 20. );					//MuonCollection_pt
+    histset[31]= muon.make<TH1D>("Muon_eta" , "Muon_eta" ,140 , -3.5 , 3.5 );				//MuonCollection_ eta
+    histset[84]= muon.make<TH1D>("Muon_phi", "Muon_phi",314, -3.15,3.15);
+    histset[32]= TMmuon.make<TH1D>("TM_mass" , "TM_mass" ,120 , 0. , 12. );					//MuonCollection_TMuon mass
+    histset[33]= muon.make<TH1D>("NMuons" , "Muon_Size" ,10 , 0. ,10  );					//MuonCollection_Muon size
+    
+    histset[39]= TMmuon.make<TH1D>("TM_mass1.2_j_psi" , "TM_mass" ,90 ,2.6  , 3.5 );				//MuonCollection_TMuon mass_j/psi
+    histset[40]= TMmuon.make<TH1D>("TM_mass1.6_j_psi" , "TM_mass" ,90 , 2.6 , 3.5 );				//MuonCollection_TMuon mass_j/psi
+    histset[41]= TMmuon.make<TH1D>("TM_mass2.4_j_psi" , "TM_mass" ,90 ,2.6 , 3.5 );				//MuonCollection_TMuon mass_j/psi
+    
+    histset[42]= TMmuon.make<TH1D>("TM_mass1_upsilon" , "TM_mass" ,80 ,8.  , 12. );				//MuonCollection_TMuon mass_upsilon
+    
+    histset[43]= TMmuon.make<TH1D>("TM_mass2.4_upsilon" , "TM_mass" ,80 ,8. ,12. );				//MuonCollection_TMuon mass_ upsilon
+    histset[45]= TMmuon.make<TH1D>("TM_mass_likeCharges" , "TM_mass_Like Charges" ,120 , 0. , 12. );		//MuonCollection_TMuon mass_ FOR LIKE CHARGES
+    histset[46]= Gmuon.make<TH1D>("GM_mass_likeCharges" , "GM_mass_Like Charges" ,120 , 0. , 12. );		//TrackCollection_GMuon mass_ FOR LIKE CHARGES
+    
+    
+    histset[47]= Gmuon.make<TH1D>("GM_mass1.2_j_psi" , "GM_mass" ,90 ,2.6  , 3.5 );				//TrackCollection_GMuon mass_j/psi
+    histset[48]= Gmuon.make<TH1D>("GM_mass1.6_j_psi" , "GM_mass" ,90 , 2.6 , 3.5 );				//TrackCollection_GMuon mass_j/psi
+    histset[49]= Gmuon.make<TH1D>("GM_mass2.4_j_psi" , "GM_mass" ,90 ,2.6 , 3.5 );				//TrackCollection_gMuon mass_j/psi
+    
+    histset[50]= TMmuon.make<TH1D>("TM_chi2" , "TM_Chi2" ,500 ,0 , 100 );					//MuonCollection
+    histset[51]= TMmuon.make<TH1D>("TM_Ndof" , "TM_Ndof" ,60 ,0 , 60 );					//MuonCollection
+    histset[52]= TMmuon.make<TH1D>("TM_NormalizedChi2" , "TM_NormalizedChi2" ,200 ,0 , 20 );			//MuonCollection
+    
+    histset[53]= Gmuon.make<TH1D>("GM_chi2" , "GM_Chi2" ,300 ,0 , 150 );					//TrackCollection
+    histset[54]= Gmuon.make<TH1D>("GM_ndof" , "GM_ndof" ,100 ,0 , 100 );					//TrackCollection
+    histset[55]= Gmuon.make<TH1D>("GM_normalizedchi2" , "GM_normalizedChi2" ,200 ,0 , 20 );			//TrackCollection
+    
+    histset[56]= muon.make<TH1D>("Muon_chi2" , "Muon_Chi2" ,500 ,0 , 100 );				//MuonCollection
+    histset[57]= muon.make<TH1D>("Muon_Ndof" , "Muon_Ndof" ,60 ,0 , 60 );					//MuonCollection
+    histset[58]= muon.make<TH1D>("Muon_NormalizedChi2" , "Muon_NormalizedChi2" ,200 ,0 , 20 );		//MuonCollection
+    
+    histset[59]= Gmuon.make<TH1D>("GM_HitsOK" , "GM_Tracks with good Hits" ,10 ,0 , 10 );			//TrackCollection
+    
+    histset[60]= Gmuon.make<TH1D>("GM_validhits" , "GM_ValidHits" ,100, 0. ,100 );				//TrackCollection
+    histset[61]= Gmuon.make<TH1D>("GM_pixelhits" , "GM_pixelhits" ,14 , 0. ,14 );				//TrackCollection
+    
+    histset[62]= TMmuon.make<TH1D>("TM_HitsOK" , "TM_Tracks with good Hits" ,10 ,0 , 10 );			//MuonCollection
+    
+    histset[63]= TMmuon.make<TH1D>("TM_validhits" , "TM_ValidHits" ,40, 0. ,40 );				//MuonCollection
+    histset[64]= TMmuon.make<TH1D>("TM_pixelhits" , "TM_pixelhits" ,14 , 0. ,14 );				//MuonCollection
+    
+    
+    histset[65]= TMmuon.make<TH1D>("TM_mass_C" , "TM_mass" ,120 , 0. , 12. );				//MuonCollection_TMuon mass_corrected
+    histset[66]= Gmuon.make<TH1D>("GMmass_C" , "GMmass" ,120 , 0. , 12. );					//TrackCollection_GMuon mass_corrected
+    histset[67]= Gmuon.make<TH1D>("GMmass_extended_C" , "GMmass" ,120 , 0. , 120. );			//TrackCollection_GMuon mass_corrected
+    
+    histset[68]= Gmuon.make<TH1D>("GM_mass1.2_j_psi_C" , "GM_mass" ,90 ,2.6  , 3.5 );			//TrackCollection_GMuon mass_j/psi
+    histset[69]= Gmuon.make<TH1D>("GM_mass1.6_j_psi_C" , "GM_mass" ,90 , 2.6 , 3.5 );			//TrackCollection_GMuon mass_j/psi
+    histset[70]= Gmuon.make<TH1D>("GM_mass2.4_j_psi_C" , "GM_mass" ,90 ,2.6 , 3.5 );			//TrackCollection_gMuon mass_j/psi
+    
+    histset[71]= TMmuon.make<TH1D>("TM_mass1_upsilon_C" , "TM_mass" ,80 ,8.  , 12. );			//MuonCollection_TMuon mass_upsilon
+    
+    histset[72]= TMmuon.make<TH1D>("TM_mass2.4_upsilon_C" , "TM_mass" ,80 ,8. ,12. );			//MuonCollection_TMuon mass_ upsilon
+    
+    
+    histset[73]= TMmuon.make<TH1D>("TM_mass1.2_j_psi_C" , "TM_mass" ,90 ,2.6  , 3.5 );			//MuonCollection_TMuon mass_j/psi
+    histset[74]= TMmuon.make<TH1D>("TM_mass1.6_j_psi_C" , "TM_mass" ,90 , 2.6 , 3.5 );			//MuonCollection_TMuon mass_j/psi
+    histset[75]= TMmuon.make<TH1D>("TM_mass2.4_j_psi_C" , "TM_mass" ,90 ,2.6 , 3.5 );			//MuonCollection_TMuon mass_j/psi
+    
+    histset[76]= Gmuon.make<TH1D>("GM_mass1_upsilon" , "GM_mass" ,80 ,8.  , 12. );				//TrackCollection_TMuon mass_upsilon
+    
+    histset[77]= Gmuon.make<TH1D>("GM_mass2.4_upsilon" , "GM_mass" ,80 ,8. ,12. );				//TrackCollection_TMuon mass_ upsilon
+    
+    histset[78]= Gmuon.make<TH1D>("GM_mass1_upsilon_C" , "GM_mass" ,80 ,8.  , 12. );			//TrackCollection_TMuon mass_upsilon
+    
+    histset[79]= Gmuon.make<TH1D>("GM_mass2.4_upsilon_C" , "GM_mass" ,80 ,8. ,12. );			//TrackCollection_TMuon mass_ upsilon
+    
+    histset[80]= Gmuon.make<TH1D>("GM_Zmass", "GM_Zmass",30, 60.0,120.0);
+    histset[94]= Gmuon.make<TH1D>("GM_Zmass_cuts", "GM_Zmass_cuts",30, 60.0,120.0);
+    
+    histset[95]= Gmuon.make<TH1D>("GM_Zmass_cuts_like_charges", "GM_Zmass_cuts_like_charges",30, 60.0,120.0);
+    
+    histset[85]= PrVertex.make<TH1D>("Vertex.Track_eta", "Vertex.Track_Eta",100, -3.5,3.5); 					//Track eta if Muon not found
+    
+    histset[86]= PrVertex.make<TH1D>("tracks_per_vertex_using_counter" , "Tracks per Vertex using counter" , 200 , 0 , 200 );	// Track Multiplicity
+    histset[87]= PrVertex.make<TH1D>("tracks_per_vertex" , "Tracks per Vertex" , 200 , 0 , 200 );					// Track Multiplicity
+    
+    histset[88]= Gmuon.make<TH1D>("dx_muon" , "dx_muon" , 100 , 0 , 1 );
+    histset[89]= Gmuon.make<TH1D>("dy_muon" , "dy_muon" , 100 , 0 , 1 );
+    histset[90]= Gmuon.make<TH1D>("dz_muon" , "dz_muon" , 200 , 0 , 2 );
+    histset[91]= Gmuon.make<TH1D>("dxy_Gmuon" , "dxy_gmuon" , 100 , 0 , 1 );
+    histset[92]= Gmuon.make<TH1D>("goodMuonChamberHit_Gmuon" , "goodMuonChamberHit_gmuon" , 40,0 , 40 );
+    histset[93]= Gmuon.make<TH1D>("MuonStations_Tmuon" , "MuonStations_Tmuon" , 2,0 , 2 );
+    
+    histset[96]= electron.make<TH1D>("Electron_momentum" , "Electron_momentum" ,400 , 0. , 200. );		//ElectronCollection_ momentum
+    histset[97]= electron.make<TH1D>("Electron_pt" , "Electron_PT" ,400 , 0. , 200. );				//ElectronCollection_pt
+    histset[98]= electron.make<TH1D>("Electron_eta" , "Electron_eta" ,140 , -3.5 , 3.5 );			//ElectronCollection_ eta
+    histset[99]= electron.make<TH1D>("Electron_phi", "Electron_phi",314, -3.17,3.17);
+    histset[104]= electron.make<TH1D>("Z_electron_mass" , "electron_mass" ,30 , 60. , 120. );			//ElectronCollection mass
+    histset[105]= electron.make<TH1D>("Nelectrons" , "Electron_Size" ,10 , 0. ,10  );				//ElectronCollection_Muon size
+    histset[106]= electron.make<TH1D>("Super Cluster_eta" , "Super Cluster_eta" ,140 , 0 , 3.5 );		//Electron super cluster_ eta
+    histset[107]= electron.make<TH1D>("Super Cluster_rawenergy" , "Super Cluster_rawenergy" ,200 , 0 , 200 );	//Electron super cluster_ energy
+    histset[118]= electron.make<TH1D>("Electron Et" , "Electron Et" ,200 , 0 , 200 );				//Electron et
+    
+    histset[119]= electron.make<TH1D>("Z_electron_mass_cuts" , "electron_mass_cuts" ,30 , 60. , 120. );	//ElectronCollection mass
+    histset[108]= electron.make<TH1D>("Barrel_Electron_track isolation" , "Barrel_Electron Track Isolation" ,500 , 0. , 0.5 );
+    histset[109]= electron.make<TH1D>("Barrel_Electron_Ecal isolation" , "Barrel_Electron ECAL Isolation" ,500 , 0. ,0.5 );
+    histset[110]= electron.make<TH1D>("Barrel_Electron_hcal isolation" , "Barrel_Electron HCAL Isolation" ,500 , 0. ,0.5 );
+    histset[111]= electron.make<TH1D>("Electron_track missing hit" , "Electron Track missing hits" ,5 , 0. ,5);
+    histset[112]= electron.make<TH1D>("Electron_Dcot" , "Electron Dcot" ,1000 , -0.05 ,0.05);
+    histset[113]= electron.make<TH1D>("Electron_Dist" , "Electron Dist" ,1000 , -0.05 ,0.05);
+    histset[114]= electron.make<TH1D>("Barrel_Electron_sigmaIetaIeta" , "Barrel_Electron sigmaIetaIeta" ,300 , 0. ,0.03);
+    histset[115]= electron.make<TH1D>("Barrel_Electron_deltaphi" , "Barrel_Electron deltaphi" ,10000 , -0.5 ,0.5);
+    histset[116]= electron.make<TH1D>("Barrel_Electron_deltaeta" , "Barrel_Electron deltaeta" ,10000 , -0.05 ,0.05);
+    histset[117]= electron.make<TH1D>("Barrel_Electron_H/E" , "Barrel_Electron H/E" ,1200 , 0. ,0.2);
+    
+    
+    histset[120]= electron.make<TH1D>("Endcap_Electron_track isolation" , "Endcap_Electron Track Isolation" ,500 , 0. , 0.5 );
+    histset[121]= electron.make<TH1D>("Endcap_Electron_Ecal isolation" , "Endcap_Electron ECAL Isolation" ,500 , 0. ,0.5 );
+    histset[122]= electron.make<TH1D>("Endcap_Electron_hcal isolation" , "Endcap_Electron HCAL Isolation" ,500 , 0. ,0.5 );
+    histset[123]= electron.make<TH1D>("Endcap_Electron_sigmaIetaIeta" , "Endcap_Electron sigmaIetaIeta" ,1000 , 0. ,0.1);
+    histset[124]= electron.make<TH1D>("Endcap_Electron_deltaphi" , "Endcap_Electron deltaphi" ,1000 , -0.5,0.5);
+    histset[125]= electron.make<TH1D>("Endcap_Electron_deltaeta" , "Endcap_Electron deltaeta" ,400 , -0.01 ,0.01);
+    histset[126]= electron.make<TH1D>("Endcap_Electron_H/E" , "Endcap_Electron H/E" ,1000 , 0. ,0.1);
+    histset[127]= electron.make<TH1D>("Z_electron_mass_likeCharges" , "electron_mass_likeCharges" ,30 , 60. , 120. );		//ElectronCollection mass
+    histset[128]= electron.make<TH1D>("Z_electron_mass_cuts_likeCharges" , "electron_mass_cuts_likeCharges" ,30 , 60. , 120. );//ElectronCollection mass
+    histset[129]= electron.make<TH1D>("W_muon_transverseMass" , "muon_transverseMass" ,30 , 0. , 120. );			//MuonCollection mass
+    histset[130]= electron.make<TH1D>("W_muon_transverseMass_cuts" , "muon_transverseMass_cuts" ,30 , 0. , 120. );		//MuonCollection mass
+    histset[131]= electron.make<TH1D>("W_electron_transverseMass" , "electron_transverseMass" ,30 , 0. , 120. );		//ElectronCollection mass
+    histset[132]= electron.make<TH1D>("W_electron_transverseMass_cuts" , "electron_transverseMass_cuts" ,30 , 0. , 120. );	//ElectronCollection mass
+    histset[133]= electron.make<TH1D>("Event_PFMET" , "Event_PFMET" ,28 , 0. , 70. );						//ElectronCollection MET for W's
+    histset[134]= electron.make<TH1D>("Event_CaloMET" , "Event_CaloMET" ,28 , 0. , 70. );					//ElectronCollection MET for W's
+    histset[135]= electron.make<TH1D>("muonCorrCaloMET" , "muonCorrCaloMET" ,28 , 0. , 70. );					//ElectronCollection MET for W's
+    histset[136]= electron.make<TH1D>("Event_PFMET_electroncuts" , "Event_PFMET" ,28 , 0. , 70. );				//ElectronCollection MET for W's
+    histset[137]= electron.make<TH1D>("Event_PFMET_muoncuts" , "Event_PFMET" ,28 , 0. , 70. );					//ElectronCollection MET for W's
+    histset[138]= electron.make<TH1D>("Electron_Z_Dcot" , "Electron Dcot" ,1000 ,-0.5 ,0.5);
+    histset[139]= electron.make<TH1D>("Electron_Z_Dist" , "Electron Dist" ,1000 ,-0.5 ,0.5);
+    
+    
+    
+    
+    
+    // change binning to correspond to log(0.3) - log(500), 200 bins/log10 unit
+    histset[100] = Gmuon.make<TH1D>("GM_mass_log", "GM mass log", 644, -.52, 2.7 );					//TrackCollection_GMuon mass
+    histset[101] = TMmuon.make<TH1D>("TM_mass_log", "TM mass log", 644, -.52, 2.7 );					//MuonCollection_TMuon mass
+    histset[102] = Gmuon.make<TH1D>("GM_mass_log_likecharges", "GM mass log like", 644, -.52, 2.7 );			//TrackCollection_GMuon mass
+    histset[103] = TMmuon.make<TH1D>("TM_mass_log_likecharges", "TM mass log like", 644, -.52, 2.7 );			//MuonCollection_TMuon mass
+    
+    
+    // set axis labels
+    
+    histset[1]->GetXaxis()->SetTitle("Global Muon Momentum from track collection(in GeV/c)");
+    histset[1]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[2]->GetXaxis()->SetTitle("Transverse Momentum of global muons from track collection(in GeV/c)");
+    histset[2]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[3]->GetXaxis()->SetTitle("Eta of global muons from track collection (in radians)");
+    histset[3]->GetYaxis()->SetTitle("Number of Events");
+    histset[4]->GetXaxis()->SetTitle("Number of Global Muons");
+    histset[4]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[5]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 (in GeV/c^2)");
+    histset[5]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[6]->GetXaxis()->SetTitle("Number of Tracks");
+    histset[6]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[29]->GetXaxis()->SetTitle("Momentum (in GeV/c)");
+    histset[29]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[30]->GetXaxis()->SetTitle("Transverse Momentum (in GeV/c)");
+    histset[30]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[31]->GetXaxis()->SetTitle("Eta (in radians)");
+    histset[31]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[33]->GetXaxis()->SetTitle("Number of Muons");
+    histset[33]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[39]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 with|eta|<1.2(in GeV/c^2)");
+    histset[39]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[40]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 with |eta|>1.2 and |eta|<1.6 (in GeV/c^2)");
+    histset[40]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[41]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 with |eta|>1,6 and |eta|<2.4 (in GeV/c^2)");
+    histset[41]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[32]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 (in GeV/c^2)");
+    histset[32]->GetYaxis()->SetTitle("Number of Events");
+    histset[44]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 (in GeV/c^2)");
+    histset[44]->GetYaxis()->SetTitle("Number of Events");
+    histset[42]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 (in GeV/c^2)");
+    histset[42]->GetYaxis()->SetTitle("Number of Events");
+    histset[43]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 (in GeV/c^2)");
+    histset[43]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[45]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 (in GeV/c^2)");
+    histset[45]->GetYaxis()->SetTitle("Number of Events");
+    histset[46]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 (in GeV/c^2)");
+    histset[46]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[47]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 (in GeV/c^2)");
+    histset[47]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[48]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 (in GeV/c^2)");
+    histset[48]->GetYaxis()->SetTitle("Number of Events");
+    histset[49]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 (in GeV/c^2)");
+    histset[49]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[50]->GetXaxis()->SetTitle("Chi2 values");
+    histset[50]->GetYaxis()->SetTitle("Number of Events");
+    histset[51]->GetXaxis()->SetTitle("Ndof values");
+    histset[51]->GetYaxis()->SetTitle("Number of Events");
+    histset[52]->GetXaxis()->SetTitle("NormalizedChi2 values");
+    histset[52]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[53]->GetXaxis()->SetTitle("Chi2 values");
+    histset[53]->GetYaxis()->SetTitle("Number of Events");
+    histset[54]->GetXaxis()->SetTitle("Ndof values");
+    histset[54]->GetYaxis()->SetTitle("Number of Events");
+    histset[55]->GetXaxis()->SetTitle("NormalizedChi2 values");
+    histset[55]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[56]->GetXaxis()->SetTitle("Chi2 values");
+    histset[56]->GetYaxis()->SetTitle("Number of Events");
+    histset[57]->GetXaxis()->SetTitle("Ndof values");
+    histset[57]->GetYaxis()->SetTitle("Number of Events");
+    histset[58]->GetXaxis()->SetTitle("NormalizedChi2 values");
+    histset[58]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[59]->GetXaxis()->SetTitle("Good Track multiplicity");
+    histset[59]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[60]->GetXaxis()->SetTitle("Number of valid hits");
+    histset[60]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[61]->GetXaxis()->SetTitle("Munber of pixel hits");
+    histset[61]->GetYaxis()->SetTitle("Number of Events");
+    histset[62]->GetXaxis()->SetTitle("Good Track multiplicity");
+    histset[62]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[63]->GetXaxis()->SetTitle("Number of valid hits");
+    histset[63]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[64]->GetXaxis()->SetTitle("Munber of pixel hits");
+    histset[64]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[65]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 (in GeV/c^2)");
+    histset[65]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[66]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 (in GeV/c^2)");
+    histset[66]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[67]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 (in GeV/c^2)");
+    histset[67]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[68]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 (in GeV/c^2)");
+    histset[68]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[69]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 (in GeV/c^2)");
+    histset[69]->GetYaxis()->SetTitle("Number of Events");
+    histset[70]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 (in GeV/c^2)");
+    histset[70]->GetYaxis()->SetTitle("Number of Events");
+    histset[72]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 (in GeV/c^2)");
+    histset[72]->GetYaxis()->SetTitle("Number of Events");
+    histset[71]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 (in GeV/c^2)");
+    histset[71]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[73]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 (in GeV/c^2)");
+    histset[73]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[74]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 (in GeV/c^2)");
+    histset[74]->GetYaxis()->SetTitle("Number of Events");
+    histset[75]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 (in GeV/c^2)");
+    histset[75]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[76]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 (in GeV/c^2)");
+    histset[76]->GetYaxis()->SetTitle("Number of Events");
+    histset[77]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 (in GeV/c^2)");
+    histset[77]->GetYaxis()->SetTitle("Number of Events");
+    histset[78]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 (in GeV/c^2)");
+    histset[78]->GetYaxis()->SetTitle("Number of Events");
+    histset[79]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 (in GeV/c^2)");
+    histset[79]->GetYaxis()->SetTitle("Number of Events");
+    histset[80]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 (in GeV/c^2)");
+    histset[80]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[81]->GetXaxis()->SetTitle("Phi");
+    histset[81]->GetYaxis()->SetTitle("Number of Events");
+    histset[82]->GetXaxis()->SetTitle("Phi");
+    histset[82]->GetYaxis()->SetTitle("Number of Events");
+    histset[83]->GetXaxis()->SetTitle("Phi");
+    histset[83]->GetYaxis()->SetTitle("Number of Events");
+    histset[84]->GetXaxis()->SetTitle("Phi");
+    histset[84]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[85]->GetXaxis()->SetTitle("Eta (in radians)");
+    histset[85]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[86]->GetXaxis()->SetTitle("Number of Tracks");
+    histset[86]->GetYaxis()->SetTitle("Number of Vertices");
+    histset[87]->GetXaxis()->SetTitle("Number of Tracks");
+    histset[87]->GetYaxis()->SetTitle("Number of Vertices");
+    
+    histset[88]->GetXaxis()->SetTitle("difference in x");
+    histset[88]->GetYaxis()->SetTitle("Number of Events");
+    histset[89]->GetXaxis()->SetTitle("difference in y");
+    histset[89]->GetYaxis()->SetTitle("Number of Events");
+    histset[90]->GetXaxis()->SetTitle("difference in z");
+    histset[90]->GetYaxis()->SetTitle("Number of Events");
+    histset[91]->GetXaxis()->SetTitle("Transverse impact paramemter w.r.t. BS");
+    histset[91]->GetYaxis()->SetTitle("Number of Events");
+    histset[92]->GetXaxis()->SetTitle("Number of valid hits");
+    histset[92]->GetYaxis()->SetTitle("Number of Events");
+    histset[93]->GetXaxis()->SetTitle("Muons matching with at least two muon stations");
+    histset[93]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[94]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 (in GeV/c^2)");
+    histset[94]->GetYaxis()->SetTitle("Number of Events");
+    histset[95]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 (in GeV/c^2)");
+    histset[95]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[96]->GetXaxis()->SetTitle("Momentum (in GeV/c)");
+    histset[96]->GetYaxis()->SetTitle("Number of Events");
+    histset[97]->GetXaxis()->SetTitle("Transverse Momentum (in GeV/c)");
+    histset[97]->GetYaxis()->SetTitle("Number of Events");
+    histset[98]->GetXaxis()->SetTitle("Eta (in radians)");
+    histset[98]->GetYaxis()->SetTitle("Number of Events");
+    histset[99]->GetXaxis()->SetTitle("Eta (in radians)");
+    histset[99]->GetYaxis()->SetTitle("Number of Events");
+    histset[104]->GetXaxis()->SetTitle("Invariant Mass for Nelectron>=2 (in GeV/c^2)");
+    histset[104]->GetYaxis()->SetTitle("Number of Events");
+    histset[105]->GetXaxis()->SetTitle("Number of Electrons");
+    histset[105]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[106]->GetXaxis()->SetTitle("Super Cluster Eta(in radians)");
+    histset[106]->GetYaxis()->SetTitle("Number of Events");
+    histset[107]->GetXaxis()->SetTitle("Super Cluster Energy");
+    histset[107]->GetYaxis()->SetTitle("Number of Events");
+    histset[108]->GetXaxis()->SetTitle("Track Isolation");
+    histset[108]->GetYaxis()->SetTitle("Number of Events");
+    histset[109]->GetXaxis()->SetTitle("Ecal Isolation");
+    histset[109]->GetYaxis()->SetTitle("Number of Events");
+    histset[110]->GetXaxis()->SetTitle("Hcal Isolation");
+    histset[110]->GetYaxis()->SetTitle("Number of Events");
+    histset[111]->GetXaxis()->SetTitle("gsfTrack Hit type");
+    histset[111]->GetYaxis()->SetTitle("Number of Events");
+    histset[112]->GetXaxis()->SetTitle("Dcot");
+    histset[112]->GetYaxis()->SetTitle("Number of Events");
+    histset[113]->GetXaxis()->SetTitle("Dist");
+    histset[113]->GetYaxis()->SetTitle("Number of Events");
+    histset[114]->GetXaxis()->SetTitle("sigmaIetaIeta");
+    histset[114]->GetYaxis()->SetTitle("Number of Events");
+    histset[115]->GetXaxis()->SetTitle("DeltaPhi");
+    histset[115]->GetYaxis()->SetTitle("Number of Events");
+    histset[116]->GetXaxis()->SetTitle("DeltaEta");
+    histset[116]->GetYaxis()->SetTitle("Number of Events");
+    histset[117]->GetXaxis()->SetTitle("H/E");
+    histset[117]->GetYaxis()->SetTitle("Number of Events");
+    histset[118]->GetXaxis()->SetTitle("Electron Et");
+    histset[118]->GetYaxis()->SetTitle("Number of Events");
+    histset[119]->GetXaxis()->SetTitle("Invariant Mass for Nelectron>=2 (in GeV/c^2)");
+    histset[119]->GetYaxis()->SetTitle("Number of Events");
+    histset[120]->GetXaxis()->SetTitle("Track Isolation");
+    histset[120]->GetYaxis()->SetTitle("Number of Events");
+    histset[121]->GetXaxis()->SetTitle("Ecal Isolation");
+    histset[121]->GetYaxis()->SetTitle("Number of Events");
+    histset[122]->GetXaxis()->SetTitle("Hcal Isolation");
+    histset[122]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[123]->GetXaxis()->SetTitle("sigmaIetaIeta");
+    histset[123]->GetYaxis()->SetTitle("Number of Events");
+    histset[124]->GetXaxis()->SetTitle("DeltaPhi");
+    histset[124]->GetYaxis()->SetTitle("Number of Events");
+    histset[125]->GetXaxis()->SetTitle("DeltaEta");
+    histset[125]->GetYaxis()->SetTitle("Number of Events");
+    histset[126]->GetXaxis()->SetTitle("H/E");
+    histset[126]->GetYaxis()->SetTitle("Number of Events");
+    histset[127]->GetXaxis()->SetTitle("Invariant Mass for Nelectron>=2 (in GeV/c^2)");
+    histset[127]->GetYaxis()->SetTitle("Number of Events");
+    histset[128]->GetXaxis()->SetTitle("Invariant Mass for Nelectron>=2 (in GeV/c^2)");
+    histset[128]->GetYaxis()->SetTitle("Number of Events");
+    
+    histset[129]->GetXaxis()->SetTitle("Transverse Mass for muons+MET (in GeV/c^2)");
+    histset[129]->GetYaxis()->SetTitle("Number of Events");
+    histset[130]->GetXaxis()->SetTitle("Transverse Mass for muons+MET (in GeV/c^2)");
+    histset[130]->GetYaxis()->SetTitle("Number of Events");
+    histset[131]->GetXaxis()->SetTitle("Transverse Mass for electrons+MET (in GeV/c^2)");
+    histset[131]->GetYaxis()->SetTitle("Number of Events");
+    histset[132]->GetXaxis()->SetTitle("Transverse Mass for electrons+MET (in GeV/c^2)");
+    histset[132]->GetYaxis()->SetTitle("Number of Events");
+    histset[133]->GetXaxis()->SetTitle("MET (in GeV)");
+    histset[133]->GetYaxis()->SetTitle("Number of Events");
+    histset[134]->GetXaxis()->SetTitle("MET (in GeV)");
+    histset[134]->GetYaxis()->SetTitle("Number of Events");
+    histset[135]->GetXaxis()->SetTitle("MET (in GeV)");
+    histset[135]->GetYaxis()->SetTitle("Number of Events");
+    histset[136]->GetXaxis()->SetTitle("MET (in GeV)");
+    histset[136]->GetYaxis()->SetTitle("Number of Events");
+    histset[137]->GetXaxis()->SetTitle("MET (in GeV)");
+    histset[137]->GetYaxis()->SetTitle("Number of Events");
+    
+    
+    
+    
+    
+    histset[100]->GetXaxis()->SetTitle("Invariant Log10(Mass) for Nmuon>=2 (in GeV/c^2)");
+    histset[100]->GetYaxis()->SetTitle("Number of Events/GeV");
+    histset[101]->GetXaxis()->SetTitle("Invariant Log10(Mass) for Nmuon>=2 (in GeV/c^2)");
+    histset[101]->GetYaxis()->SetTitle("Number of Events/GeV");
+    histset[102]->GetXaxis()->SetTitle("Invariant Log10(Mass) for Nmuon>=2 (in GeV/c^2)");
+    histset[102]->GetYaxis()->SetTitle("Number of Events/GeV");
+    histset[103]->GetXaxis()->SetTitle("Invariant Log10(Mass) for Nmuon>=2 (in GeV/c^2)");
+    histset[103]->GetYaxis()->SetTitle("Number of Events/GeV");
 
-  histset[35]->GetXaxis()->SetTitle("Transverse Momentum (in GeV/c)");
-  histset[35]->GetYaxis()->SetTitle("Number of Events");
-
-  histset[36]->GetXaxis()->SetTitle("Position X of Vertices (in cm)");
-  histset[36]->GetYaxis()->SetTitle("Number of Events");
-
-  histset[37]->GetXaxis()->SetTitle("Position Y of Vertices (in cm)");
-  histset[37]->GetYaxis()->SetTitle("Number of Events");
-
-  histset[7]->GetXaxis()->SetTitle("Position z of Vertices (in cm)");
-  histset[7]->GetYaxis()->SetTitle("Number of Events");
-
-  histset[38]->GetXaxis()->SetTitle("Eta (in radians)");
-  histset[38]->GetYaxis()->SetTitle("Number of Events");
-
-  histset[8]->GetXaxis()->SetTitle("Number of vertices with a non zero number of tracks associated to it");
-  histset[8]->GetYaxis()->SetTitle("Number of Events");
-
-  histset[9]->GetXaxis()->SetTitle("Transverse Momentum for |eta|<0.2(in GeV/c)");
-  histset[9]->GetYaxis()->SetTitle("Number of Events");
-  histset[9]->SetLineColor(kRed);
-
-  histset[10]->GetXaxis()->SetTitle("Transverse Momentum for |eta|<0.4 and |eta|>=0.2(in GeV/c)");
-  histset[10]->GetYaxis()->SetTitle("Number of Events");
-
-  histset[11]->GetXaxis()->SetTitle("Transverse Momentum for |eta|<0.6 and |eta|>=0.4(in GeV/c)");
-  histset[11]->GetYaxis()->SetTitle("Number of Events");
-
-  histset[12]->GetXaxis()->SetTitle("Transverse Momentum for |eta|<0.8 and |eta|>=0.6(in GeV/c)");
-  histset[12]->GetYaxis()->SetTitle("Number of Events");
-
-  histset[13]->GetXaxis()->SetTitle("Transverse Momentum for |eta|<1.0 and |eta|>=0.8(in GeV/c)");
-  histset[13]->GetYaxis()->SetTitle("Number of Events");
-
-  histset[14]->GetXaxis()->SetTitle("Transverse Momentum for |eta|<1.2 and |eta|>=1.0(in Gev/c)");
-  histset[14]->GetYaxis()->SetTitle("Number of Events");
-
-  histset[15]->GetXaxis()->SetTitle("Transverse Momentum for |eta|<1.4 and |eta|>=1.2(in GeV/c)");
-  histset[15]->GetYaxis()->SetTitle("Number of Events");
-
-  histset[16]->GetXaxis()->SetTitle("Transverse Momentum for |eta|<1.6 and |eta|>=1.4(in GeV/c)");
-  histset[16]->GetYaxis()->SetTitle("Number of Events");
-
-  histset[17]->GetXaxis()->SetTitle("Transverse Momentum for |eta|<1.8 and |eta|>=1.6(in Gev/c)");
-  histset[17]->GetYaxis()->SetTitle("Number of Events");
-
-  histset[18]->GetXaxis()->SetTitle("Transverse Momentum for |eta|<2.0 and |eta|>=1.8(in GeV/c)");
-  histset[18]->GetYaxis()->SetTitle("Number of Events");
-
-  histset[19]->GetXaxis()->SetTitle("Transverse Momentum for |eta|<2.2 and |eta|>=2.0(in Gev/c)");
-  histset[19]->GetYaxis()->SetTitle("Number of Events");
-
-  histset[20]->GetXaxis()->SetTitle("Transverse Momentum for |eta|<2.4 and |eta|>=2.2(in GeV/c)");
-  histset[20]->GetYaxis()->SetTitle("Number of Events");
-
-  histset[21]->GetXaxis()->SetTitle("Transverse Momentum for |eta|<2.6 and |eta|>=2.4(in GeV/c)");
-  histset[21]->GetYaxis()->SetTitle("Number of Events");
-
-  histset[22]->GetXaxis()->SetTitle("Absolute value of the z distance of Vertices from the first primary vertex (in cm)");
-  histset[22]->GetYaxis()->SetTitle("Number of Events");
-
-  histset[26]->GetXaxis()->SetTitle("Vertex multiplicity");
-  histset[26]->GetYaxis()->SetTitle("Number of Events");
-
-  histset[28]->GetXaxis()->SetTitle("Momentum of tracks associated with a vertex (in GeV/c)");
-  histset[28]->GetYaxis()->SetTitle("Number of Events");
-
-  histset[27]->GetXaxis()->SetTitle("Transverse Momentum of tracks associated with a vertex (in GeV/c)");
-  histset[27]->GetYaxis()->SetTitle("Number of Events");
-}
-
- //------------------------------Muons and Onia--------------------------------------//
- // use either global muons from inclusive Mu sample 
- // or tracker muons from Onia sample (preselected 2.5<m<4.1 GeV) 
-
-
-  histset[1] = fs->make<TH1D>("GMmomentum" , "GM_Momentum" , 240 , 0. , 120. );				//TrackCollection_GMuon momentum
-  histset[2] = fs->make<TH1D>("GM_Transverse_momentum" , "TransverseMomentum" , 240 , 0. , 120. );	//TrackCollection_GMuon Transverse_momentum
-  histset[3] = fs->make<TH1D>("GM_eta" , "GM_Eta" , 140 ,-3.5 , 3.5 );					//TrackColletion_GMuon eta
-  histset[83]= fs->make<TH1D>("GM_phi", "GM_phi",314, -3.15,3.15);
-  histset[4] = fs->make<TH1D>("GMmultiplicty" , "GMmultiplicity" , 8 , 0 , 8 );				//TrackCollection_GMuon multiplicity
-  histset[5] = fs->make<TH1D>("GMmass" , "GMmass" ,120 , 0. , 12. );					//TrackCollection_GMuon mas
-  histset[44]= fs->make<TH1D>("GMmass_extended" , "GMmass" ,120 , 0. , 120. );				//TrackCollection_GMuon mass
-  histset[29]= fs->make<TH1D>("Muon_momentum" , "Muon_momentum" ,100 , 0. , 20. );			//MuonCollection_ momentum
-  histset[30]= fs->make<TH1D>("Muon_pt" , "Muon_PT" ,100 , 0. , 20. );					//MuonCollection_pt
-  histset[31]= fs->make<TH1D>("Muon_eta" , "Muon_eta" ,140 , -3.5 , 3.5 );				//MuonCollection_ eta
-  histset[84]= fs->make<TH1D>("Muon_phi", "Muon_phi",314, -3.15,3.15);
-  histset[32]= fs->make<TH1D>("TM_mass" , "TM_mass" ,120 , 0. , 12. );					//MuonCollection_TMuon mass
-  histset[33]= fs->make<TH1D>("NMuons" , "Muon_Size" ,10 , 0. ,10  );					//MuonCollection_Muon size
-
-  histset[39]= fs->make<TH1D>("TM_mass1.2_j_psi" , "TM_mass" ,90 ,2.6  , 3.5 );				//MuonCollection_TMuon mass_j/psi
-  histset[40]= fs->make<TH1D>("TM_mass1.6_j_psi" , "TM_mass" ,90 , 2.6 , 3.5 );				//MuonCollection_TMuon mass_j/psi
-  histset[41]= fs->make<TH1D>("TM_mass2.4_j_psi" , "TM_mass" ,90 ,2.6 , 3.5 );				//MuonCollection_TMuon mass_j/psi
-
-  histset[42]= fs->make<TH1D>("TM_mass1_upsilon" , "TM_mass" ,80 ,8.  , 12. );				//MuonCollection_TMuon mass_upsilon
-
-  histset[43]= fs->make<TH1D>("TM_mass2.4_upsilon" , "TM_mass" ,80 ,8. ,12. );				//MuonCollection_TMuon mass_ upsilon
-  histset[45]= fs->make<TH1D>("TM_mass_likeCharges" , "TM_mass_Like Charges" ,120 , 0. , 12. );		//MuonCollection_TMuon mass_ FOR LIKE CHARGES
-  histset[46]= fs->make<TH1D>("GM_mass_likeCharges" , "GM_mass_Like Charges" ,120 , 0. , 12. );		//TrackCollection_GMuon mass_ FOR LIKE CHARGES
-
-
-  histset[47]= fs->make<TH1D>("GM_mass1.2_j_psi" , "GM_mass" ,90 ,2.6  , 3.5 );				//TrackCollection_GMuon mass_j/psi
-  histset[48]= fs->make<TH1D>("GM_mass1.6_j_psi" , "GM_mass" ,90 , 2.6 , 3.5 );				//TrackCollection_GMuon mass_j/psi
-  histset[49]= fs->make<TH1D>("GM_mass2.4_j_psi" , "GM_mass" ,90 ,2.6 , 3.5 );				//TrackCollection_gMuon mass_j/psi
-
-  histset[50]= fs->make<TH1D>("TM_chi2" , "TM_Chi2" ,500 ,0 , 100 );					//MuonCollection
-  histset[51]= fs->make<TH1D>("TM_Ndof" , "TM_Ndof" ,60 ,0 , 60 );					//MuonCollection
-  histset[52]= fs->make<TH1D>("TM_NormalizedChi2" , "TM_NormalizedChi2" ,200 ,0 , 20 );			//MuonCollection
-
-  histset[53]= fs->make<TH1D>("GM_chi2" , "GM_Chi2" ,300 ,0 , 150 );					//TrackCollection
-  histset[54]= fs->make<TH1D>("GM_ndof" , "GM_ndof" ,100 ,0 , 100 );					//TrackCollection
-  histset[55]= fs->make<TH1D>("GM_normalizedchi2" , "GM_normalizedChi2" ,200 ,0 , 20 );			//TrackCollection
-
-  histset[56]= fs->make<TH1D>("Muon_chi2" , "Muon_Chi2" ,500 ,0 , 100 );				//MuonCollection
-  histset[57]= fs->make<TH1D>("Muon_Ndof" , "Muon_Ndof" ,60 ,0 , 60 );					//MuonCollection
-  histset[58]= fs->make<TH1D>("Muon_NormalizedChi2" , "Muon_NormalizedChi2" ,200 ,0 , 20 );		//MuonCollection
-
-  histset[59]= fs->make<TH1D>("GM_HitsOK" , "GM_Tracks with good Hits" ,10 ,0 , 10 );			//TrackCollection
-
-  histset[60]= fs->make<TH1D>("GM_validhits" , "GM_ValidHits" ,100, 0. ,100 );				//TrackCollection
-  histset[61]= fs->make<TH1D>("GM_pixelhits" , "GM_pixelhits" ,14 , 0. ,14 );				//TrackCollection
-
-  histset[62]= fs->make<TH1D>("TM_HitsOK" , "TM_Tracks with good Hits" ,10 ,0 , 10 );			//MuonCollection
-
-  histset[63]= fs->make<TH1D>("TM_validhits" , "TM_ValidHits" ,40, 0. ,40 );				//MuonCollection
-  histset[64]= fs->make<TH1D>("TM_pixelhits" , "TM_pixelhits" ,14 , 0. ,14 );				//MuonCollection
-
-
-  histset[65]= fs->make<TH1D>("TM_mass_C" , "TM_mass" ,120 , 0. , 12. );				//MuonCollection_TMuon mass_corrected
-  histset[66]= fs->make<TH1D>("GMmass_C" , "GMmass" ,120 , 0. , 12. );					//TrackCollection_GMuon mass_corrected
-  histset[67]= fs->make<TH1D>("GMmass_extended_C" , "GMmass" ,120 , 0. , 120. );			//TrackCollection_GMuon mass_corrected
-
-  histset[68]= fs->make<TH1D>("GM_mass1.2_j_psi_C" , "GM_mass" ,90 ,2.6  , 3.5 );			//TrackCollection_GMuon mass_j/psi
-  histset[69]= fs->make<TH1D>("GM_mass1.6_j_psi_C" , "GM_mass" ,90 , 2.6 , 3.5 );			//TrackCollection_GMuon mass_j/psi
-  histset[70]= fs->make<TH1D>("GM_mass2.4_j_psi_C" , "GM_mass" ,90 ,2.6 , 3.5 );			//TrackCollection_gMuon mass_j/psi
-
-  histset[71]= fs->make<TH1D>("TM_mass1_upsilon_C" , "TM_mass" ,80 ,8.  , 12. );			//MuonCollection_TMuon mass_upsilon
-
-  histset[72]= fs->make<TH1D>("TM_mass2.4_upsilon_C" , "TM_mass" ,80 ,8. ,12. );			//MuonCollection_TMuon mass_ upsilon
-
-
-  histset[73]= fs->make<TH1D>("TM_mass1.2_j_psi_C" , "TM_mass" ,90 ,2.6  , 3.5 );			//MuonCollection_TMuon mass_j/psi
-  histset[74]= fs->make<TH1D>("TM_mass1.6_j_psi_C" , "TM_mass" ,90 , 2.6 , 3.5 );			//MuonCollection_TMuon mass_j/psi
-  histset[75]= fs->make<TH1D>("TM_mass2.4_j_psi_C" , "TM_mass" ,90 ,2.6 , 3.5 );			//MuonCollection_TMuon mass_j/psi
-
-  histset[76]= fs->make<TH1D>("GM_mass1_upsilon" , "GM_mass" ,80 ,8.  , 12. );				//TrackCollection_TMuon mass_upsilon
-
-  histset[77]= fs->make<TH1D>("GM_mass2.4_upsilon" , "GM_mass" ,80 ,8. ,12. );				//TrackCollection_TMuon mass_ upsilon
-
-  histset[78]= fs->make<TH1D>("GM_mass1_upsilon_C" , "GM_mass" ,80 ,8.  , 12. );			//TrackCollection_TMuon mass_upsilon
-
-  histset[79]= fs->make<TH1D>("GM_mass2.4_upsilon_C" , "GM_mass" ,80 ,8. ,12. );			//TrackCollection_TMuon mass_ upsilon
-
-  histset[80]=fs->make<TH1D>("GM_Zmass", "GM_Zmass",30, 60.0,120.0); 
-  histset[94]=fs->make<TH1D>("GM_Zmass_cuts", "GM_Zmass_cuts",30, 60.0,120.0); 
-
-  histset[95]=fs->make<TH1D>("GM_Zmass_cuts_like_charges", "GM_Zmass_cuts_like_charges",30, 60.0,120.0); 
-
-  histset[85]= fs->make<TH1D>("eta_no_mu", "Eta_with no Muon",100, -3.5,3.5); 				//Track eta if Muon not found
-
-  histset[86]= fs->make<TH1D>("tracks_per_vertex_using_counter" , "Tracks per Vertex using counter" , 200 , 0 , 200 );// Track Multiplicity
-  histset[87]= fs->make<TH1D>("tracks_per_vertex" , "Tracks per Vertex" , 200 , 0 , 200 );		// Track Multiplicity
-
-  histset[88]=fs->make<TH1D>("dx_muon" , "dx_muon" , 100 , 0 , 1 );
-  histset[89]=fs->make<TH1D>("dy_muon" , "dy_muon" , 100 , 0 , 1 );
-  histset[90]=fs->make<TH1D>("dz_muon" , "dz_muon" , 200 , 0 , 2 );
-  histset[91]=fs->make<TH1D>("dxy_Gmuon" , "dxy_gmuon" , 100 , 0 , 1 );
-  histset[92]=fs->make<TH1D>("goodMuonChamberHit_Gmuon" , "goodMuonChamberHit_gmuon" , 40,0 , 40 );
-  histset[93]=fs->make<TH1D>("MuonStations_Tmuon" , "MuonStations_Tmuon" , 2,0 , 2 );
-
-  histset[96]= fs->make<TH1D>("Electron_momentum" , "Electron_momentum" ,400 , 0. , 200. );		//ElectronCollection_ momentum
-  histset[97]= fs->make<TH1D>("Electron_pt" , "Electron_PT" ,400 , 0. , 200. );				//ElectronCollection_pt
-  histset[98]= fs->make<TH1D>("Electron_eta" , "Electron_eta" ,140 , -3.5 , 3.5 );			//ElectronCollection_ eta
-  histset[99]= fs->make<TH1D>("Electron_phi", "Electron_phi",314, -3.17,3.17);
-  histset[104]= fs->make<TH1D>("Z_electron_mass" , "electron_mass" ,30 , 60. , 120. );			//ElectronCollection mass
-  histset[105]= fs->make<TH1D>("Nelectrons" , "Electron_Size" ,10 , 0. ,10  );				//ElectronCollection_Muon size
-  histset[106]= fs->make<TH1D>("Super Cluster_eta" , "Super Cluster_eta" ,140 , 0 , 3.5 );		//Electron super cluster_ eta
-  histset[107]= fs->make<TH1D>("Super Cluster_rawenergy" , "Super Cluster_rawenergy" ,200 , 0 , 200 );	//Electron super cluster_ energy
-  histset[118]= fs->make<TH1D>("Electron Et" , "Electron Et" ,200 , 0 , 200 );				//Electron et
-
-  histset[119]= fs->make<TH1D>("Z_electron_mass_cuts" , "electron_mass_cuts" ,30 , 60. , 120. );	//ElectronCollection mass
-  histset[108]= fs->make<TH1D>("Barrel_Electron_track isolation" , "Barrel_Electron Track Isolation" ,500 , 0. , 0.5 );
-  histset[109]= fs->make<TH1D>("Barrel_Electron_Ecal isolation" , "Barrel_Electron ECAL Isolation" ,500 , 0. ,0.5 );
-  histset[110]= fs->make<TH1D>("Barrel_Electron_hcal isolation" , "Barrel_Electron HCAL Isolation" ,500 , 0. ,0.5 );
-  histset[111]= fs->make<TH1D>("Electron_track missing hit" , "Electron Track missing hits" ,5 , 0. ,5);
-  histset[112]= fs->make<TH1D>("Electron_Dcot" , "Electron Dcot" ,1000 , -0.05 ,0.05);
-  histset[113]= fs->make<TH1D>("Electron_Dist" , "Electron Dist" ,1000 , -0.05 ,0.05);
-  histset[114]= fs->make<TH1D>("Barrel_Electron_sigmaIetaIeta" , "Barrel_Electron sigmaIetaIeta" ,300 , 0. ,0.03);
-  histset[115]= fs->make<TH1D>("Barrel_Electron_deltaphi" , "Barrel_Electron deltaphi" ,10000 , -0.5 ,0.5);
-  histset[116]= fs->make<TH1D>("Barrel_Electron_deltaeta" , "Barrel_Electron deltaeta" ,10000 , -0.05 ,0.05);
-  histset[117]= fs->make<TH1D>("Barrel_Electron_H/E" , "Barrel_Electron H/E" ,1200 , 0. ,0.2);
-
-
-  histset[120]= fs->make<TH1D>("Endcap_Electron_track isolation" , "Endcap_Electron Track Isolation" ,500 , 0. , 0.5 );
-  histset[121]= fs->make<TH1D>("Endcap_Electron_Ecal isolation" , "Endcap_Electron ECAL Isolation" ,500 , 0. ,0.5 );
-  histset[122]= fs->make<TH1D>("Endcap_Electron_hcal isolation" , "Endcap_Electron HCAL Isolation" ,500 , 0. ,0.5 );
-  histset[123]= fs->make<TH1D>("Endcap_Electron_sigmaIetaIeta" , "Endcap_Electron sigmaIetaIeta" ,1000 , 0. ,0.1);
-  histset[124]= fs->make<TH1D>("Endcap_Electron_deltaphi" , "Endcap_Electron deltaphi" ,1000 , -0.5,0.5);
-  histset[125]= fs->make<TH1D>("Endcap_Electron_deltaeta" , "Endcap_Electron deltaeta" ,400 , -0.01 ,0.01);
-  histset[126]= fs->make<TH1D>("Endcap_Electron_H/E" , "Endcap_Electron H/E" ,1000 , 0. ,0.1);
-  histset[127]= fs->make<TH1D>("Z_electron_mass_likeCharges" , "electron_mass_likeCharges" ,30 , 60. , 120. );		//ElectronCollection mass
-  histset[128]= fs->make<TH1D>("Z_electron_mass_cuts_likeCharges" , "electron_mass_cuts_likeCharges" ,30 , 60. , 120. );//ElectronCollection mass
-  histset[129]= fs->make<TH1D>("W_muon_transverseMass" , "muon_transverseMass" ,30 , 0. , 120. );			//MuonCollection mass
-  histset[130]= fs->make<TH1D>("W_muon_transverseMass_cuts" , "muon_transverseMass_cuts" ,30 , 0. , 120. );		//MuonCollection mass
-  histset[131]= fs->make<TH1D>("W_electron_transverseMass" , "electron_transverseMass" ,30 , 0. , 120. );		//ElectronCollection mass
-  histset[132]= fs->make<TH1D>("W_electron_transverseMass_cuts" , "electron_transverseMass_cuts" ,30 , 0. , 120. );	//ElectronCollection mass
-  histset[133]= fs->make<TH1D>("Event_PFMET" , "Event_PFMET" ,28 , 0. , 70. );						//ElectronCollection MET for W's
-  histset[134]= fs->make<TH1D>("Event_CaloMET" , "Event_CaloMET" ,28 , 0. , 70. );					//ElectronCollection MET for W's
-  histset[135]= fs->make<TH1D>("muonCorrCaloMET" , "muonCorrCaloMET" ,28 , 0. , 70. );					//ElectronCollection MET for W's
-  histset[136]= fs->make<TH1D>("Event_PFMET_electroncuts" , "Event_PFMET" ,28 , 0. , 70. );				//ElectronCollection MET for W's
-  histset[137]= fs->make<TH1D>("Event_PFMET_muoncuts" , "Event_PFMET" ,28 , 0. , 70. );					//ElectronCollection MET for W's
-  histset[138]= fs->make<TH1D>("Electron_Z_Dcot" , "Electron Dcot" ,1000 ,-0.5 ,0.5);
-  histset[139]= fs->make<TH1D>("Electron_Z_Dist" , "Electron Dist" ,1000 ,-0.5 ,0.5);
-
-
-
-
-
-// change binning to correspond to log(0.3) - log(500), 200 bins/log10 unit
-  histset[100]=fs->make<TH1D>("GM_mass_log", "GM mass log", 644, -.52, 2.7 );					//TrackCollection_GMuon mass
-  histset[101]=fs->make<TH1D>("TM_mass_log", "TM mass log", 644, -.52, 2.7 );					//MuonCollection_TMuon mass
-  histset[102]=fs->make<TH1D>("GM_mass_log_likecharges", "GM mass log like", 644, -.52, 2.7 );			//TrackCollection_GMuon mass
-  histset[103]=fs->make<TH1D>("TM_mass_log_likecharges", "TM mass log like", 644, -.52, 2.7 );			//MuonCollection_TMuon mass
-
-
-// set axis labels
-    {
-  histset[1]->GetXaxis()->SetTitle("Global Muon Momentum from track collection(in GeV/c)");
-  histset[1]->GetYaxis()->SetTitle("Number of Events");
-
-  histset[2]->GetXaxis()->SetTitle("Transverse Momentum of global muons from track collection(in GeV/c)");
-  histset[2]->GetYaxis()->SetTitle("Number of Events");
-
-  histset[3]->GetXaxis()->SetTitle("Eta of global muons from track collection (in radians)");
-  histset[3]->GetYaxis()->SetTitle("Number of Events");
-  histset[4]->GetXaxis()->SetTitle("Number of Global Muons");
-  histset[4]->GetYaxis()->SetTitle("Number of Events");
-
-  histset[5]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 (in GeV/c^2)");
-  histset[5]->GetYaxis()->SetTitle("Number of Events");
-
-  histset[6]->GetXaxis()->SetTitle("Number of Tracks");
-  histset[6]->GetYaxis()->SetTitle("Number of Events");
-
-  histset[29]->GetXaxis()->SetTitle("Momentum (in GeV/c)");
-  histset[29]->GetYaxis()->SetTitle("Number of Events");
-
-  histset[30]->GetXaxis()->SetTitle("Transverse Momentum (in GeV/c)");
-  histset[30]->GetYaxis()->SetTitle("Number of Events");
-
-  histset[31]->GetXaxis()->SetTitle("Eta (in radians)");
-  histset[31]->GetYaxis()->SetTitle("Number of Events"); 
-
-  histset[33]->GetXaxis()->SetTitle("Number of Muons");
-  histset[33]->GetYaxis()->SetTitle("Number of Events");
-
-  histset[39]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 with|eta|<1.2(in GeV/c^2)");
-  histset[39]->GetYaxis()->SetTitle("Number of Events");
-
-  histset[40]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 with |eta|>1.2 and |eta|<1.6 (in GeV/c^2)");
-  histset[40]->GetYaxis()->SetTitle("Number of Events");
-
-  histset[41]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 with |eta|>1,6 and |eta|<2.4 (in GeV/c^2)");
-  histset[41]->GetYaxis()->SetTitle("Number of Events");
-
-  histset[32]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 (in GeV/c^2)");
-  histset[32]->GetYaxis()->SetTitle("Number of Events");
-  histset[44]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 (in GeV/c^2)");
-  histset[44]->GetYaxis()->SetTitle("Number of Events");
-  histset[42]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 (in GeV/c^2)");
-  histset[42]->GetYaxis()->SetTitle("Number of Events");
-  histset[43]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 (in GeV/c^2)");
-  histset[43]->GetYaxis()->SetTitle("Number of Events");
-
-  histset[45]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 (in GeV/c^2)");
-  histset[45]->GetYaxis()->SetTitle("Number of Events");
-  histset[46]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 (in GeV/c^2)");
-  histset[46]->GetYaxis()->SetTitle("Number of Events");
-
-  histset[47]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 (in GeV/c^2)");
-  histset[47]->GetYaxis()->SetTitle("Number of Events");
-
-  histset[48]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 (in GeV/c^2)");
-  histset[48]->GetYaxis()->SetTitle("Number of Events");
-  histset[49]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 (in GeV/c^2)");
-  histset[49]->GetYaxis()->SetTitle("Number of Events");
-
-  histset[50]->GetXaxis()->SetTitle("Chi2 values");
-  histset[50]->GetYaxis()->SetTitle("Number of Events");
-  histset[51]->GetXaxis()->SetTitle("Ndof values");
-  histset[51]->GetYaxis()->SetTitle("Number of Events");
-  histset[52]->GetXaxis()->SetTitle("NormalizedChi2 values");
-  histset[52]->GetYaxis()->SetTitle("Number of Events");
-
-  histset[53]->GetXaxis()->SetTitle("Chi2 values");
-  histset[53]->GetYaxis()->SetTitle("Number of Events");
-  histset[54]->GetXaxis()->SetTitle("Ndof values");
-  histset[54]->GetYaxis()->SetTitle("Number of Events");
-  histset[55]->GetXaxis()->SetTitle("NormalizedChi2 values");
-  histset[55]->GetYaxis()->SetTitle("Number of Events");
-
-  histset[56]->GetXaxis()->SetTitle("Chi2 values");
-  histset[56]->GetYaxis()->SetTitle("Number of Events");
-  histset[57]->GetXaxis()->SetTitle("Ndof values");
-  histset[57]->GetYaxis()->SetTitle("Number of Events");
-  histset[58]->GetXaxis()->SetTitle("NormalizedChi2 values");
-  histset[58]->GetYaxis()->SetTitle("Number of Events");
-
-  histset[59]->GetXaxis()->SetTitle("Good Track multiplicity");
-  histset[59]->GetYaxis()->SetTitle("Number of Events");
-
-  histset[60]->GetXaxis()->SetTitle("Number of valid hits");
-  histset[60]->GetYaxis()->SetTitle("Number of Events");
-
-  histset[61]->GetXaxis()->SetTitle("Munber of pixel hits");
-  histset[61]->GetYaxis()->SetTitle("Number of Events");
-  histset[62]->GetXaxis()->SetTitle("Good Track multiplicity");
-  histset[62]->GetYaxis()->SetTitle("Number of Events");
-
-  histset[63]->GetXaxis()->SetTitle("Number of valid hits");
-  histset[63]->GetYaxis()->SetTitle("Number of Events");
-
-  histset[64]->GetXaxis()->SetTitle("Munber of pixel hits");
-  histset[64]->GetYaxis()->SetTitle("Number of Events");
-
-  histset[65]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 (in GeV/c^2)");
-  histset[65]->GetYaxis()->SetTitle("Number of Events");
-
-  histset[66]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 (in GeV/c^2)");
-  histset[66]->GetYaxis()->SetTitle("Number of Events");
-
-  histset[67]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 (in GeV/c^2)");
-  histset[67]->GetYaxis()->SetTitle("Number of Events");
-  
-  histset[68]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 (in GeV/c^2)");
-  histset[68]->GetYaxis()->SetTitle("Number of Events");
-
-  histset[69]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 (in GeV/c^2)");
-  histset[69]->GetYaxis()->SetTitle("Number of Events");
-  histset[70]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 (in GeV/c^2)");
-  histset[70]->GetYaxis()->SetTitle("Number of Events");
-  histset[72]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 (in GeV/c^2)");
-  histset[72]->GetYaxis()->SetTitle("Number of Events");
-  histset[71]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 (in GeV/c^2)");
-  histset[71]->GetYaxis()->SetTitle("Number of Events");
-
-  histset[73]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 (in GeV/c^2)");
-  histset[73]->GetYaxis()->SetTitle("Number of Events");
-
-  histset[74]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 (in GeV/c^2)");
-  histset[74]->GetYaxis()->SetTitle("Number of Events");
-  histset[75]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 (in GeV/c^2)");
-  histset[75]->GetYaxis()->SetTitle("Number of Events");
-
-  histset[76]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 (in GeV/c^2)");
-  histset[76]->GetYaxis()->SetTitle("Number of Events");
-  histset[77]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 (in GeV/c^2)");
-  histset[77]->GetYaxis()->SetTitle("Number of Events");
-  histset[78]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 (in GeV/c^2)");
-  histset[78]->GetYaxis()->SetTitle("Number of Events");
-  histset[79]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 (in GeV/c^2)");
-  histset[79]->GetYaxis()->SetTitle("Number of Events");
-  histset[80]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 (in GeV/c^2)");
-  histset[80]->GetYaxis()->SetTitle("Number of Events");
-
-  histset[81]->GetXaxis()->SetTitle("Phi");
-  histset[81]->GetYaxis()->SetTitle("Number of Events");
-  histset[82]->GetXaxis()->SetTitle("Phi");
-  histset[82]->GetYaxis()->SetTitle("Number of Events");
-  histset[83]->GetXaxis()->SetTitle("Phi");
-  histset[83]->GetYaxis()->SetTitle("Number of Events");
-  histset[84]->GetXaxis()->SetTitle("Phi");
-  histset[84]->GetYaxis()->SetTitle("Number of Events");
-
-  histset[85]->GetXaxis()->SetTitle("Eta (in radians)");
-  histset[85]->GetYaxis()->SetTitle("Number of Events"); 
-
-  histset[86]->GetXaxis()->SetTitle("Number of Tracks");
-  histset[86]->GetYaxis()->SetTitle("Number of Vertices");
-  histset[87]->GetXaxis()->SetTitle("Number of Tracks");
-  histset[87]->GetYaxis()->SetTitle("Number of Vertices");
-
-  histset[88]->GetXaxis()->SetTitle("difference in x");
-  histset[88]->GetYaxis()->SetTitle("Number of Events");
-  histset[89]->GetXaxis()->SetTitle("difference in y");
-  histset[89]->GetYaxis()->SetTitle("Number of Events");
-  histset[90]->GetXaxis()->SetTitle("difference in z");
-  histset[90]->GetYaxis()->SetTitle("Number of Events");
-  histset[91]->GetXaxis()->SetTitle("Transverse impact paramemter w.r.t. BS");
-  histset[91]->GetYaxis()->SetTitle("Number of Events");
-  histset[92]->GetXaxis()->SetTitle("Number of valid hits");
-  histset[92]->GetYaxis()->SetTitle("Number of Events");
-  histset[93]->GetXaxis()->SetTitle("Muons matching with at least two muon stations");
-  histset[93]->GetYaxis()->SetTitle("Number of Events");
-
-  histset[94]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 (in GeV/c^2)");
-  histset[94]->GetYaxis()->SetTitle("Number of Events");
-  histset[95]->GetXaxis()->SetTitle("Invariant Mass for Nmuon>=2 (in GeV/c^2)");
-  histset[95]->GetYaxis()->SetTitle("Number of Events");
-
-  histset[96]->GetXaxis()->SetTitle("Momentum (in GeV/c)");
-  histset[96]->GetYaxis()->SetTitle("Number of Events");
-  histset[97]->GetXaxis()->SetTitle("Transverse Momentum (in GeV/c)");
-  histset[97]->GetYaxis()->SetTitle("Number of Events");
-  histset[98]->GetXaxis()->SetTitle("Eta (in radians)");
-  histset[98]->GetYaxis()->SetTitle("Number of Events");
-  histset[99]->GetXaxis()->SetTitle("Eta (in radians)");
-  histset[99]->GetYaxis()->SetTitle("Number of Events"); 
-  histset[104]->GetXaxis()->SetTitle("Invariant Mass for Nelectron>=2 (in GeV/c^2)");
-  histset[104]->GetYaxis()->SetTitle("Number of Events");
-  histset[105]->GetXaxis()->SetTitle("Number of Electrons");
-  histset[105]->GetYaxis()->SetTitle("Number of Events");
-
-  histset[106]->GetXaxis()->SetTitle("Super Cluster Eta(in radians)");
-  histset[106]->GetYaxis()->SetTitle("Number of Events");
-  histset[107]->GetXaxis()->SetTitle("Super Cluster Energy");
-  histset[107]->GetYaxis()->SetTitle("Number of Events");
-  histset[108]->GetXaxis()->SetTitle("Track Isolation");
-  histset[108]->GetYaxis()->SetTitle("Number of Events");
-  histset[109]->GetXaxis()->SetTitle("Ecal Isolation");
-  histset[109]->GetYaxis()->SetTitle("Number of Events");
-  histset[110]->GetXaxis()->SetTitle("Hcal Isolation");
-  histset[110]->GetYaxis()->SetTitle("Number of Events");
-  histset[111]->GetXaxis()->SetTitle("gsfTrack Hit type");
-  histset[111]->GetYaxis()->SetTitle("Number of Events");
-  histset[112]->GetXaxis()->SetTitle("Dcot");
-  histset[112]->GetYaxis()->SetTitle("Number of Events");
-  histset[113]->GetXaxis()->SetTitle("Dist");
-  histset[113]->GetYaxis()->SetTitle("Number of Events");
-  histset[114]->GetXaxis()->SetTitle("sigmaIetaIeta");
-  histset[114]->GetYaxis()->SetTitle("Number of Events");
-  histset[115]->GetXaxis()->SetTitle("DeltaPhi");
-  histset[115]->GetYaxis()->SetTitle("Number of Events");
-  histset[116]->GetXaxis()->SetTitle("DeltaEta");
-  histset[116]->GetYaxis()->SetTitle("Number of Events");
-  histset[117]->GetXaxis()->SetTitle("H/E");
-  histset[117]->GetYaxis()->SetTitle("Number of Events");
-  histset[118]->GetXaxis()->SetTitle("Electron Et");
-  histset[118]->GetYaxis()->SetTitle("Number of Events");
-  histset[119]->GetXaxis()->SetTitle("Invariant Mass for Nelectron>=2 (in GeV/c^2)");
-  histset[119]->GetYaxis()->SetTitle("Number of Events");
-  histset[120]->GetXaxis()->SetTitle("Track Isolation");
-  histset[120]->GetYaxis()->SetTitle("Number of Events");
-  histset[121]->GetXaxis()->SetTitle("Ecal Isolation");
-  histset[121]->GetYaxis()->SetTitle("Number of Events");
-  histset[122]->GetXaxis()->SetTitle("Hcal Isolation");
-  histset[122]->GetYaxis()->SetTitle("Number of Events");
-
-  histset[123]->GetXaxis()->SetTitle("sigmaIetaIeta");
-  histset[123]->GetYaxis()->SetTitle("Number of Events");
-  histset[124]->GetXaxis()->SetTitle("DeltaPhi");
-  histset[124]->GetYaxis()->SetTitle("Number of Events");
-  histset[125]->GetXaxis()->SetTitle("DeltaEta");
-  histset[125]->GetYaxis()->SetTitle("Number of Events");
-  histset[126]->GetXaxis()->SetTitle("H/E");
-  histset[126]->GetYaxis()->SetTitle("Number of Events");
-  histset[127]->GetXaxis()->SetTitle("Invariant Mass for Nelectron>=2 (in GeV/c^2)");
-  histset[127]->GetYaxis()->SetTitle("Number of Events");
-  histset[128]->GetXaxis()->SetTitle("Invariant Mass for Nelectron>=2 (in GeV/c^2)");
-  histset[128]->GetYaxis()->SetTitle("Number of Events");
-
-  histset[129]->GetXaxis()->SetTitle("Transverse Mass for muons+MET (in GeV/c^2)");
-  histset[129]->GetYaxis()->SetTitle("Number of Events");
-  histset[130]->GetXaxis()->SetTitle("Transverse Mass for muons+MET (in GeV/c^2)");
-  histset[130]->GetYaxis()->SetTitle("Number of Events");
-  histset[131]->GetXaxis()->SetTitle("Transverse Mass for electrons+MET (in GeV/c^2)");
-  histset[131]->GetYaxis()->SetTitle("Number of Events");
-  histset[132]->GetXaxis()->SetTitle("Transverse Mass for electrons+MET (in GeV/c^2)");
-  histset[132]->GetYaxis()->SetTitle("Number of Events");
-  histset[133]->GetXaxis()->SetTitle("MET (in GeV)");
-  histset[133]->GetYaxis()->SetTitle("Number of Events");
-  histset[134]->GetXaxis()->SetTitle("MET (in GeV)");
-  histset[134]->GetYaxis()->SetTitle("Number of Events");
-  histset[135]->GetXaxis()->SetTitle("MET (in GeV)");
-  histset[135]->GetYaxis()->SetTitle("Number of Events");
-  histset[136]->GetXaxis()->SetTitle("MET (in GeV)");
-  histset[136]->GetYaxis()->SetTitle("Number of Events");
-  histset[137]->GetXaxis()->SetTitle("MET (in GeV)");
-  histset[137]->GetYaxis()->SetTitle("Number of Events");
-
-
-
-
-
-  histset[100]->GetXaxis()->SetTitle("Invariant Log10(Mass) for Nmuon>=2 (in GeV/c^2)");
-  histset[100]->GetYaxis()->SetTitle("Number of Events/GeV");
-  histset[101]->GetXaxis()->SetTitle("Invariant Log10(Mass) for Nmuon>=2 (in GeV/c^2)");
-  histset[101]->GetYaxis()->SetTitle("Number of Events/GeV");
-  histset[102]->GetXaxis()->SetTitle("Invariant Log10(Mass) for Nmuon>=2 (in GeV/c^2)");
-  histset[102]->GetYaxis()->SetTitle("Number of Events/GeV");
-  histset[103]->GetXaxis()->SetTitle("Invariant Log10(Mass) for Nmuon>=2 (in GeV/c^2)");
-  histset[103]->GetYaxis()->SetTitle("Number of Events/GeV");
-
-    }
 
 
 //                event property histograms                //
@@ -723,21 +765,48 @@ DemoAnalyzer::DemoAnalyzer(const edm::ParameterSet& iConfig)
     
                 //// ---------- J/Psi Acceptance ---------- ////
     
-                    hxhy[1]       =   fs->make<TH2D>("h_Paircount", "", 100,0, 2.4, 100, 0,30);
-                    histset[205]  =   fs->make<TH1D>("h_JpsiPT", "", 100, 0, 30);
-                    hxhy[2]       =   fs->make<TH2D>("h_Paircount2", "", 24, 0, 2.4, 42, binsy );
+                    hxhy[1]       =   acceptance.fs->make<TH2D>("h_Paircount", "", 100,0, 2.4, 100, 0,30);
+                    histset[205]  =   acceptance.fs->make<TH1D>("h_JpsiPT", "", 100, 0, 30);
+                    hxhy[2]       =   acceptance.fs->make<TH2D>("h_Paircount2", "", 24, 0, 2.4, 42, binsy );
                 //// ------------- D* Anaylsis ------------ ////
     
-                    histset[206]  =   fs->make<TH1D>("h_D0mass", "", 200, 1.5, 2); //D0 mass histogram
-                    histset[208]  =   fs->make<TH1D>("h_deltaM", "", 50, 0.138, 0.17); //Mass difference histogram for 'right charge' paring
-                    histset[209]  =   fs->make<TH1D>("h_deltaMwrongcharge", "", 50, 0.138, 0.17); //Mass difference histogram for 'wrong charge' pairing
-                    histset[210]  =   fs->make<TH1D>("h_z","",100,0,0.5);
-                    histset[211]  =   fs->make<TH1D>("h_n","",100, 0 ,200);
+                    histset[206]  =   dmesons.fs->make<TH1D>("h_D0mass", "", 200, 1.5, 2); //D0 mass histogram
+                    histset[208]  =   dmesons.fs->make<TH1D>("h_deltaM", "", 50, 0.138, 0.17); //Mass difference histogram for 'right charge' paring
+                    histset[209]  =   dmesons.fs->make<TH1D>("h_deltaMwrongcharge", "", 50, 0.138, 0.17); //Mass difference histogram for 'wrong charge' pairing
+                    histset[210]  =   dmesons.fs->make<TH1D>("h_z","",100,0,0.5);
+                    histset[211]  =   dmesons.fs->make<TH1D>("h_n","",100, 0 ,200);
     
                 //// ------------- Y cut implementation ------------ ////
     
-                histset[250]  =  fs->make<TH1D>("h_Upsilon","",80, 8, 12);
-                histset[251]  =  fs->make<TH1D>("h_Upsilon_eta","",80, 8, 12);
+                histset[250]  =  upsilon.fs->make<TH1D>("h_Upsilon","",80, 8, 12);
+                histset[251]  =  upsilon.fs->make<TH1D>("h_Upsilon_eta","",80, 8, 12);
+    
+    
+                 //// ------------- JETS implementation ------------ ////
+
+    
+    
+    histset[261]  = pfjetsF.make<TH1D>("h_jetPT" , "" , 200 , 0 , 20 );
+    
+    histset[262]  = pfjetsF.make<TH1D>("h_JetETA" , "" , 100 , -3 , 3 );
+    
+    histset[302]  = pfjetsF.make<TH1D>("h_TrackerJetPT" , "" , 200 , 0 , 20 );
+    
+    histset[303]  = pfjetsF.make<TH1D>("TrackJets_Eta" , "TrackJets_Eta" , 100 , -7.0 , 7.0 );
+    histset[303]->GetXaxis()->SetTitle("Eta (in radians)");
+    histset[303]->GetYaxis()->SetTitle("Number of PFJets");
+    
+    histset[304]  = pfjetsF.make<TH1D>("TrackJet.Ntracks" , "TrackJet.Ntracks" , 35 , 0 , 35.0 );
+    histset[304]->GetXaxis()->SetTitle("Ntracks");
+    histset[304]->GetYaxis()->SetTitle("Number of TrackJets");
+    
+    histset[305]  = pfjetsF.make<TH1D>("TrackJet.fromHardVertex" , "TrackJet.fromHardVertex" , 20 , -5 , 5.0 );
+    histset[305]->GetXaxis()->SetTitle("FromHardVertex");
+    histset[305]->GetYaxis()->SetTitle("Number of TrackJets");
+    
+    histset[306]  = pfjetsF.make<TH1D>("TrackJet.primaryVertex.tracksSize" , "TrackJet.primaryVertex.tracksSize" , 100 , 0 ,200.0 );
+    histset[306]->GetXaxis()->SetTitle("N tracks in the assosiated Primary Vertex");
+    histset[306]->GetYaxis()->SetTitle("Number of TrackJets");
     
     
 }
@@ -775,6 +844,8 @@ Handle<reco::TrackCollection> gmuons;
 Handle<reco::VertexCollection> Primvertex;
 Handle<reco::MuonCollection> muons;
 Handle<reco::GsfElectronCollection> electrons;
+
+    
  edm:: Handle<edm::View<reco::PFMET> > pfmets;// Handle<reco::PFMET> mets;  didn't work for some reason
 edm:: Handle<edm::View<reco::CaloMET> > calomets;
 edm:: Handle<edm::View<reco::CaloMET> > muCorrmets;
@@ -1122,6 +1193,26 @@ else {
  histset[6]->Fill(tracks->size());
  histset[26]->Fill(Primvertex->size());
 
+    
+    Handle<PFJetCollection>   pfjets;
+    iEvent.getByLabel("ak7PFJets",pfjets);
+    
+    
+    for(PFJetCollection::const_iterator i_pfjet = pfjets->begin(); i_pfjet != pfjets->end(); i_pfjet++)
+    {
+        
+        histset[261]->Fill(i_pfjet->pt());
+        histset[262]->Fill(i_pfjet->eta());
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    
  // loop over tracks
 /*
   for( reco::TrackCollection::const_iterator it = tracks->begin(); it !=
