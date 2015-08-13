@@ -31,8 +31,8 @@ goodJSON = '/home/cms-opendata/CMSSW_4_2_8/src/Cert_136033-149442_7TeV_Apr21ReRe
 myLumis = LumiList.LumiList(filename = goodJSON).getCMSSWString().split(',')
 
 
-files2010data = FileUtils.loadListFromFile ('/home/cms-opendata/CMSSW_4_2_8/src/MinBsData0000.txt')
-#files2010data = FileUtils.loadListFromFile ('/home/cms-opendata/CMSSW_4_2_8/src/JetData0000.txt')
+#files2010data = FileUtils.loadListFromFile ('/home/cms-opendata/CMSSW_4_2_8/src/MinBsData0000.txt')
+files2010data = FileUtils.loadListFromFile ('/home/cms-opendata/CMSSW_4_2_8/src/JetData0000.txt')
 #files2010data = FileUtils.loadListFromFile ('/home/cms-opendata/CMSSW_4_2_8/src/MuoniaData0000.txt')
 
 
