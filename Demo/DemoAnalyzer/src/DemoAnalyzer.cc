@@ -186,6 +186,7 @@ DemoAnalyzer::DemoAnalyzer(const edm::ParameterSet& iConfig)
     // book histograms
     //-------------------------Minimum Bias---------------------------------//
     {
+        /*
     histset[300]  = pfjetsF.make<TH1D>("PFJets_PT" , "PFJets_PT" , 200 , 0 , 20 );
     histset[300]->GetXaxis()->SetTitle("PFJets PT");
     histset[300]->GetYaxis()->SetTitle("Number of PFJets");
@@ -213,7 +214,7 @@ DemoAnalyzer::DemoAnalyzer(const edm::ParameterSet& iConfig)
     histset[306]  = pfjetsF.make<TH1D>("TrackJet.primaryVertex.tracksSize" , "TrackJet.primaryVertex.tracksSize" , 100 , 0 ,200.0 );
     histset[306]->GetXaxis()->SetTitle("N tracks in the assosiated Primary Vertex");
     histset[306]->GetYaxis()->SetTitle("Number of TrackJets");
-    
+    */
     
     //----------------------------------------------------------------------//
     histset[6]  = tracks.make<TH1D>("tracks" , "Tracks" , 300 , 0 , 300 ); 					// Track Multiplicity
@@ -778,17 +779,16 @@ DemoAnalyzer::DemoAnalyzer(const edm::ParameterSet& iConfig)
     
                 //// ------------- Y cut implementation ------------ ////
     
-                histset[250]  =  upsilon.make<TH1D>("h_Upsilon","",80, 8, 12);
-                histset[251]  =  upsilon.make<TH1D>("h_Upsilon_eta","",80, 8, 12);
+                    histset[250]  =  upsilon.make<TH1D>("h_Upsilon","",80, 8, 12);
+                    histset[251]  =  upsilon.make<TH1D>("h_Upsilon_eta","",80, 8, 12);
     
     
                  //// ------------- JETS implementation ------------ ////
 
     
     
-    histset[261]  = pfjetsF.make<TH1D>("h_jetPT" , "" , 200 , 0 , 20 );
-    
-    histset[262]  = pfjetsF.make<TH1D>("h_JetETA" , "" , 100 , -3 , 3 );
+                histset[261]  = pfjetsF.make<TH1D>("h_jetPT" , "" , 200 , 0 , 20 );
+                histset[262]  = pfjetsF.make<TH1D>("h_JetETA" , "" , 100 , -3 , 3 );
     
     histset[302]  = pfjetsF.make<TH1D>("h_TrackerJetPT" , "" , 200 , 0 , 20 );
     
@@ -1214,7 +1214,7 @@ else {
     
     
  // loop over tracks
-/*
+
   for( reco::TrackCollection::const_iterator it = tracks->begin(); it !=
  tracks->end(); it++) {
     // LogInfo("Demo")<<"track p"<<it->p()<< "  track reference position"<<it->referencePoint()<< "   track vertex position"<<it->vertex();
@@ -1480,22 +1480,22 @@ if(fabs(ite->x()-(itMuon->track())->vx())<=0.1 && fabs(ite->y()-(itMuon->track()
   //                          for J/psi (BPH-10-002) and Z (EWK-10-002)                                  //
  
  
-  histset[33]->Fill(muons->size()); // only the total number of muons
+    histset[33]->Fill(muons->size()); // only the total number of muons
  
 for (MuonCollection::const_iterator itMuon = muons->begin(); itMuon != muons->end(); ++itMuon) {
 
-  double Mt;
- int  ValidHits=0; int PixelHits=0;//TM_J/Psi
- int  GM_ValidHits=0; int GM_PixelHits=0;//GM_Z
- int size2=0;
- int jpsi_flag1=0;
+    double Mt;
+    int  ValidHits=0; int PixelHits=0;//TM_J/Psi
+    int  GM_ValidHits=0; int GM_PixelHits=0;//GM_Z
+    int size2=0;
+    int   jpsi_flag1=0;
  
- int Zflag1=0;
+    int Zflag1=0;
  
- int Wflag1=0;
- int Wflag2=1;
- int goodhit=0;//GM_Z Muon Chamber hits
- double relIso=1.;// relative Isolation for muons(Z paper);
+    int Wflag1=0;
+    int Wflag2=1;
+    int goodhit=0;//GM_Z Muon Chamber hits
+    double relIso=1.;// relative Isolation for muons(Z paper);
  
     
  int Yflag=0;
@@ -1645,10 +1645,7 @@ for (MuonCollection::const_iterator itMuon = muons->begin(); itMuon != muons->en
         //Upisilon Varriables
             double dref[3]={abs((itMuon->track())->vx()-(itM->track())->vx()),abs((itMuon->track())->vy()-(itM->track())->vy()),abs((itMuon->track())->vz()-(itM->track())->vz())};
         
-            
-            
-            
-            
+        
 		const reco::HitPattern& p1 = (itM->track())->hitPattern();
 	 
 		// loop over the hits of the track
@@ -1656,9 +1653,8 @@ for (MuonCollection::const_iterator itMuon = muons->begin(); itMuon != muons->en
 		  uint32_t hit = p1.getHitPattern(n);
 
 		  // if the hit is valid and in pixel 
-		  if (p1.validHitFilter(hit) && p1.pixelHitFilter(hit)) PixelHits1++;
-	 
-		  if (p1.validHitFilter(hit))ValidHits1++;
+            if (p1.validHitFilter(hit) && p1.pixelHitFilter(hit)) PixelHits1++;
+            if (p1.validHitFilter(hit))ValidHits1++;
 		  
 		}
 
@@ -1810,7 +1806,7 @@ for (MuonCollection::const_iterator itMuon = muons->begin(); itMuon != muons->en
 }// Muon Collection for loop ends
 
 
-*/
+
 
 /*------------------------------------------------------------------------------------------------------------------------------------------------
   -----------------------------------------------ELECTRON COLLECTION--------------------------------------------------------------------------------
