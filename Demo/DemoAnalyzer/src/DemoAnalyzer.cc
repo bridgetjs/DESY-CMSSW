@@ -765,16 +765,16 @@ DemoAnalyzer::DemoAnalyzer(const edm::ParameterSet& iConfig)
     
                 //// ---------- J/Psi Acceptance ---------- ////
     
-                    hxhy[1]       =   acceptance.fs->make<TH2D>("h_Paircount", "", 100,0, 2.4, 100, 0,30);
-                    histset[205]  =   acceptance.fs->make<TH1D>("h_JpsiPT", "", 100, 0, 30);
-                    hxhy[2]       =   acceptance.fs->make<TH2D>("h_Paircount2", "", 24, 0, 2.4, 42, binsy );
+                    hxhy[1]       =   acceptance.make<TH2D>("h_Paircount", "", 100,0, 2.4, 100, 0,30);
+                    histset[205]  =   acceptance.make<TH1D>("h_JpsiPT", "", 100, 0, 30);
+                    hxhy[2]       =   acceptance.make<TH2D>("h_Paircount2", "", 24, 0, 2.4, 42, binsy );
                 //// ------------- D* Anaylsis ------------ ////
     
-                    histset[206]  =   dmesons.fs->make<TH1D>("h_D0mass", "", 200, 1.5, 2); //D0 mass histogram
-                    histset[208]  =   dmesons.fs->make<TH1D>("h_deltaM", "", 50, 0.138, 0.17); //Mass difference histogram for 'right charge' paring
-                    histset[209]  =   dmesons.fs->make<TH1D>("h_deltaMwrongcharge", "", 50, 0.138, 0.17); //Mass difference histogram for 'wrong charge' pairing
-                    histset[210]  =   dmesons.fs->make<TH1D>("h_z","",100,0,0.5);
-                    histset[211]  =   dmesons.fs->make<TH1D>("h_n","",100, 0 ,200);
+                    histset[206]  =   dmesons.make<TH1D>("h_D0mass", "", 200, 1.5, 2); //D0 mass histogram
+                    histset[208]  =   dmesons.make<TH1D>("h_deltaM", "", 50, 0.138, 0.17); //Mass difference histogram for 'right charge' paring
+                    histset[209]  =   dmesons.make<TH1D>("h_deltaMwrongcharge", "", 50, 0.138, 0.17); //Mass difference histogram for 'wrong charge' pairing
+                    histset[210]  =   dmesons.make<TH1D>("h_z","",100,0,0.5);
+                    histset[211]  =   dmesons.make<TH1D>("h_n","",100, 0 ,200);
     
                 //// ------------- Y cut implementation ------------ ////
     
