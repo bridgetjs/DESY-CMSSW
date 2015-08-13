@@ -1208,11 +1208,6 @@ else {
     
     
     
-    
-    
-    
-    
-    
  // loop over tracks
 
   for( reco::TrackCollection::const_iterator it = tracks->begin(); it !=
@@ -2096,7 +2091,7 @@ histset[105]->Fill(electrons->size());
                                         double ptD0= sqrt(paxisD0[0]*paxisD0[0] +paxisD0[1]*paxisD0[1]);
                                          
                                         //locate D0 vertex using average coordinate of tracks
-                                        double vcD0[3] ={0.5*(itK1->vx()+itP2->vx()), 0.5*(itK1->vy()- itP2->vy()), 0.5*(itK1->vz()-itP2->vz())};
+                                        double vcD0[3] ={0.5*(itK1->vx()+itP2->vx()), 0.5*(itK1->vy()+itP2->vy()), 0.5*(itK1->vz()+itP2->vz())};
                                             
                                             
                                             //Now start a third loop for the slow pion
