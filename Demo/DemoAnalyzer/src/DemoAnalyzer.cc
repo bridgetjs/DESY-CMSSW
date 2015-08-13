@@ -778,8 +778,8 @@ DemoAnalyzer::DemoAnalyzer(const edm::ParameterSet& iConfig)
     
                 //// ------------- Y cut implementation ------------ ////
     
-                histset[250]  =  upsilon.fs->make<TH1D>("h_Upsilon","",80, 8, 12);
-                histset[251]  =  upsilon.fs->make<TH1D>("h_Upsilon_eta","",80, 8, 12);
+                histset[250]  =  upsilon.make<TH1D>("h_Upsilon","",80, 8, 12);
+                histset[251]  =  upsilon.make<TH1D>("h_Upsilon_eta","",80, 8, 12);
     
     
                  //// ------------- JETS implementation ------------ ////
