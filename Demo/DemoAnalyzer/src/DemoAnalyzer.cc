@@ -2090,7 +2090,7 @@ histset[105]->Fill(electrons->size());
                                         double pD0 = sqrt(paxisD0[0]*paxisD0[0] +paxisD0[1]*paxisD0[1] +paxisD0[2]*paxisD0[2]);
                                         double ptD0= sqrt(paxisD0[0]*paxisD0[0] +paxisD0[1]*paxisD0[1]);
                                          
-                                        //locate D0 vertex using average coordinate of tracks
+                                        //locate D0 'vertex' using average coordinate of tracks
                                         double vcD0[3] ={0.5*(itK1->vx()+itP2->vx()), 0.5*(itK1->vy()+itP2->vy()), 0.5*(itK1->vz()+itP2->vz())};
                                             
                                             

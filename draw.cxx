@@ -126,6 +126,26 @@ void draw(){
     legc8->AddEntry((TObject*)0, "#||{#eta^{#mu}} < 2.4 ", "");
     legc8->Draw();
     
+    TCanvas *c4 = new TCanvas("c4","",600,400);
+    TH1D *hdeltaM=(TH1D*)dirfsubDMesons->Get("h_deltaM");
+    TH1D *hdeltaMwrongcharge=(TH1D*)dirfsubDMesons->Get("h_deltaMwrongcharge");
+    hdeltaM->SetStats(1);
+    hdeltaM->SetLineColor(kBlue);
+    hdeltaM->GetXaxis()->SetTitle("M(K#pi#pi)- M(K#pi) [GeV/c^{2}]");
+    hdeltaM->GetYaxis()->SetTitleOffset(0.05);
+    hdeltaM->GetYaxis()->SetTitle("Number of Entries");
+    hdeltaM->Draw("E");
+    hdeltaMwrongcharge->SetLineColor(kRed);
+    hdeltaMwrongcharge->Draw("E same");
+    TLegend* legc4 = new TLegend(0.7, 0.1, .9, .3);
+    legc4->AddEntry(hdeltaM, "Right Charge", "l");
+    legc4->AddEntry(hdeltaMwrongcharge, "Wrong Charge", "l");
+    legc4->Draw();
+    legc4->SetBorderSize(0);
+    c4->SaveAs("./Plots/DeltaD0Mass.png");
+    
+    
+    
    // c8->SaveAs("Upsilon.png");
     
     //TCanvas *c9=new TCanvas("c9","", 600,500);
@@ -249,25 +269,7 @@ double allFit(double* x, double* par){
    h_D0mass->Draw();
    c3->SaveAs("./Plots/D0Mass.png");
    
-   TCanvas *c4 = new TCanvas("c4","",600,400);
-   TH1D *hdeltaM=(TH1D*)dirfsubDMesons->Get("h_deltaM");
-   TH1D *hdeltaMwrongcharge=(TH1D*)dirfsubDMesons->Get("h_deltaMwrongcharge");
-   hdeltaM->SetStats(1);
-   hdeltaM->SetLineColor(kBlue);
-   hdeltaM->GetXaxis()->SetTitle("M(K#pi#pi)- M(K#pi) [GeV/c^{2}]");
-   hdeltaM->GetYaxis()->SetTitleOffset(0.05);
-   hdeltaM->GetYaxis()->SetTitle("Number of Entries");
-   hdeltaM->Draw("E");
-   hdeltaMwrongcharge->SetLineColor(kRed);
-   hdeltaMwrongcharge->Draw("E same");
-   TLegend* legc4 = new TLegend(0.7, 0.1, .9, .3);
-   legc4->AddEntry(hdeltaM, "Right Charge", "l");
-   legc4->AddEntry(hdeltaMwrongcharge, "Wrong Charge", "l");
-   legc4->Draw();
-   legc4->SetBorderSize(0);
-   c4->SaveAs("./Plots/DeltaD0Mass.png");
-   
-   
+
    
    TCanvas *c6=new TCanvas("c6","" ,600,400);
    TH1D *hz=(TH1D*)dirfsubDMesons->Get("h_z");
