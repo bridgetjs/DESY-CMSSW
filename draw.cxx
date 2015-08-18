@@ -89,49 +89,14 @@ void draw(){
  
     //Define fitting functions
 
-    TF1* Fit1=new TF1("Fit1", allFit,8,12,15);
-    //Set parameters
-    Fit1->SetParameter(0,1.5);
-    Fit1->SetParameter(1,0.3);
-    Fit1->SetParameter(2,9.46);
-    Fit1->SetParameter(3,0.1);
-    Fit1->SetParameter(4,1400);
-    
-    Fit1->SetParameter(5,1);
-    Fit1->SetParameter(6,0.22);
-    Fit1->SetParameter(7,10.02326);
-    Fit1->SetParameter(8,0.1);
-    Fit1->SetParameter(9,600);
-   
-    Fit1->SetParameter(10,1);
-    Fit1->SetParameter(11,0.3);
-    Fit1->SetParameter(12,10.3552);
-    Fit1->SetParameter(13,0.15);
-    Fit1->SetParameter(14,550);
 
     
-    TCanvas *c8=new TCanvas("c8","", 600,500);
-    TH1D *hUpsilon=(TH1D*)dirfsubUpsilon->Get("h_Upsilon");
-    hUpsilon->SetStats(0);
-    hUpsilon->GetYaxis()->SetTitleOffset(1.15);
-    hUpsilon->GetXaxis()->SetTitle("#mu^{+} #mu^{-} mass (Gev/c^{2})");
-    hUpsilon->GetYaxis()->SetTitle("Events");
-    hUpsilon->Draw("E");
-    Fit1->Draw("same");
-    //hUpsilon->Fit("Fit1");
-    TLegend* legc8 = new TLegend(0.6, 0.6, .89, .89);
-    legc8->SetBorderSize(0);
-    legc8->AddEntry((TObject*)0, "CMS,  #sqrt{s} = 7 TeV", "");
-    legc8->AddEntry((TObject*)0, "L = n pb^{-1}", "");
-    legc8->AddEntry((TObject*)0, "#||{#eta^{#mu}} < 2.4 ", "");
-    legc8->Draw();
-    
     TCanvas *c4 = new TCanvas("c4","",600,400);
-    TH1D *hdeltaM=(TH1D*)dirfsubDMesons->Get("h_deltaM");
-    TH1D *hdeltaMwrongcharge=(TH1D*)dirfsubDMesons->Get("h_deltaMwrongcharge");
+    TH1D *hdeltaM=(TH1D*)dirfsubDMesons->Get("h_deltaM2ndcuts");
+    TH1D *hdeltaMwrongcharge=(TH1D*)dirfsubDMesons->Get("h_deltaMwrongcharge2ndcuts");
     hdeltaM->SetStats(1);
     hdeltaM->SetLineColor(kBlue);
-    hdeltaM->GetXaxis()->SetTitle("M(K#pi#pi)- M(K#pi) [GeV/c^{2}]");
+    hdeltaM->GetXaxis()->SetTitle("M(K#pi#pi)- M(K#pi) (GeV/c^{2})");
     hdeltaM->GetYaxis()->SetTitleOffset(0.05);
     hdeltaM->GetYaxis()->SetTitle("Number of Entries");
     hdeltaM->Draw("E");
@@ -142,7 +107,14 @@ void draw(){
     legc4->AddEntry(hdeltaMwrongcharge, "Wrong Charge", "l");
     legc4->Draw();
     legc4->SetBorderSize(0);
-    c4->SaveAs("./Plots/DeltaD0Mass.png");
+    TLegend* legc4i= new TLegend(0.6, 0.6, .89, .89);
+    legc4i->SetBorderSize(0);
+    legc4i->AddEntry((TObject*)0, "CMS,  #sqrt{s} = 7 TeV", "");
+    legc4i->AddEntry((TObject*)0, "L = n pb^{-1}", "");
+    //legc4i->AddEntry((TObject*)0, "#||{#eta^{#mu}} < 1 ", "");
+    legc4i->Draw();
+
+    c4->SaveAs("./Plots/DeltaD0Mass2ndcuts.png");
     
     
     
@@ -192,47 +164,8 @@ double allFit(double* x, double* par){
   /*  ---------------------------- ARCHIVE SECTION ----------------------------
    Use this section to store old/no longer needed code for future use.
 
-   //Fitting functions
-   TF1* cryst1 = new TF1("cryst1",CrystalBall,8,12,5);
-   TF1* cryst2 = new TF1("cryst2",CrystalBall,8,12,5);
-   TF1 *custgaus = new TF1("custgaus",   "[0]*exp(-0.5*((x-[1])/[2])^2)", 8,12);
-   TF1* bkgrnd= new TF1("bkgrnd",Background,0,1000,2);
-   TF1* cryst3 = new TF1("cryst3",&CrystalBall,8,12,7);
 
-   
-   //Old Crystal Ball  function code
-   double CrystalBall(double* x, double* par){
-   
-        double xcur = x[0];
-        double alpha = par[0];
-        double n = par[1];
-        double mu = par[2];
-        double sigma = par[3];
-        double N = par[4];
-   //  cout<< " " << alpha << endl;
-   TF1* exp = new TF1("exp","exp(x)",1e-20,1e20);
-   double A;
-   double B;
-   double f;
-    if (alpha < 0){
-        A = pow((n/(-1*alpha)),n)*exp->Eval((-1)*alpha*alpha/2);
-        B = n/(-1*alpha) + alpha;
-    }
-    else {
-        A = pow((n/alpha),n)*exp->Eval((-1)*alpha*alpha/2);
-        B = n/alpha - alpha;
-    }
-   ￼
-   
-        if ((xcur-mu)/sigma > (-1)*alpha) {
-        f = N*exp->Eval((-1)*(xcur-mu)*(xcur-mu)/ (2*sigma*sigma));
-    }
-   else {
-        f = N*A*pow((B- (xcur-mu)/sigma),(-1*n));
-   }
-        delete exp;
-        return f;
-   }
+
    ---------------------------- Muon Pair Count pt/y ----------------------------
    // Plot the number of muons agains rapidity and pt
 
@@ -305,4 +238,54 @@ double allFit(double* x, double* par){
    legc9->AddEntry((TObject*)0, "#||{#eta^{#mu}} < 1 ", "");
    legc9->Draw();
    c9->SaveAs("Upsiloneta.png");
+   
+   
+   TF1* Fit1=new TF1("Fit1", allFit,8,12,15);
+   //Set parameters
+   Fit1->SetParameter(0,1.5);
+   Fit1->SetParameter(1,0.3);
+   Fit1->SetParameter(2,9.46);
+   Fit1->SetParameter(3,0.1);
+   Fit1->SetParameter(4,1400);
+   
+   Fit1->SetParameter(5,1);
+   Fit1->SetParameter(6,0.22);
+   Fit1->SetParameter(7,10.02326);
+   Fit1->SetParameter(8,0.1);
+   Fit1->SetParameter(9,600);
+   
+   Fit1->SetParameter(10,1);
+   Fit1->SetParameter(11,0.3);
+   Fit1->SetParameter(12,10.3552);
+   Fit1->SetParameter(13,0.15);
+   Fit1->SetParameter(14,550);
+   
+   
+   TCanvas *c8=new TCanvas("c8","", 600,500);
+   TH1D *hUpsilon=(TH1D*)dirfsubUpsilon->Get("h_Upsilon");
+   hUpsilon->SetStats(0);
+   hUpsilon->GetYaxis()->SetTitleOffset(1.15);
+   hUpsilon->GetXaxis()->SetTitle("#mu^{+} #mu^{-} mass (Gev/c^{2})");
+   hUpsilon->GetYaxis()->SetTitle("Events");
+   hUpsilon->Draw("E");
+   Fit1->Draw("same");
+   //hUpsilon->Fit("Fit1");
+   TLegend* legc8 = new TLegend(0.6, 0.6, .89, .89);
+   legc8->SetBorderSize(0);
+   legc8->AddEntry((TObject*)0, "CMS,  #sqrt{s} = 7 TeV", "");
+   legc8->AddEntry((TObject*)0, "L = n pb^{-1}", "");
+   legc8->AddEntry((TObject*)0, "#||{#eta^{#mu}} < 2.4 ", "");
+   legc8->Draw();
+   
+   
+   
+   ----------------------------The DREGS ----------------------------
+
+   
+   //Fitting functions
+   TF1* cryst1 = new TF1("cryst1",CrystalBall,8,12,5);
+   TF1* cryst2 = new TF1("cryst2",CrystalBall,8,12,5);
+   TF1 *custgaus = new TF1("custgaus",   "[0]*exp(-0.5*((x-[1])/[2])^2)", 8,12);
+   TF1* bkgrnd= new TF1("bkgrnd",Background,0,1000,2);
+   TF1* cryst3 = new TF1("cryst3",&CrystalBall,8,12,7);
   */

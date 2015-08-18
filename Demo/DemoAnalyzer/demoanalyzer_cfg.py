@@ -23,7 +23,7 @@ process.MessageLogger.cerr.FwkReport.reportEvery = 100
 process.options   = cms.untracked.PSet( wantSummary = cms.untracked.bool(True))
                                         
 # set the maximum number of events to be processed here
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1))
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(1000000))
 
 goodJSON = '/home/cms-opendata/CMSSW_4_2_8/src/Cert_136033-149442_7TeV_Apr21ReReco_Collisions10_JSON_v2.txt'
 #goodJSON = '/afs/desy.de/user/s/stefan/CMSPhysic/FromIrene/data_files/Cert_136033-149442_7TeV_Apr21ReReco_Collisions10_JSON_v2.txt'
