@@ -2112,7 +2112,7 @@ histset[105]->Fill(electrons->size());
                                     
                                     
                                 //----Begin a loop over a third track to find D*
-                                    //First check D0 mass is within 500 MeV of the Actual D0 mass
+                                    //First check D0 mass is within 600 MeV of the 1.9GeV
                                     if (abs(MD0-1.9)<0.3) { // check it is a 'reasonable' D0 candidate with a loose cut
                   
                                         //locate D0 'vertex' using average coordinate of tracks
