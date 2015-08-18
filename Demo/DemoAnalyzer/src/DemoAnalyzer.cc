@@ -46,7 +46,7 @@
 
 
 //------ ADD EXTRA HEADER FILES--------------------//
-#include"math.h"
+#include "math.h"
 #include "FWCore/Framework/interface/EventSetup.h"
 #include "FWCore/Framework/interface/ESHandle.h"
 #include "FWCore/MessageLogger/interface/MessageLogger.h"
@@ -772,10 +772,21 @@ DemoAnalyzer::DemoAnalyzer(const edm::ParameterSet& iConfig)
                 //// ------------- D* Anaylsis ------------ ////
     
                     histset[206]  =   dmesons.make<TH1D>("h_D0mass", "", 200, 1.5, 2); //D0 mass histogram
-                    histset[208]  =   dmesons.make<TH1D>("h_deltaM", "", 50, 0.138, 0.17); //Mass difference histogram for 'right charge' paring
-                    histset[209]  =   dmesons.make<TH1D>("h_deltaMwrongcharge", "", 50, 0.138, 0.17); //Mass difference histogram for 'wrong charge' pairing
+                    histset[208]  =   dmesons.make<TH1D>("h_deltaM", "", 64, 0.138, 0.17); //Mass difference histogram for 'right charge' paring
+                    histset[209]  =   dmesons.make<TH1D>("h_deltaMwrongcharge", "", 64, 0.138, 0.17); //Mass difference histogram for 'wrong charge' pairing
+    
+    
+                    histset[212]  =   dmesons.make<TH1D>("h_deltaM2ndcuts", "", 64, 0.138, 0.17); //Mass difference histogram for 'right charge' paring (Atlas Cuts)
+                    histset[213]  =   dmesons.make<TH1D>("h_deltaMwrongcharge2ndcuts", "", 64, 0.138, 0.17); //Mass difference histogram for 'wrong charge' pairing (Atlas Cuts)
+    
+                    histset[217]  =   dmesons.make<TH1D>("h_D0masscut", "", 200, 1.5, 2); //D0 mass histogram with a cut on delta M
+    
                     histset[210]  =   dmesons.make<TH1D>("h_z","",100,0,0.5);
                     histset[211]  =   dmesons.make<TH1D>("h_n","",100, 0 ,200);
+                    histset[214]  =   dmesons.make<TH1D>("h_d0pt","",100, 0 ,50);
+                    histset[215]  =   dmesons.make<TH1D>("h_dstarpt","",100, 0 ,50);
+                    histset[216]  =   dmesons.make<TH1D>("h_pspt","",100, 0 ,10);
+    
     
                 //// ------------- Y cut implementation ------------ ////
     
@@ -2034,8 +2045,19 @@ histset[105]->Fill(electrons->size());
  }//for(reco::GsfElectronCollection........) ends
  
   */
-//////////////// ------------------------------ D* Meson Analysis ------------------------------ ////////////////
+//////////////// ----------------------------- D* Meson Analysis ------------------------------ ////////////////
+    double MDstar;
+    double deltaM;
     
+    //Reconsider D0 mass cuts
+    /*
+  Change D0 cut to a loose cut and and then apply tighter cuts if needed
+     
+     */
+    // 2 cuts
+        //loose and tight D0 and deltaM
+        //3 types of histograms with deltaM peak
+    //for properties of D* -- hard cut of D0M and deltaM
     //Loop over all non zero tracks with an iteractor K
     
     if (tracks->size()>=3) { //check for track collection with more than 3 tracks
@@ -2076,14 +2098,12 @@ histset[105]->Fill(electrons->size());
                                         //Calculate D0 invariant mass,
                                     double MD0 = invMass( itK1->p(),itK1->px(),itK1->py(),itK1->pz(),Kmass, itP2->p(),itP2->px(),itP2->py(),itP2->pz(), Pimass );
                                        
-                                        if (cf==1) {
-                                            //cout <<"BINGO: " << MD0 <<endl;
-                                            histset[206]->Fill(MD0);
-                                        }
+                                        if (cf==1) histset[206]->Fill(MD0);
+                                        if (cf=1)
                                     
                                 //----Begin a loop over a third track to find D*
                                     //First check D0 mass is within 50 MeV of the Actual D0 mass
-                                    if (abs(MD0- MD0Actual)<.05) { // check it is a reasonable D0 candidate
+                                    if (abs(MD0-1.9)<0.3) { // check it is a reasonable D0 candidate with a loose cut
                                         
                                         //Calculate D px, py, pz, p and pt
                                         double paxisD0[3]={itK1->px()+itP2->px(), itK1->py() +itP2->py(), itK1->pz() + itP2->pz() };
@@ -2092,7 +2112,6 @@ histset[105]->Fill(electrons->size());
                                          
                                         //locate D0 'vertex' using average coordinate of tracks
                                         double vcD0[3] ={0.5*(itK1->vx()+itP2->vx()), 0.5*(itK1->vy()+itP2->vy()), 0.5*(itK1->vz()+itP2->vz())};
-                                            
                                             
                                             //Now start a third loop for the slow pion
                                             for (reco::TrackCollection::const_iterator itPS3 = tracks->begin(); itPS3 !=tracks->end() ; itPS3 ++){
@@ -2103,14 +2122,19 @@ histset[105]->Fill(electrons->size());
                                                         if (sqrt(vc2[0]*vc2[0] + vc2[1]*vc2[1])<0.1 && vc2[2] <0.1){ // Check the slow pion originates from the same region as the D0
                                                             
                                                             //Now Calculate D* mass
-                                                            double MDstar= invMass(pD0,paxisD0[0],paxisD0[1],paxisD0[2],MD0, itPS3->p(), itPS3->px(), itPS3->py(), itPS3->pz(),Pimass);
+                                                            MDstar= invMass(pD0,paxisD0[0],paxisD0[1],paxisD0[2],MD0, itPS3->p(), itPS3->px(), itPS3->py(), itPS3->pz(),Pimass);
                                                             
                                                             //D* mass diff cut <0.17 to reduce overflow of histogram
                                                             if (MDstar-MD0 <0.17) {
+                                                            
+                                                                double ptaxisDstar[3]={paxisD0[0]+itPS3->px(), paxisD0[1]+itPS3->py(), paxisD0[2]+itPS3->pz() };
+                                                                double pDstar = sqrt(paxisDstar[0]*paxisDstar[0] +paxisDstar[1]*paxisDstar[1] +paxisDstar[2]*paxisDstar[2]);
+                                                                double ptDstar= sqrt(paxisDstar[0]*paxisDstar[0] +paxisDstar[1]*paxisDstar[1]);
                                                                 
-                                                                
+                                                                histset[214]->Fill(ptD0);
+                                                                histset[215]->Fill(ptDstar);
+                                                                histset[216]->Fill(itPS3->pt());
                                                              //Start of z cut
-                                                                
                                                                 double sumpt=0;
                                                                 int n=0;     //declare varriable
                                                                 //Loop over all tracks
@@ -2122,23 +2146,31 @@ histset[105]->Fill(electrons->size());
                                                                         sumpt += abs(itSum->pt()); // sum pt for all tracks
                                                                         n++; //Fill a counter histogram to see how many tracks are present
                                                                     }// end of Sumpt vertex check
-                                                                    
+                                                                
                                                                     
                                                                 }
                                                                 //end of sum loop
-                                                                double z=ptD0/sumpt; // calculate z after loop
+                                                                double z=ptDstar/sumpt; // calculate z after loop
                                                                 histset[210]->Fill(z);
                                                                 histset[211]->Fill(n);
+                                                                deltaM=MDstar-MD0;
                                                                 //Fill deltaM histograms depending on Charge flag cf and z values
-                                                                if      (cf==1 && z>0.05)  histset[208]->Fill(MDstar-MD0);
-                                                                else if (cf==-1 && z>0.05) histset[209]->Fill(MDstar-MD0);
-                                                               
+                                                                if      (cf==1 && z>0.05)  histset[208]->Fill(deltaM);
+                                                                else if (cf==-1 && z>0.05) histset[209]->Fill(MdeltaM);
+                                                                
+                                                                if (ptDstar>3.5 && itK1->pt()>1 && itp2->pt() && itPS3->pt()>0.25) { // extra cuts from Atlas
+                                                                    if      (cf==1 && z>0.05)  histset[212]->Fill(deltaM);
+                                                                    else if (cf==-1 && z>0.05) histset[213]->Fill(deltaM);
+                                                                }
                                                             }
-                                       
                                                     }//end of Pi Slow vertex check.
                                                 }//end of PS3 vs K1 charge and iterators check
                                             }//end of PS3 loop
-                                    }//End of charge check
+                                    }//End of D0 mass check
+                                
+                    
+
+                                    
                             }//vertex seperation cut
                         } //Pt and K1 cut
                     }//end of P2 loop

@@ -20,7 +20,7 @@ process.MessageLogger.cerr.FwkReport.reportEvery = 100
 #process.MessageLogger.cerr.INFO = cms.untracked.PSet(
        # limit = cms.untracked.int32(-1)
        # )
-#process.options   = cms.untracked.PSet( wantSummary = cms.untracked.bool(True))
+process.options   = cms.untracked.PSet( wantSummary = cms.untracked.bool(True))
                                         
 # set the maximum number of events to be processed here
 process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1))
