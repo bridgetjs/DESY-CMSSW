@@ -2109,7 +2109,7 @@ histset[105]->Fill(electrons->size());
                                     double ptD0= sqrt(paxisD0[0]*paxisD0[0] +paxisD0[1]*paxisD0[1]);
                                     
                                         if (cf==1) histset[206]->Fill(MD0);
-                                        if (cf==1)
+                                    
                                     
                                 //----Begin a loop over a third track to find D*
                                     //First check D0 mass is within 500 MeV of the Actual D0 mass
@@ -2174,8 +2174,9 @@ histset[105]->Fill(electrons->size());
                                                                     if      (cf==1)  histset[212]->Fill(deltaM);
                                                                     else if (cf==-1) histset[213]->Fill(deltaM);
                                                                 }
-                                                            }//hard cut on D0 mass
-                                                            else if (abs(deltaM-0.145)<3) histset[217]->Fill(MD0);
+                                                            }//hard cut on D0 mass ends
+                                    
+                                                          if (abs(deltaM-0.145)<0.005 && cf==1) histset[217]->Fill(MD0);
                                                            
                                                             
                                                     }//end of Pi Slow vertex check.
