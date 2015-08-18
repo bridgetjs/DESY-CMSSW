@@ -12,7 +12,7 @@ process = cms.Process("Demo")
 process.load("FWCore.MessageLogger.MessageLogger_cfi")
 process.MessageLogger.cerr.threshold = 'INFO'
 process.MessageLogger.categories.append('Demo')
-process.MessageLogger.cerr.FwkReport.reportEvery = 100
+process.MessageLogger.cerr.FwkReport.reportEvery = 10000
 
 
 #process.load("FWCore.MessageService.MessageLogger_cfi")

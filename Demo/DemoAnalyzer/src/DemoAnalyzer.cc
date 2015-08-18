@@ -2164,7 +2164,7 @@ histset[105]->Fill(electrons->size());
                                                                 histset[221]->Fill(itP2->eta());
                                                                 histset[222]->Fill(itPS3->eta());
                                                                 
-                                                            if (abs(MD0-MD0Actual)<0.5 ) {
+                                                            if (abs(MD0-MD0Actual)<0.05 ) {//hard D0 cut of 50 MeV 
                                                             
                                                                 //Fill deltaM histograms depending on Charge flag cf
                                                                 if      (cf==1)  histset[208]->Fill(deltaM);
