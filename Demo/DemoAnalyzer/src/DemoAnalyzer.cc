@@ -2109,7 +2109,7 @@ histset[105]->Fill(electrons->size());
                                     double ptD0= sqrt(paxisD0[0]*paxisD0[0] +paxisD0[1]*paxisD0[1]);
                                     
                                         if (cf==1) histset[206]->Fill(MD0);
-                                        if (cf=1)
+                                        if (cf==1)
                                     
                                 //----Begin a loop over a third track to find D*
                                     //First check D0 mass is within 500 MeV of the Actual D0 mass
@@ -2170,7 +2170,7 @@ histset[105]->Fill(electrons->size());
                                                                 if      (cf==1)  histset[208]->Fill(deltaM);
                                                                 else if (cf==-1) histset[209]->Fill(deltaM);
                                                                 
-                                                                if (ptDstar>3.5 && itK1->pt()>1 && itp2->pt() && itPS3->pt()>0.25) { // extra cuts from Atlas
+                                                                if (ptDstar>3.5 && itK1->pt()>1 && itP2->pt() && itPS3->pt()>0.25) { // extra cuts from Atlas
                                                                     if      (cf==1)  histset[212]->Fill(deltaM);
                                                                     else if (cf==-1) histset[213]->Fill(deltaM);
                                                                 }

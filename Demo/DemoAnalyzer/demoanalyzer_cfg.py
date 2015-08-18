@@ -12,7 +12,7 @@ process = cms.Process("Demo")
 process.load("FWCore.MessageLogger.MessageLogger_cfi")
 process.MessageLogger.cerr.threshold = 'INFO'
 process.MessageLogger.categories.append('Demo')
-process.MessageLogger.cerr.FwkReport.reportEvery = 10000
+process.MessageLogger.cerr.FwkReport.reportEvery = 1000
 
 
 #process.load("FWCore.MessageService.MessageLogger_cfi")
@@ -83,7 +83,7 @@ process.demo = cms.EDAnalyzer('DemoAnalyzer'
 
 # change this output file name according to input file
 process.TFileService = cms.Service("TFileService",
-                                       fileName = cms.string('OutputD02.root')
+                                       fileName = cms.string('OutputD03.root')
                                    )
 
 process.p = cms.Path(process.demo)
