@@ -2128,7 +2128,7 @@ histset[105]->Fill(electrons->size());
                                                             
                                                             //Now Calculate D* mass
                                                             MDstar= invMass(pD0,paxisD0[0],paxisD0[1],paxisD0[2],MD0, itPS3->p(), itPS3->px(), itPS3->py(), itPS3->pz(),Pimass);
-                                                            double ptaxisDstar[3]={paxisD0[0]+itPS3->px(), paxisD0[1]+itPS3->py(), paxisD0[2]+itPS3->pz() };
+                                                            double paxisDstar[3]={paxisD0[0]+itPS3->px(), paxisD0[1]+itPS3->py(), paxisD0[2]+itPS3->pz() };
                                                             double pDstar = sqrt(paxisDstar[0]*paxisDstar[0] +paxisDstar[1]*paxisDstar[1] +paxisDstar[2]*paxisDstar[2]);
                                                             double ptDstar= sqrt(paxisDstar[0]*paxisDstar[0] +paxisDstar[1]*paxisDstar[1]);
                                                             
