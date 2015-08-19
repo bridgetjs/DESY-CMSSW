@@ -1657,8 +1657,8 @@ for (MuonCollection::const_iterator itMuon = muons->begin(); itMuon != muons->en
     
         //Upisilon Varriables
             double dref[3]={abs((itMuon->track())->vx()-(itM->track())->vx()),abs((itMuon->track())->vy()-(itM->track())->vy()),abs((itMuon->track())->vz()-(itM->track())->vz())};
-            double d1[3]={abs(itMuon->track())->vx()),abs((itMuon->track())->vy()),abs((itMuon->track())->vz());
-            double d2[3]={abs(itM->track())->vx()),abs((itM->track())->vy()),abs((itM->track())->vz());
+              double d1[3]={abs(itMuon->track())->vx()),abs((itMuon->track())->vy()),abs((itMuon->track())->vz())};
+              double d2[3]={abs(itM->track())->vx()),abs((itM->track())->vy()),abs((itM->track())->vz())};
 		const reco::HitPattern& p1 = (itM->track())->hitPattern();
 	 
 		// loop over the hits of the track
