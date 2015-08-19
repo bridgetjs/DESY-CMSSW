@@ -1227,7 +1227,7 @@ else {
     
     
  // loop over tracks
-/*
+
   for( reco::TrackCollection::const_iterator it = tracks->begin(); it !=
  tracks->end(); it++) {
     // LogInfo("Demo")<<"track p"<<it->p()<< "  track reference position"<<it->referencePoint()<< "   track vertex position"<<it->vertex();
@@ -1657,8 +1657,8 @@ for (MuonCollection::const_iterator itMuon = muons->begin(); itMuon != muons->en
     
         //Upisilon Varriables
             double dref[3]={abs((itMuon->track())->vx()-(itM->track())->vx()),abs((itMuon->track())->vy()-(itM->track())->vy()),abs((itMuon->track())->vz()-(itM->track())->vz())};
-        
-        
+            double d1[3]={abs(itMuon->track())->vx()),abs((itMuon->track())->vy()),abs((itMuon->track())->vz());
+            double d2[3]={abs(itM->track())->vx()),abs((itM->track())->vy()),abs((itM->track())->vz());
 		const reco::HitPattern& p1 = (itM->track())->hitPattern();
 	 
 		// loop over the hits of the track
@@ -1716,7 +1716,7 @@ for (MuonCollection::const_iterator itMuon = muons->begin(); itMuon != muons->en
 	 }
        
     //Cuts for Upsilon [arXiv 1012.5545 §3.3]
-              if (ValidHits1>=12 && PixelHits1>=1 && (itM->track())->normalizedChi2()<5 && sqrt(dref[0]*dref[0] + dref[1]*dref[1])<=0.2 && dref[2]<=5){
+              if (ValidHits1>=12 && PixelHits1>=1 && (itM->track())->normalizedChi2()<5 && sqrt(d1[0]*d1[0] + d1[1]*d1[1])<=0.2 && dref[2]<=5 && sqrt(d2[0]*d2[0] + d2[1]*d2[1])<=0.2 && d2[2]<=5 && dref[2]<2){
                         // section removed from if(.... ) as unclear: muon::isGoodMuon(*itM,muon::TMLastStationAngTight) && muon::isGoodMuon(*itM,muon::TrackerMuonArbitrated) && itM->isTrackerMuon()
         
                   if ((abs (itM->eta()) < 1.6 && abs(itMuon->eta()) <1.6 && itM->pt()>3.5 && itMuon->pt()>3.5) || ( abs(abs(itM->eta())-2) < 0.4  && abs(abs(itMuon->eta())-2) < 0.4  && itM->pt()>2.5 && itMuon->pt()>2.5 )) Yflag=1;
@@ -1819,7 +1819,6 @@ for (MuonCollection::const_iterator itMuon = muons->begin(); itMuon != muons->en
 }// Muon Collection for loop ends
 
 
-*/
 
 /*------------------------------------------------------------------------------------------------------------------------------------------------
   -----------------------------------------------ELECTRON COLLECTION--------------------------------------------------------------------------------

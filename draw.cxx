@@ -3,8 +3,7 @@
 Description: This is a root macro to draw histograms produced by the CMS Open Data analyzer.
  
 /----------------------------  Implementation  ----------------------------/
-TEST2
- 
+
 It may be executed, via the terminal, with the following commands:
     root -l
     .x draw.cxx 
@@ -54,7 +53,6 @@ To produce a plot one should carry out the following
 #include "TRandom3.h"
 #include "TTree.h"
 #include <iostream>
-bool
 
 double CrystalBall(double* x, double* par);
 double Background(double* x, double* par);
@@ -117,13 +115,91 @@ void draw(){
     c4->SaveAs("./Plots/DeltaD0Mass2ndcuts.png");
     
     
+    //Define fitting functions
     
-   // c8->SaveAs("Upsilon.png");
+    TF1* Fit1=new TF1("Fit1", allFit,8,12,17);
     
-    //TCanvas *c9=new TCanvas("c9","", 600,500);
-    //
-    //cryst2->Draw("same");
-
+    //Set parameters
+    Fit1->SetParameter(0,1);
+    Fit1->SetParameter(1,0.2);
+    Fit1->FixParameter(2,9.4603);
+    Fit1->SetParameter(3,0.1);
+    Fit1->SetParameter(4,2750);
+    
+    Fit1->SetParameter(5,1);//fix
+    Fit1->SetParameter(6,0.22);
+    Fit1->FixParameter(7,10.02326);
+    Fit1->SetParameter(8,0.12);
+    Fit1->SetParameter(9,1700);
+    
+    Fit1->FixParameter(10,2);//fix
+    Fit1->SetParameter(11,0.1);
+    Fit1->FixParameter(12,10.3352);
+    Fit1->FixParameter(13,0.1); //fix)
+    Fit1->SetParameter(14,1000);
+    
+    
+    //Fit1->SetParNames("#alpha1","n1","mean1","#sigma1","Ntot1","#alpha2","n2","mean2","#sigma2","Ntot2","#alpha3","n3","mean3","#sigma3","Ntot3");
+    Fit1->SetParNames("#alpha","n","Mean","#sigma","N");
+    Fit1->SetLineColor(kBlue);
+    
+    TCanvas *c8=new TCanvas("c8","", 600,500);
+    TH1D *hUpsilon=(TH1D*)dirfsubUpsilon->Get("h_Upsilon");
+    hUpsilon->SetStats(0);
+    hUpsilon->GetYaxis()->SetTitleOffset(1.3);
+    hUpsilon->GetXaxis()->SetTitle("#mu^{+} #mu^{-} mass (Gev/c^{2})");
+    hUpsilon->GetYaxis()->SetTitle("Number of Events");
+    hUpsilon->SetMarkerStyle(20);
+    hUpsilon->Draw("E");
+    hUpsilon->SetMarkerSize(0.5);
+    // Fit1->Draw("same");
+    hUpsilon->Fit("Fit1","","",8,12);
+    TLegend* legc8 = new TLegend(0.6, 0.6, .89, .89);
+    legc8->SetBorderSize(0);
+    legc8->AddEntry((TObject*)0, "CMS,  #sqrt{s} = 7 TeV", "");
+    legc8->AddEntry((TObject*)0, "L = n pb^{-1}", "");
+    legc8->AddEntry((TObject*)0, "#||{#eta^{#mu}} < 2.4 ", "");
+    legc8->Draw();
+    c8->SaveAs("Upsilon.png");
+    
+    TF1* Fit2=new TF1("Fit2", allFit,8,12,17);
+    Fit2->SetLineColor(kBlue);
+    Fit2->SetParameter(0,2);
+    Fit2->SetParameter(1,0.2);
+    Fit2->FixParameter(2,9.4603);
+    Fit2->SetParameter(3,0.1);
+    Fit2->SetParameter(4,1200);
+    
+    Fit2->FixParameter(5,1.3);//fix
+    Fit2->SetParameter(6,0.22);
+    Fit2->FixParameter(7,10.02326);
+    Fit2->SetParameter(8,0.05);
+    Fit2->SetParameter(9,400);
+    
+    Fit2->FixParameter(10,0.7);//fix
+    Fit2->SetParameter(11,0.5);
+    Fit2->FixParameter(12,10.3352);
+    Fit2->FixParameter(13,0.1); //fix)
+    Fit2->SetParameter(14,600);
+    
+    TCanvas *c9=new TCanvas("c9","", 600,500);
+    TH1D *hUpsiloneta=(TH1D*)dirfsubUpsilon->Get("h_Upsilon_eta");
+    hUpsiloneta->SetStats(0);
+    hUpsiloneta->GetYaxis()->SetTitleOffset(1.15);
+    hUpsiloneta->GetXaxis()->SetTitle("#mu^{+} #mu^{-} mass (Gev/c^{2})");
+    hUpsiloneta->GetYaxis()->SetTitle("Events");
+    hUpsiloneta->SetMarkerStyle(20);
+    hUpsiloneta->SetMarkerSize(0.5);
+    hUpsiloneta->Draw("E");
+    hUpsiloneta->Fit("Fit2","","",8,12);
+    //Fit2->Draw("same");
+    TLegend* legc9 = new TLegend(0.6, 0.6, .89, .89);
+    legc9->SetBorderSize(0);
+    legc9->AddEntry((TObject*)0, "CMS,  #sqrt{s} = 7 TeV", "");
+    legc9->AddEntry((TObject*)0, "L = n pb^{-1}", "");
+    legc9->AddEntry((TObject*)0, "#||{#eta^{#mu}} < 1.0 ", "");
+    legc9->Draw();
+    c9->SaveAs("Upsiloneta.png");
   
  return;
 }
@@ -147,16 +223,16 @@ double CrystalBall(double *x,double *par) {
 
 
 double Background(double* x, double* par) {
-    if ( x[0] < 9.2 || x[0] > 10.5) {
-        return exp(-(par[0]*x[0]-par[1]));
-    }
-    else{
-        return 0;
-    }
+    //if ( x[0] > 10.47) {
+    return exp(-par[0]*x[0]+par[1]);
+    //}
+    //else{
+    // return 0;
+    //}
 }
 double allFit(double* x, double* par){
-    return ( CrystalBall(x,par)+ CrystalBall(x,&par[5])+CrystalBall(x,&par[10]) ) ;
-
+    return ( CrystalBall(x,par)+ CrystalBall(x,&par[5])+CrystalBall(x,&par[10]) + Background(x,&par[15]) ) ;
+    
 }
 
 
@@ -224,58 +300,7 @@ double allFit(double* x, double* par){
 
    
 ---------------------------- Upsilon Analysis ----------------------------
-   TCanvas *c9=new TCanvas("c9","", 600,500);
-   TH1D *hUpsiloneta=(TH1D*)dirfsubUpsilon->Get("h_Upsilon_eta");
-   hUpsiloneta->SetStats(1);
-   hUpsiloneta->GetYaxis()->SetTitleOffset(1.15);
-   hUpsiloneta->GetXaxis()->SetTitle("#mu^{+} #mu^{-} mass (Gev/c^{2})");
-   hUpsiloneta->GetYaxis()->SetTitle("Events");
-   hUpsiloneta->Draw("E");
-   TLegend* legc9 = new TLegend(0.6, 0.6, .89, .89);
-   legc9->SetBorderSize(0);
-   legc9->AddEntry((TObject*)0, "CMS,  #sqrt{s} = 7 TeV", "");
-   legc9->AddEntry((TObject*)0, "L = n pb^{-1}", "");
-   legc9->AddEntry((TObject*)0, "#||{#eta^{#mu}} < 1 ", "");
-   legc9->Draw();
-   c9->SaveAs("Upsiloneta.png");
-   
-   
-   TF1* Fit1=new TF1("Fit1", allFit,8,12,15);
-   //Set parameters
-   Fit1->SetParameter(0,1.5);
-   Fit1->SetParameter(1,0.3);
-   Fit1->SetParameter(2,9.46);
-   Fit1->SetParameter(3,0.1);
-   Fit1->SetParameter(4,1400);
-   
-   Fit1->SetParameter(5,1);
-   Fit1->SetParameter(6,0.22);
-   Fit1->SetParameter(7,10.02326);
-   Fit1->SetParameter(8,0.1);
-   Fit1->SetParameter(9,600);
-   
-   Fit1->SetParameter(10,1);
-   Fit1->SetParameter(11,0.3);
-   Fit1->SetParameter(12,10.3552);
-   Fit1->SetParameter(13,0.15);
-   Fit1->SetParameter(14,550);
-   
-   
-   TCanvas *c8=new TCanvas("c8","", 600,500);
-   TH1D *hUpsilon=(TH1D*)dirfsubUpsilon->Get("h_Upsilon");
-   hUpsilon->SetStats(0);
-   hUpsilon->GetYaxis()->SetTitleOffset(1.15);
-   hUpsilon->GetXaxis()->SetTitle("#mu^{+} #mu^{-} mass (Gev/c^{2})");
-   hUpsilon->GetYaxis()->SetTitle("Events");
-   hUpsilon->Draw("E");
-   Fit1->Draw("same");
-   //hUpsilon->Fit("Fit1");
-   TLegend* legc8 = new TLegend(0.6, 0.6, .89, .89);
-   legc8->SetBorderSize(0);
-   legc8->AddEntry((TObject*)0, "CMS,  #sqrt{s} = 7 TeV", "");
-   legc8->AddEntry((TObject*)0, "L = n pb^{-1}", "");
-   legc8->AddEntry((TObject*)0, "#||{#eta^{#mu}} < 2.4 ", "");
-   legc8->Draw();
+
    
    
    
