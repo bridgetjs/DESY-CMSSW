@@ -1659,6 +1659,7 @@ for (MuonCollection::const_iterator itMuon = muons->begin(); itMuon != muons->en
             double dref[3]={abs((itMuon->track())->vx()-(itM->track())->vx()),abs((itMuon->track())->vy()-(itM->track())->vy()),abs((itMuon->track())->vz()-(itM->track())->vz())};
               double d1[3]={abs(itMuon->track())->vx()),abs((itMuon->track())->vy()),abs((itMuon->track())->vz())};
               double d2[3]={abs(itM->track())->vx()),abs((itM->track())->vy()),abs((itM->track())->vz())};
+              
 		const reco::HitPattern& p1 = (itM->track())->hitPattern();
 	 
 		// loop over the hits of the track
@@ -1720,7 +1721,7 @@ for (MuonCollection::const_iterator itMuon = muons->begin(); itMuon != muons->en
                         // section removed from if(.... ) as unclear: muon::isGoodMuon(*itM,muon::TMLastStationAngTight) && muon::isGoodMuon(*itM,muon::TrackerMuonArbitrated) && itM->isTrackerMuon()
         
                   if ((abs (itM->eta()) < 1.6 && abs(itMuon->eta()) <1.6 && itM->pt()>3.5 && itMuon->pt()>3.5) || ( abs(abs(itM->eta())-2) < 0.4  && abs(abs(itMuon->eta())-2) < 0.4  && itM->pt()>2.5 && itMuon->pt()>2.5 )) Yflag=1;
-                  
+              
               }//if valid hits ends
               
 	      }//isNonnull() ends
@@ -2198,7 +2199,7 @@ histset[105]->Fill(electrons->size());
  Use actual D0 mass - D0 is a pure background plot!!!!
  
  */
-
+}
 
 }//DemoAnalyzer ends
 
