@@ -1779,10 +1779,10 @@ for (MuonCollection::const_iterator itMuon = muons->begin(); itMuon != muons->en
             if (Yflag==1 && (abs(rap) < 2 )&& (abs(M-11)<3 )) {
                 histset[250]->Fill(M);
                 histset[252]->Fill(scorr);
-                if (abs(itM->eta())<1 && abs(itMuon->eta())<1) {histset[251]->Fill(M); histset[253]->Fill(scorr) }
+                if (abs(itM->eta())<1 && abs(itMuon->eta())<1) {histset[251]->Fill(M); histset[253]->Fill(scorr); }
             }
             
-		  if(fabs(itM->eta())<2.4 && fabs(itMuon->eta())<2.4){ histset[43]->Fill(s);histset[72]->Fill(scorr);}
+		  if(fabs(itM->eta())<2.4 && fabs(itMuon->eta())<2.4){ histset[43]->Fill(s); histset[72]->Fill(scorr);}
 		  if(fabs(itM->eta())<1. && fabs(itMuon->eta())<1.) {  histset[42]->Fill(s);histset[71]->Fill(scorr);}
 		}
 
