@@ -799,8 +799,8 @@ DemoAnalyzer::DemoAnalyzer(const edm::ParameterSet& iConfig)
     
                     histset[250]  =  upsilon.make<TH1D>("h_Upsilon","",80, 8, 12);
                     histset[251]  =  upsilon.make<TH1D>("h_Upsilon_eta","",80, 8, 12);
-    
-    
+                    histset[252]  =  upsilon.make<TH1D>("h_Upsiloncorr","",80, 8, 12);
+                    histset[253]  =  upsilon.make<TH1D>("h_Upsilon_etacorr","",80, 8, 12);
                  //// ------------- JETS implementation ------------ ////
 
     
@@ -1717,7 +1717,7 @@ for (MuonCollection::const_iterator itMuon = muons->begin(); itMuon != muons->en
 	 }
        
     //Cuts for Upsilon [arXiv 1012.5545 §3.3]
-              if (ValidHits1>=12 && PixelHits1>=1 && (itM->track())->normalizedChi2()<5 && sqrt(d1[0]*d1[0] + d1[1]*d1[1])<=0.2 && dref[2]<=5 && sqrt(d2[0]*d2[0] + d2[1]*d2[1])<=0.2 && d2[2]<=5 && dref[2]<2){
+              if (ValidHits1>=12 && PixelHits1>=1 && (itM->track())->normalizedChi2()<5 && sqrt(d1[0]*d1[0] + d1[1]*d1[1])<=0.2 && d1[2]<=2.5 && sqrt(d2[0]*d2[0] + d2[1]*d2[1])<=0.2 && d2[2]<=2.5 && dref[2]<2  && itM->isTrackerMuon() && itMuon->isTrackerMuon()){
                         // section removed from if(.... ) as unclear: muon::isGoodMuon(*itM,muon::TMLastStationAngTight) && muon::isGoodMuon(*itM,muon::TrackerMuonArbitrated) && itM->isTrackerMuon()
         
                   if ((abs (itM->eta()) < 1.6 && abs(itMuon->eta()) <1.6 && itM->pt()>3.5 && itMuon->pt()>3.5) || ( abs(abs(itM->eta())-2) < 0.4  && abs(abs(itMuon->eta())-2) < 0.4  && itM->pt()>2.5 && itMuon->pt()>2.5 )) Yflag=1;
@@ -1770,15 +1770,16 @@ for (MuonCollection::const_iterator itMuon = muons->begin(); itMuon != muons->en
             if (abs(s-jpsim)<.1 && jpsi_flag2==1 && jpsi_flag1==1 ){
                 pt_jpsi=sqrt( pow( itM->px() + itMuon->px(), 2 ) + pow( itM->py() + itMuon->py(), 2 ) );
                 histset[205]->Fill(pt_jpsi);
-                hxhy[1]->Fill(  rap, pt_jpsi );
-                hxhy[2]->Fill(  rap, pt_jpsi );
+                hxhy[1]->Fill(  abs(rap), pt_jpsi );
+                hxhy[2]->Fill(  abs(rap), pt_jpsi );
             }
             //--------------------------upsilon range--------------------------------------------------------//
             
             
             if (Yflag==1 && (abs(rap) < 2 )&& (abs(M-11)<3 )) {
                 histset[250]->Fill(M);
-                if (abs(itM->eta())<1 && abs(itMuon->eta())<1) histset[251]->Fill(M);
+                histset[252]->Fill(scorr);
+                if (abs(itM->eta())<1 && abs(itMuon->eta())<1) {histset[251]->Fill(M); histset[253]->Fill(scorr) }
             }
             
 		  if(fabs(itM->eta())<2.4 && fabs(itMuon->eta())<2.4){ histset[43]->Fill(s);histset[72]->Fill(scorr);}
@@ -2065,8 +2066,8 @@ histset[105]->Fill(electrons->size());
         //loose and tight D0 and deltaM
         //3 types of histograms with deltaM peak
     //for properties of D* -- hard cut of D0M and deltaM
-    //Loop over all non zero tracks with an iteractor K
     
+    //Loop over all non zero tracks with an iteractor K
     if (tracks->size()>=3) { //check for track collection with more than 3 tracks
         
        // cout<< "Analysing " << tracks->size() << "tracks" << endl; // checking no of tracks
@@ -2196,7 +2197,6 @@ histset[105]->Fill(electrons->size());
  
  Fill vcD0 and vc3 histograms (3D)
  take wrong charge from right charge
- Use actual D0 mass - D0 is a pure background plot!!!!
  
  */
 

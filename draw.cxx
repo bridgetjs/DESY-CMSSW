@@ -92,11 +92,13 @@ void draw(){
     TCanvas *c4 = new TCanvas("c4","",600,400);
     TH1D *hdeltaM=(TH1D*)dirfsubDMesons->Get("h_deltaM2ndcuts");
     TH1D *hdeltaMwrongcharge=(TH1D*)dirfsubDMesons->Get("h_deltaMwrongcharge2ndcuts");
-    hdeltaM->SetStats(1);
+    hdeltaM->SetStats(0);
     hdeltaM->SetLineColor(kBlue);
     hdeltaM->GetXaxis()->SetTitle("M(K#pi#pi)- M(K#pi) (GeV/c^{2})");
-    hdeltaM->GetYaxis()->SetTitleOffset(0.05);
+    hdeltaM->GetYaxis()->SetTitleOffset(1.15);
     hdeltaM->GetYaxis()->SetTitle("Number of Entries");
+    hdeltaM->SetMarkerStyle(20);
+    hdeltaM->SetMarkerSize(0.5);
     hdeltaM->Draw("E");
     hdeltaMwrongcharge->SetLineColor(kRed);
     hdeltaMwrongcharge->Draw("E same");
@@ -105,7 +107,7 @@ void draw(){
     legc4->AddEntry(hdeltaMwrongcharge, "Wrong Charge", "l");
     legc4->Draw();
     legc4->SetBorderSize(0);
-    TLegend* legc4i= new TLegend(0.6, 0.6, .89, .89);
+    TLegend* legc4i= new TLegend(0.69, 0.69, .3, .9);
     legc4i->SetBorderSize(0);
     legc4i->AddEntry((TObject*)0, "CMS,  #sqrt{s} = 7 TeV", "");
     legc4i->AddEntry((TObject*)0, "L = n pb^{-1}", "");
@@ -114,8 +116,6 @@ void draw(){
 
     c4->SaveAs("./Plots/DeltaD0Mass2ndcuts.png");
     
-    
-    //Define fitting functions
     
     TF1* Fit1=new TF1("Fit1", allFit,8,12,17);
     
@@ -200,6 +200,7 @@ void draw(){
     legc9->AddEntry((TObject*)0, "#||{#eta^{#mu}} < 1.0 ", "");
     legc9->Draw();
     c9->SaveAs("Upsiloneta.png");
+ 
   
  return;
 }
@@ -260,7 +261,10 @@ double allFit(double* x, double* par){
    hPaircount2->GetXaxis()->SetTitle("y^{J/#psi}");    // add axis titles
    hPaircount2->GetYaxis()->SetTitle("p_{T}^{J/#psi} [GeV/c]");
    hPaircount2->Draw("colz");// draw with a colour scale
-   c2->SaveAs("./Plots/Paircount2.png");
+   c5->Update();
+   TPaletteAxis *pal =  (TPaletteAxis*)hPaircount2->GetListOfFunctions()->FindObject("palette");
+   pal->GetAxis()->SetLabelSize(0.026);
+   c5->SaveAs("Paircount2.png");
    
    TCanvas *c2 = new TCanvas("c2","",600,400);
    h_JpsiPT->SetStats(1);
@@ -301,7 +305,7 @@ double allFit(double* x, double* par){
    
 ---------------------------- Upsilon Analysis ----------------------------
 
-   
+
    
    
    ----------------------------The DREGS ----------------------------

@@ -31,9 +31,9 @@ goodJSON = '/home/cms-opendata/CMSSW_4_2_8/src/Cert_136033-149442_7TeV_Apr21ReRe
 myLumis = LumiList.LumiList(filename = goodJSON).getCMSSWString().split(',')
 
 
-files2010data = FileUtils.loadListFromFile ('/home/cms-opendata/CMSSW_4_2_8/src/MinBsData0000.txt')
+#files2010data = FileUtils.loadListFromFile ('/home/cms-opendata/CMSSW_4_2_8/src/MinBsData0000.txt')
 #files2010data = FileUtils.loadListFromFile ('/home/cms-opendata/CMSSW_4_2_8/src/JetData0000.txt')
-#files2010data = FileUtils.loadListFromFile ('/home/cms-opendata/CMSSW_4_2_8/src/MuoniaData0000.txt')
+files2010data = FileUtils.loadListFromFile ('/home/cms-opendata/CMSSW_4_2_8/src/MuoniaData0000.txt')
 
 
 #files2010data = FileUtils.loadListFromFile ('/afs/desy.de/user/s/stefan/CMSPhysic/FromIrene/data_files/CMS_Run2010B_Mu_AOD_Apr21ReReco-v1_0000_file_index.txt')
@@ -83,7 +83,7 @@ process.demo = cms.EDAnalyzer('DemoAnalyzer'
 
 # change this output file name according to input file
 process.TFileService = cms.Service("TFileService",
-                                       fileName = cms.string('OutputD03.root')
+                                       fileName = cms.string('OutputMuonia3.root')
                                    )
 
 process.p = cms.Path(process.demo)
