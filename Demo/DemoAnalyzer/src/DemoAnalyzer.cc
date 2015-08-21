@@ -1709,7 +1709,7 @@ for (MuonCollection::const_iterator itMuon = muons->begin(); itMuon != muons->en
 
 
      // for j_psi
-       if (ValidHits1>=12 && PixelHits1>=2 && (itM->track())->normalizedChi2()<4.0 && dx<=0.1 && dy<=0.1 && dz<=0.3 && muon::isGoodMuon(*itM,muon::TMLastStationAngTight) && muon::isGoodMuon(*itM,muon::TrackerMuonArbitrated) && itM->isTrackerMuon())
+       if (ValidHits1>=12 && PixelHits1>=2 && (itM->track())->normalizedChi2()<4.0&& (itMuon->track())->normalizedChi2()<4.0 && dx<=0.1 && dy<=0.1 && dz<=0.3 && muon::isGoodMuon(*itM,muon::TMLastStationAngTight) && muon::isGoodMuon(*itM,muon::TrackerMuonArbitrated) && itM->isTrackerMuon())
 	 {
 	    if(fabs(itM->eta())<1.3 && itM->pt()>3.3)jpsi_flag2=1;
 	    else if(fabs(itM->eta())>1.3 && fabs(itM->eta())<2.2 && itM->p()>2.9)jpsi_flag2=1;
@@ -1717,9 +1717,9 @@ for (MuonCollection::const_iterator itMuon = muons->begin(); itMuon != muons->en
 	 }
        
     //Cuts for Upsilon [arXiv 1012.5545 §3.3]
-              if (ValidHits1>=12 && PixelHits1>=1 && (itM->track())->normalizedChi2()<5 && sqrt(d1[0]*d1[0] + d1[1]*d1[1])<=0.2 && d1[2]<=2.5 && sqrt(d2[0]*d2[0] + d2[1]*d2[1])<=0.2 && d2[2]<=2.5 && dref[2]<2  && itM->isTrackerMuon() && itMuon->isTrackerMuon() && muon::isGoodMuon(*itM,muon::TMOneStationTight) && muon::isGoodMuon(*itMuon,muon::TMOneStationTight) ){
+              if (ValidHits1>=12 && PixelHits1>=1 && (itM->track())->normalizedChi2()<5 && (itMuon->track())->normalizedChi2()<5 && sqrt(d1[0]*d1[0] + d1[1]*d1[1])<=0.2 && d1[2]<=25 && sqrt(d2[0]*d2[0] + d2[1]*d2[1])<=0.2 && d2[2]<=25 && dref[2]<2  && itM->isTrackerMuon() && itMuon->isTrackerMuon() && muon::isGoodMuon(*itM,muon::TMOneStationTight) && muon::isGoodMuon(*itMuon,muon::TMOneStationTight) ){
         
-                  if ((abs (itM->eta()) < 1.6 && abs(itMuon->eta()) <1.6 && itM->pt()>3.5 && itMuon->pt()>3.5) || ( abs(abs(itM->eta())-2) < 0.4  && abs(abs(itMuon->eta())-2) < 0.4  && itM->pt()>2.5 && itMuon->pt()>2.5 )) Yflag=1;
+                  if ( ( (abs (itM->eta()) < 1.6 && itM->pt()>3.5) || ( abs(abs(itM->eta())-2) < 0.4 && itM->pt()>2.5 ) ) && ( (abs (itMuon->eta()) < 1.6 && itMuon->pt()>3.5) || ( abs(abs(itMuon->eta())-2) < 0.4 && itMuon->pt()>2.5 ) ) ) Yflag=1;
               
               }//if valid hits ends
               
