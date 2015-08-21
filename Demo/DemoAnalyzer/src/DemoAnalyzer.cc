@@ -1717,8 +1717,7 @@ for (MuonCollection::const_iterator itMuon = muons->begin(); itMuon != muons->en
 	 }
        
     //Cuts for Upsilon [arXiv 1012.5545 §3.3]
-              if (ValidHits1>=12 && PixelHits1>=1 && (itM->track())->normalizedChi2()<5 && sqrt(d1[0]*d1[0] + d1[1]*d1[1])<=0.2 && d1[2]<=2.5 && sqrt(d2[0]*d2[0] + d2[1]*d2[1])<=0.2 && d2[2]<=2.5 && dref[2]<2  && itM->isTrackerMuon() && itMuon->isTrackerMuon()){
-                        // section removed from if(.... ) as unclear: muon::isGoodMuon(*itM,muon::TMLastStationAngTight) && muon::isGoodMuon(*itM,muon::TrackerMuonArbitrated) && itM->isTrackerMuon()
+              if (ValidHits1>=12 && PixelHits1>=1 && (itM->track())->normalizedChi2()<5 && sqrt(d1[0]*d1[0] + d1[1]*d1[1])<=0.2 && d1[2]<=2.5 && sqrt(d2[0]*d2[0] + d2[1]*d2[1])<=0.2 && d2[2]<=2.5 && dref[2]<2  && itM->isTrackerMuon() && itMuon->isTrackerMuon() && muon::isGoodMuon(*itM,muon::TMOneStationTight) && muon::isGoodMuon(*itMuon,muon::TMOneStationTight) ){
         
                   if ((abs (itM->eta()) < 1.6 && abs(itMuon->eta()) <1.6 && itM->pt()>3.5 && itMuon->pt()>3.5) || ( abs(abs(itM->eta())-2) < 0.4  && abs(abs(itMuon->eta())-2) < 0.4  && itM->pt()>2.5 && itMuon->pt()>2.5 )) Yflag=1;
               
@@ -1829,7 +1828,7 @@ for (MuonCollection::const_iterator itMuon = muons->begin(); itMuon != muons->en
 
 
 
-/*
+
 
 histset[105]->Fill(electrons->size());
  for( reco::GsfElectronCollection::const_iterator it = electrons->begin(); it !=
@@ -2052,7 +2051,7 @@ histset[105]->Fill(electrons->size());
 
  }//for(reco::GsfElectronCollection........) ends
  
-  */
+  
 //////////////// ----------------------------- D* Meson Analysis ------------------------------ ////////////////
     double MDstar;
     double deltaM;
@@ -2164,7 +2163,10 @@ histset[105]->Fill(electrons->size());
                                                                 histset[220]->Fill(itK1->eta());
                                                                 histset[221]->Fill(itP2->eta());
                                                                 histset[222]->Fill(itPS3->eta());
-                                                                
+                                                            
+                                                            
+                                                            
+                                                            
                                                             if (abs(MD0-MD0Actual)<0.05 ) {//hard D0 cut of 50 MeV 
                                                             
                                                                 //Fill deltaM histograms depending on Charge flag cf
@@ -2191,7 +2193,7 @@ histset[105]->Fill(electrons->size());
                 }//end of K1 Pt cut
             }//end of K loop
     }//end of track size cut
-
+//Can I check hadron status of the track, I.e if it left a signal in the HCAL
  
  /* Ideas:
  
