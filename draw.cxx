@@ -88,33 +88,7 @@ void draw(){
     //Define fitting functions
 
 
-    
-    TCanvas *c4 = new TCanvas("c4","",600,400);
-    TH1D *hdeltaM=(TH1D*)dirfsubDMesons->Get("h_deltaM2ndcuts");
-    TH1D *hdeltaMwrongcharge=(TH1D*)dirfsubDMesons->Get("h_deltaMwrongcharge2ndcuts");
-    hdeltaM->SetStats(0);
-    hdeltaM->SetLineColor(kBlue);
-    hdeltaM->GetXaxis()->SetTitle("M(K#pi#pi)- M(K#pi) (GeV/c^{2})");
-    hdeltaM->GetYaxis()->SetTitleOffset(1.15);
-    hdeltaM->GetYaxis()->SetTitle("Number of Entries");
-    hdeltaM->SetMarkerStyle(20);
-    hdeltaM->SetMarkerSize(0.5);
-    hdeltaM->Draw("E");
-    hdeltaMwrongcharge->SetLineColor(kRed);
-    hdeltaMwrongcharge->Draw("E same");
-    TLegend* legc4 = new TLegend(0.7, 0.1, .9, .3);
-    legc4->AddEntry(hdeltaM, "Right Charge", "l");
-    legc4->AddEntry(hdeltaMwrongcharge, "Wrong Charge", "l");
-    legc4->Draw();
-    legc4->SetBorderSize(0);
-    TLegend* legc4i= new TLegend(0.69, 0.69, .3, .9);
-    legc4i->SetBorderSize(0);
-    legc4i->AddEntry((TObject*)0, "CMS,  #sqrt{s} = 7 TeV", "");
-    legc4i->AddEntry((TObject*)0, "L = n pb^{-1}", "");
-    //legc4i->AddEntry((TObject*)0, "#||{#eta^{#mu}} < 1 ", "");
-    legc4i->Draw();
 
-    c4->SaveAs("./Plots/DeltaD0Mass2ndcuts.png");
     
     
     TF1* Fit1=new TF1("Fit1", allFit,8,12,17);
@@ -302,7 +276,32 @@ double allFit(double* x, double* par){
    hn->Draw();
    //cn->SaveAs("./Plots/D0z.png");
 
+   TCanvas *c4 = new TCanvas("c4","",600,400);
+   TH1D *hdeltaM=(TH1D*)dirfsubDMesons->Get("h_deltaM2ndcuts");
+   TH1D *hdeltaMwrongcharge=(TH1D*)dirfsubDMesons->Get("h_deltaMwrongcharge2ndcuts");
+   hdeltaM->SetStats(0);
+   hdeltaM->SetLineColor(kBlue);
+   hdeltaM->GetXaxis()->SetTitle("M(K#pi#pi)- M(K#pi) (GeV/c^{2})");
+   hdeltaM->GetYaxis()->SetTitleOffset(1.15);
+   hdeltaM->GetYaxis()->SetTitle("Number of Entries");
+   hdeltaM->SetMarkerStyle(20);
+   hdeltaM->SetMarkerSize(0.5);
+   hdeltaM->Draw("E");
+   hdeltaMwrongcharge->SetLineColor(kRed);
+   hdeltaMwrongcharge->Draw("E same");
+   TLegend* legc4 = new TLegend(0.7, 0.1, .9, .3);
+   legc4->AddEntry(hdeltaM, "Right Charge", "l");
+   legc4->AddEntry(hdeltaMwrongcharge, "Wrong Charge", "l");
+   legc4->Draw();
+   legc4->SetBorderSize(0);
+   TLegend* legc4i= new TLegend(0.69, 0.69, .3, .9);
+   legc4i->SetBorderSize(0);
+   legc4i->AddEntry((TObject*)0, "CMS,  #sqrt{s} = 7 TeV", "");
+   legc4i->AddEntry((TObject*)0, "L = n pb^{-1}", "");
+   //legc4i->AddEntry((TObject*)0, "#||{#eta^{#mu}} < 1 ", "");
+   legc4i->Draw();
    
+   c4->SaveAs("./Plots/DeltaD0Mass2ndcuts.png");
 ---------------------------- Upsilon Analysis ----------------------------
 
 
