@@ -771,7 +771,7 @@ DemoAnalyzer::DemoAnalyzer(const edm::ParameterSet& iConfig)
                     hxhy[2]       =   acceptance.make<TH2D>("h_Paircount2", "", 24, 0, 2.4, 42, binsy );
                 //// ------------- D* Anaylsis ------------ ////
     
-                    histset[206]  =   dmesons.make<TH1D>("h_D0mass", "", 200, 1.5, 2); //D0 mass histogram
+                    histset[206]  =   dmesons.make<TH1D>("h_D0mass", "", 200, 1.6, 2.2); //D0 mass histogram
                     histset[208]  =   dmesons.make<TH1D>("h_deltaM", "", 64, 0.138, 0.17); //Mass difference histogram for 'right charge' paring
                     histset[209]  =   dmesons.make<TH1D>("h_deltaMwrongcharge", "", 64, 0.138, 0.17); //Mass difference histogram for 'wrong charge' pairing
     
@@ -779,7 +779,7 @@ DemoAnalyzer::DemoAnalyzer(const edm::ParameterSet& iConfig)
                     histset[212]  =   dmesons.make<TH1D>("h_deltaM2ndcuts", "", 64, 0.138, 0.17); //Mass difference histogram for 'right charge' paring (Atlas Cuts)
                     histset[213]  =   dmesons.make<TH1D>("h_deltaMwrongcharge2ndcuts", "", 64, 0.138, 0.17); //Mass difference histogram for 'wrong charge' pairing (Atlas Cuts)
     
-                    histset[217]  =   dmesons.make<TH1D>("h_D0masscut", "", 200, 1.5, 2); //D0 mass histogram with a cut on delta M
+                    histset[217]  =   dmesons.make<TH1D>("h_D0masscut", "", 200, 1.6, 2.2); //D0 mass histogram with a cut on delta M
     
                     histset[210]  =   dmesons.make<TH1D>("h_z","",100,0,0.5);
                     histset[211]  =   dmesons.make<TH1D>("h_n","",100, 0 ,200);
@@ -2113,7 +2113,7 @@ histset[105]->Fill(electrons->size());
                                     
                                 //----Begin a loop over a third track to find D*
                                     //First check D0 mass is within 600 MeV of the 1.9GeV
-                                    if (abs(MD0-1.9)<0.5) { // check it is a 'reasonable' D0 candidate with a loose cut
+                                    if (abs(MD0-1.9)<0.3) { // check it is a 'reasonable' D0 candidate with a loose cut
                   
                                         //locate D0 'vertex' using average coordinate of tracks
                                         double vcD0[3] ={0.5*(itK1->vx()+itP2->vx()), 0.5*(itK1->vy()+itP2->vy()), 0.5*(itK1->vz()+itP2->vz())};
@@ -2179,7 +2179,7 @@ histset[105]->Fill(electrons->size());
                                                                 }
                                                             }//hard cut on D0 mass ends
                                     
-                                                          if (abs(deltaM-0.145)<0.005 && cf==1) histset[217]->Fill(MD0);
+                                                          if (abs(deltaM-0.145)<0.001 && cf==1) histset[217]->Fill(MD0);
                                                            
                                                             
                                                     }//end of Pi Slow vertex check.
