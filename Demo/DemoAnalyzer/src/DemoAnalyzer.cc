@@ -771,7 +771,7 @@ DemoAnalyzer::DemoAnalyzer(const edm::ParameterSet& iConfig)
                     hxhy[2]       =   acceptance.make<TH2D>("h_Paircount2", "", 24, 0, 2.4, 42, binsy );
                 //// ------------- D* Anaylsis ------------ ////
     
-                    histset[206]  =   dmesons.make<TH1D>("h_D0mass", "", 200, 1.6, 2.2); //D0 mass histogram
+                    histset[206]  =   dmesons.make<TH1D>("h_D0mass", "", 60, 1.6, 2.2); //D0 mass histogram
                     histset[208]  =   dmesons.make<TH1D>("h_deltaM", "", 64, 0.138, 0.17); //Mass difference histogram for 'right charge' paring
                     histset[209]  =   dmesons.make<TH1D>("h_deltaMwrongcharge", "", 64, 0.138, 0.17); //Mass difference histogram for 'wrong charge' pairing
     
@@ -779,15 +779,15 @@ DemoAnalyzer::DemoAnalyzer(const edm::ParameterSet& iConfig)
                     histset[212]  =   dmesons.make<TH1D>("h_deltaM2ndcuts", "", 64, 0.138, 0.17); //Mass difference histogram for 'right charge' paring (Atlas Cuts)
                     histset[213]  =   dmesons.make<TH1D>("h_deltaMwrongcharge2ndcuts", "", 64, 0.138, 0.17); //Mass difference histogram for 'wrong charge' pairing (Atlas Cuts)
     
-                    histset[217]  =   dmesons.make<TH1D>("h_D0masscut", "", 200, 1.6, 2.2); //D0 mass histogram with a cut on delta M
+                    histset[217]  =   dmesons.make<TH1D>("h_D0masscut", "", 60, 1.6, 2.2); //D0 mass histogram with a cut on delta M
     
                     histset[210]  =   dmesons.make<TH1D>("h_z","",100,0,0.5);
                     histset[211]  =   dmesons.make<TH1D>("h_n","",100, 0 ,200);
-                    histset[214]  =   dmesons.make<TH1D>("h_d0pt","",100, 0 ,50);
-                    histset[215]  =   dmesons.make<TH1D>("h_dstarpt","",100, 0 ,50);
-                    histset[216]  =   dmesons.make<TH1D>("h_PS3pt","",100, 0 ,10);
-                    histset[218]  =   dmesons.make<TH1D>("h_K1pt","",100, 0 ,50);
-                    histset[219]  =   dmesons.make<TH1D>("h_P2pt","",100, 0 ,50);
+                    histset[214]  =   dmesons.make<TH1D>("h_d0pt","",100, 0 ,15);
+                    histset[215]  =   dmesons.make<TH1D>("h_dstarpt","",100, 0 ,15);
+                    histset[216]  =   dmesons.make<TH1D>("h_PS3pt","",100, 0 ,2);
+                    histset[218]  =   dmesons.make<TH1D>("h_K1pt","",100, 0 ,10);
+                    histset[219]  =   dmesons.make<TH1D>("h_P2pt","",100, 0 ,10);
     
     
                     histset[220]  =   dmesons.make<TH1D>("h_PS3eta","",50, -3 ,3);
