@@ -1227,7 +1227,7 @@ else {
     
     
  // loop over tracks
-
+/*
   for( reco::TrackCollection::const_iterator it = tracks->begin(); it !=
  tracks->end(); it++) {
     // LogInfo("Demo")<<"track p"<<it->p()<< "  track reference position"<<it->referencePoint()<< "   track vertex position"<<it->vertex();
@@ -1820,14 +1820,14 @@ for (MuonCollection::const_iterator itMuon = muons->begin(); itMuon != muons->en
 }// Muon Collection for loop ends
 
 
-
+*/
 /*------------------------------------------------------------------------------------------------------------------------------------------------
   -----------------------------------------------ELECTRON COLLECTION--------------------------------------------------------------------------------
   ---------------------------------------------------------------------------------------------------------------------------------------------------*/
 
 
 
-
+/*
 
 
 histset[105]->Fill(electrons->size());
@@ -2051,7 +2051,7 @@ histset[105]->Fill(electrons->size());
 
  }//for(reco::GsfElectronCollection........) ends
  
-  
+  */
 //////////////// ----------------------------- D* Meson Analysis ------------------------------ ////////////////
     double MDstar;
     double deltaM;
@@ -2193,8 +2193,9 @@ histset[105]->Fill(electrons->size());
                 }//end of K1 Pt cut
             }//end of K loop
     }//end of track size cut
-//Can I check hadron status of the track, I.e if it left a signal in the HCAL
- 
+
+    
+    
  /* Ideas:
  
  Fill vcD0 and vc3 histograms (3D)
