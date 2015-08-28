@@ -97,6 +97,22 @@
 #include "DataFormats/JetReco/interface/JetExtendedAssociation.h"
 #include "DataFormats/JetReco/interface/JetID.h"
 
+// for vertices refit:
+#include "TrackingTools/TransientTrack/interface/TransientTrackBuilder.h"
+#include "TrackingTools/Records/interface/TransientTrackRecord.h"
+
+#include "RecoVertex/AdaptiveVertexFit/interface/AdaptiveVertexFitter.h"
+#include "RecoVertex/AdaptiveVertexFinder/interface/AdaptiveVertexReconstructor.h"
+#include "RecoVertex/TrimmedKalmanVertexFinder/interface/KalmanTrimmedVertexFinder.h"
+
+#include "RecoVertex/VertexPrimitives/interface/TransientVertex.h"
+#include "RecoVertex/VertexPrimitives/interface/VertexException.h"
+#include "TrackingTools/TransientTrack/interface/TrackTransientTrack.h"
+//#include "TrackingTools/TransientTrack/interface/TransientTrack.h"
+
+// for PVcies:
+#include "RecoVertex/PrimaryVertexProducer/interface/PrimaryVertexProducerAlgorithm.h"
+
 #include <iostream>
 using namespace std;
 // class declaration
@@ -780,6 +796,8 @@ DemoAnalyzer::DemoAnalyzer(const edm::ParameterSet& iConfig)
                     histset[213]  =   dmesons.make<TH1D>("h_deltaMwrongcharge2ndcuts", "", 64, 0.138, 0.17); //Mass difference histogram for 'wrong charge' pairing (Atlas Cuts)
     
                     histset[217]  =   dmesons.make<TH1D>("h_D0masscut", "", 60, 1.6, 2.2); //D0 mass histogram with a cut on delta M
+                    histset[223]  =   dmesons.make<TH1D>("h_D0masscutwrongsign", "", 60, 1.6, 2.2);
+    
     
                     histset[210]  =   dmesons.make<TH1D>("h_z","",100,0,0.5);
                     histset[211]  =   dmesons.make<TH1D>("h_n","",100, 0 ,200);
@@ -1290,6 +1308,35 @@ if(fabs(it->eta())>2.400 && fabs(it->eta())<=2.60){
      histset[21]->Fill(it->pt());}
 
   }//end of track collection loop
+    
+    
+    /// **************************************************************************************************   ///
+    /// New adds for Vertex information: ///
+    
+    /// Declare objects: Track, Vertex builder, BeamSpot, Transient Track collection for the PVcies.
+    /// Should be moved into Declare variables section!?
+    
+    /// Declaration:
+    
+    //      declare new track builder for my new Transient track collection  ;
+    ESHandle<TransientTrackBuilder> theB;
+    iSetup.get<TransientTrackRecord>().get("TransientTrackBuilder",theB);
+    
+    //      to get BeamSpot information:
+    Handle<reco::BeamSpot> recoBeamSpotHandle;
+    iEvent.getByLabel("offlineBeamSpot", recoBeamSpotHandle);
+    reco::BeamSpot vertexBeamSpot= *recoBeamSpotHandle;
+    
+    //      will contain all tracks from PVcies:
+    vector<TransientTrack> mytracksPV;
+    
+    
+    //      contain all tracks from SVcies
+    vector<TransientTrack> mytracksSV;
+    vector<reco::TransientTrack> genralTracks = (*theB).build(tracks);
+    
+    
+    /// ************************************************************************************************** ///
 
 
   // fill basic vertex information
@@ -1354,19 +1401,101 @@ if(fabs(ite->x()-(itMuon->track())->vx())<=0.1 && fabs(ite->y()-(itMuon->track()
       // LogInfo("Demo")<<"Vertex track p"<<(*iTrack)->p()<<"  Vertex trackposition"<<(*iTrack)->referencePoint();
 
       counter++;
+     
+     // NEW:
+     // create a new track collection:
+     const reco::TrackRef trackRef = iTrack->castTo<reco::TrackRef>();
+     TransientTrack  transientTrack = theB->build(trackRef);
+     transientTrack.setBeamSpot(vertexBeamSpot);
+     mytracks.push_back(transientTrack);
+     mytracksPV.push_back(transientTrack);   // this collection will be used as PVcies track collection;
+     
+     
  }
  // fill number of tracks associated to this vertex (is it Ok to fill int?)
  histset[86]->Fill(counter);
     
 
       }// end of if(ite->tracksSize()!=0 && Muflag==0)
+      
+      ///---------------------------------------- Refit PV again to compare it with one from dataBase----------------------------------------  ///
+      
+      cout<<"N tracks per vertex = "<</*ite->nTracks()<<"  or "<</ite->tracksSize()<<"  ";
+      if (ite->ndof() > 0)    { cout<<"Chi2/ndof = "<<(ite->chi2()/ite->ndof())<<endl; }
+      
+      /// REFit tracks from new collection, for ONE vertex:
+      if ( mytracks.size()>1 )
+      {
+          AdaptiveVertexFitter  theFitter;
+          TransientVertex myVertexBS = theFitter.vertex(mytracks, vertexBeamSpot);                        // if you want the beam constraint
+          TransientVertex myVertex = theFitter.vertex(mytracks);                                          // if you don't want the beam constraint
+          cout<< ite->position().z() << " " << myVertex.position().z() <<"  " << myVertexBS.position().z() <<" size = "<<(myVertexBS.originalTracks()).size()<< endl;
+      } else
+      {
+          cout << "not enough tracks left" <<std::endl;
+      }
+      
+      ///------------------------------------------------------------------------------------------------------------------------ ///
+
+      
+      
   }//end of vertex collection loop
 
   
   histset[8]->Fill(size); //only valid vertices get stored.
  
+    /// ------------------------------------------------------------------------------------------------------------------------ ///
+    ///                             VERTEX STUDY                                                                           ///
+    /// ****************************************************************************************************************** ///
+    
+    /// Find PV:
+    
+    //if( tracks.size() - mytracksPV.size()>1 )
+    //{
+    //PrimaryVertexProducerAlgorithm finderSV;      /// does not work well
+    //KalmanTrimmedVertexFinder finderSV;           /// does not work well
+    
+    AdaptiveVertexReconstructor finderPV;
+    vector<TransientVertex> PVvertices = finderPV.vertices(mytracksPV, vertexBeamSpot );
+    
+    for(vector<TransientVertex>::iterator ipv = PVvertices.begin(); ipv != PVvertices.end(); ++ipv)
+    {
+        //if ( isv->isValid() ) {histset[400]->Fill( isv->normalisedChiSquared() );}
+        //histset[401]->Fill( isv->normalisedChiSquared() );
+        if (ipv->normalisedChiSquared() < 2. && ipv->normalisedChiSquared() > 0.3)      {
+            
+            cout<<" N tracks per PV = "<<(ipv->originalTracks()).size()<<"  XYZ pos = "<<(ipv->position()).x()<<"   "<<(ipv->position()).y()<<"     "<<(ipv->position()).z()<<"     ";
+            cout<<" Chi2/ndof = "<< ipv->normalisedChiSquared()<<endl;
+        }
+    }
+    //} else { cout << "not enough tracks left for SV reconstruction" <<std::endl; }
+    
+    /// ****************************************************************************************************************** ///
+    
+    /// ****************************************************************************************************************** ///
+    /// Check if there is an access to TransientTracks via TransientVertex vector:
+    /// This is just an example how to access Transient Track Collection inside of the Transient Vertex Collection:
+    
+    vector<TransientTrack> mytracks_tst;
+    for(vector<TransientVertex>::iterator ipvtst = PVvertices.begin(); ipvtst != PVvertices.end(); ++ipvtst)
+    {
+        if (ipvtst->normalisedChiSquared() < 2. && ipvtst->normalisedChiSquared() > 0.3) {} else  { continue; }
+        mytracks_tst = ipvtst->originalTracks();
+        for(vector<TransientTrack>::iterator trk_tst = mytracks_tst.begin(); trk_tst != mytracks_tst.end(); ++trk_tst)
+        {
+            
+            cout<<"TEST Transient Track P() = "<<(trk_tst->track()).p()<<endl;
+            
+        }
+        
+    }
 
-   //------------------analysing global muons with the track collection-------------------------// 
+    
+    /// ****************************************************************************************************************** ///
+    
+    
+
+   //------------------analysing global muons with the track collection-------------------------//
 
 
    histset[4]->Fill(gmuons->size());
@@ -2179,7 +2308,10 @@ histset[105]->Fill(electrons->size());
                                                                 }
                                                             }//hard cut on D0 mass ends
                                     
-                                                          if (abs(deltaM-0.145)<0.001 && cf==1) histset[217]->Fill(MD0);
+                                                            if (abs(deltaM-0.1455)<0.001){
+                                                                if      (cf==1)  histset[223]->Fill(MD0);
+                                                                else if (cf==-1) histset[218]->Fill(MD0);
+                                                                }
                                                            
                                                             
                                                     }//end of Pi Slow vertex check.
