@@ -2309,7 +2309,7 @@ histset[105]->Fill(electrons->size());
                                                             }//hard cut on D0 mass ends
                                     
                                                             if (abs(deltaM-0.1455)<0.001){
-                                                                if      (cf==1)  histset[218]->Fill(MD0);
+                                                                if      (cf==1)  histset[217]->Fill(MD0);
                                                                 else if (cf==-1) histset[223]->Fill(MD0);
                                                                 }
                                                            
