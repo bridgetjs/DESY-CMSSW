@@ -2298,23 +2298,23 @@ histset[105]->Fill(electrons->size());
                                                             
                                                             
                                                             
-                                                            if (abs(MD0-MD0Actual)<0.03 ) {//hard D0 cut of 30 MeV
+                                                            if (abs(MD0-MD0Actual)<0.025 ) {//hard D0 cut of 30 MeV
                                                             
                                                                 //Fill deltaM histograms depending on Charge flag cf
                                                                 if      (cf==1)  histset[208]->Fill(deltaM);
                                                                 else if (cf==-1) histset[209]->Fill(deltaM);
                                                                 
-                                                                if (ptDstar>3.5 && itK1->pt()>1 && itP2->pt() && itPS3->pt()>0.25) { // extra cuts from Atlas
+                                                                if (ptDstar>3.5 && itK1->pt()>1 && itP2->pt()>1 && itPS3->pt()>0.25 && abs(MD0-MD0Actual)<0.025) { // extra cuts from Atlas
                                                                     if      (cf==1)  histset[212]->Fill(deltaM);
                                                                     else if (cf==-1) histset[213]->Fill(deltaM);
                                                                 }
                                                             }//hard cut on D0 mass ends
                                     
-                                                            if (abs(deltaM-0.1455)<0.001){
+                                                            if (abs(deltaM-0.1454)<0.001){
                                                                 if      (cf==1)  histset[217]->Fill(MD0);
                                                                 else if (cf==-1) histset[223]->Fill(MD0);
                                                                 
-                                                                if (ptDstar>3.5 && itK1->pt()>1 && itP2->pt() && itPS3->pt()>0.25) { // extra cuts from Atlas
+                                                                if (ptDstar>3.5 && itK1->pt()>1 && itP2->pt()>1 && itPS3->pt()>0.25 && abs(deltaM-0.1454)<0.001) { // extra cuts from Atlas
                                                                     if      (cf==1)  histset[224]->Fill(MD0);
                                                                     else if (cf==-1) histset[225]->Fill(MD0);
                                                                 }
