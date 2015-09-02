@@ -83,7 +83,7 @@ process.demo = cms.EDAnalyzer('DemoAnalyzer'
 
 # change this output file name according to input file
 process.TFileService = cms.Service("TFileService",
-                                       fileName = cms.string('OutputD07.root')
+                                       fileName = cms.string('OutputD08.root')
                                    )
 
 process.p = cms.Path(process.demo)

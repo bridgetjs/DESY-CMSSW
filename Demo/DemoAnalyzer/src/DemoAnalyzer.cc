@@ -2275,7 +2275,7 @@ histset[105]->Fill(electrons->size());
                                                                     //Check track origins
                                                                     double vc3[3] ={abs(vcD0[0]-itSum->vx()), abs(vcD0[1]- itSum->vy()), abs(vcD0[2]-itSum->vz())};
                                                                     if (sqrt(vc3[0]*vc3[0] + vc3[1]*vc3[1])<0.1 && vc3[2] <0.1){
-                                                                        sumpt += abs(itSum->pt()); // sum pt for all tracks
+                                                                        sumpt += fabs(itSum->pt()); // sum pt for all tracks
                                                                         n++; //Fill a counter histogram to see how many tracks are present
                                                                     }// end of Sumpt vertex check
                                                                 }
@@ -2298,7 +2298,7 @@ histset[105]->Fill(electrons->size());
                                                             
                                                             
                                                             
-                                                            if (abs(MD0-MD0Actual)<0.025 ) {//hard D0 cut of 30 MeV
+                                                            if (abs(MD0-MD0Actual)<0.030 ) {//hard D0 cut of 60 MeV around the central mass
                                                             
                                                                 //Fill deltaM histograms depending on Charge flag cf
                                                                 if      (cf==1)  histset[208]->Fill(deltaM);
