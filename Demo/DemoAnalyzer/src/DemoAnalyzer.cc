@@ -815,8 +815,8 @@ DemoAnalyzer::DemoAnalyzer(const edm::ParameterSet& iConfig)
                     histset[221]  =   dmesons.make<TH1D>("h_P2eta","",50, -3 ,3);
                     histset[222]  =   dmesons.make<TH1D>("h_K1eta","",50, -3 ,3);
     
-                    hxhy[3]       =   dmesons.make<TH2D>("h_D0deltaM",60,1.6,2.2,64,0.138,0.17);
-                    hxhy[4]       =   dmesons.make<TH2D>("h_D0deltaMwrongcharge",60,1.6,2.2,64,0.138,0.17);
+                    hxhy[3]       =   dmesons.make<TH2D>("h_D0deltaM","",60,1.6,2.2,64,0.138,0.17);
+                    hxhy[4]       =   dmesons.make<TH2D>("h_D0deltaMwrongcharge","",60,1.6,2.2,64,0.138,0.17);
                 //// ------------- Y cut implementation ------------ ////
     
                     histset[250]  =  upsilon.make<TH1D>("h_Upsilon","",80, 8, 12);
