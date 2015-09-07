@@ -1249,7 +1249,7 @@ else {
     
     
  // loop over tracks
-/*
+
   for( reco::TrackCollection::const_iterator it = tracks->begin(); it !=
  tracks->end(); it++) {
     // LogInfo("Demo")<<"track p"<<it->p()<< "  track reference position"<<it->referencePoint()<< "   track vertex position"<<it->vertex();
@@ -1424,7 +1424,7 @@ if(fabs(ite->x()-(itMuon->track())->vx())<=0.1 && fabs(ite->y()-(itMuon->track()
       
       ///---------------------------------------- Refit PV again to compare it with one from dataBase----------------------------------------  ///
       
-      cout<<"N tracks per vertex = "<</*ite->nTracks()<<"  or "<</ite->tracksSize()<<"  ";
+      cout<<"N tracks per vertex = "<</*ite->nTracks()<<"  or "<<*/ite->tracksSize()<<"  ";
       if (ite->ndof() > 0)    { cout<<"Chi2/ndof = "<<(ite->chi2()/ite->ndof())<<endl; }
       
       /// REFit tracks from new collection, for ONE vertex:
@@ -1953,14 +1953,13 @@ for (MuonCollection::const_iterator itMuon = muons->begin(); itMuon != muons->en
 }// Muon Collection for loop ends
 
 
-*/
 /*------------------------------------------------------------------------------------------------------------------------------------------------
   -----------------------------------------------ELECTRON COLLECTION--------------------------------------------------------------------------------
   ---------------------------------------------------------------------------------------------------------------------------------------------------*/
 
 
 
-/*
+
 
 
 histset[105]->Fill(electrons->size());
@@ -2262,7 +2261,7 @@ histset[105]->Fill(electrons->size());
                                                             //Now Calculate D* mass
                                                             MDstar= invMass(pD0,paxisD0[0],paxisD0[1],paxisD0[2],MD0, itPS3->p(), itPS3->px(), itPS3->py(), itPS3->pz(),Pimass);
                                                             double paxisDstar[3]={paxisD0[0]+itPS3->px(), paxisD0[1]+itPS3->py(), paxisD0[2]+itPS3->pz() };
-                                                            double pDstar = sqrt(paxisDstar[0]*paxisDstar[0] +paxisDstar[1]*paxisDstar[1] +paxisDstar[2]*paxisDstar[2]);
+                                                            //double pDstar = sqrt(paxisDstar[0]*paxisDstar[0] +paxisDstar[1]*paxisDstar[1] +paxisDstar[2]*paxisDstar[2]);
                                                             double ptDstar= sqrt(paxisDstar[0]*paxisDstar[0] +paxisDstar[1]*paxisDstar[1]);
                                                             
                                                             deltaM=MDstar-MD0;
@@ -2332,24 +2331,12 @@ histset[105]->Fill(electrons->size());
                                                 }//end of PS3 vs K1 charge and iterators check
                                             }//end of PS3 loop
                                     }//End of loose D0 mass check
-                                    
                             }//vertex seperation cut
                         } //Pt and K1 cut
                     }//end of P2 loop
                 }//end of K1 Pt cut
             }//end of K loop
     }//end of track size cut
-
-    
-    
- /* Ideas:
- 
- Fill vcD0 and vc3 histograms (3D)
- take wrong charge from right charge
- 
- */
-
-    
 
 }//DemoAnalyzer ends
 
