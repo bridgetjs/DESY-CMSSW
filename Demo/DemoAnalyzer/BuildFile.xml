@@ -7,4 +7,11 @@
 <use name="DataFormats/MuonReco"/>
 <use name="RecoMuon/TrackingTools"/>
 <use name="DataFormats/JetReco"/>
+<use name="TrackingTools/TransientTrack"/>
+<use name="TrackingTools/Records"/>
+<use name="RecoVertex/AdaptiveVertexFit"/>
+<use name="RecoVertex/AdaptiveVertexFinder"/>
+<use name="RecoVertex/PrimaryVertexProducer"/>
+<use name="RecoVertex/VertexPrimitives"/>
+<use name="RecoVertex/TrimmedKalmanVertexFinder"/>
 <flags EDM_PLUGIN="1"/>
