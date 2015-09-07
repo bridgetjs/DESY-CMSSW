@@ -6,6 +6,12 @@ import FWCore.Utilities.FileUtils as FileUtils
 #import PhysicsTools.PythonAnalysis.LumiList as LumiList
 
 process = cms.Process("Demo")
+process.load("FWCore.MessageLogger.MessageLogger_cfi")
+process.load("TrackingTools/TransientTrack/TransientTrackBuilder_cfi")
+process.load('Configuration.StandardSequences.Geometry_cff')
+process.load("Configuration.StandardSequences.MagneticField_cff")
+process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
+process.GlobalTag.globaltag = 'FT_R_42_V10A::All'
 
 # intialize MessageLogger and output report
 
