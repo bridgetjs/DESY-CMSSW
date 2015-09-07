@@ -23,7 +23,7 @@ process.MessageLogger.cerr.FwkReport.reportEvery = 1000
 process.options   = cms.untracked.PSet( wantSummary = cms.untracked.bool(True))
                                         
 # set the maximum number of events to be processed here
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1))
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(40000))
 
 goodJSON = '/home/cms-opendata/CMSSW_4_2_8/src/Cert_136033-149442_7TeV_Apr21ReReco_Collisions10_JSON_v2.txt'
 #goodJSON = '/afs/desy.de/user/s/stefan/CMSPhysic/FromIrene/data_files/Cert_136033-149442_7TeV_Apr21ReReco_Collisions10_JSON_v2.txt'
@@ -31,9 +31,9 @@ goodJSON = '/home/cms-opendata/CMSSW_4_2_8/src/Cert_136033-149442_7TeV_Apr21ReRe
 myLumis = LumiList.LumiList(filename = goodJSON).getCMSSWString().split(',')
 
 
-files2010data = FileUtils.loadListFromFile ('/home/cms-opendata/CMSSW_4_2_8/src/MinBsData0000.txt')
+#files2010data = FileUtils.loadListFromFile ('/home/cms-opendata/CMSSW_4_2_8/src/MinBsData0000.txt')
 #files2010data = FileUtils.loadListFromFile ('/home/cms-opendata/CMSSW_4_2_8/src/JetData0000.txt')
-#files2010data = FileUtils.loadListFromFile ('/home/cms-opendata/CMSSW_4_2_8/src/MuoniaData0000.txt')
+files2010data = FileUtils.loadListFromFile ('/home/cms-opendata/CMSSW_4_2_8/src/MuoniaData0000.txt')
 
 
 #files2010data = FileUtils.loadListFromFile ('/afs/desy.de/user/s/stefan/CMSPhysic/FromIrene/data_files/CMS_Run2010B_Mu_AOD_Apr21ReReco-v1_0000_file_index.txt')
