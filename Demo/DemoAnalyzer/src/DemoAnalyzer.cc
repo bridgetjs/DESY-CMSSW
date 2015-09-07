@@ -1375,7 +1375,9 @@ if(fabs(ite->x()-(itMuon->track())->vx())<=0.1 && fabs(ite->y()-(itMuon->track()
       deltaz=fabs(firstz-(ite->z()));
       histset[22]->Fill(deltaz);
       }
-
+      
+      //  loop over all tracks from this vertex, usefull variable
+      vector<TransientTrack> mytracks;
     if(ite->tracksSize()!=0 && Muflag==0)
 
 // only store the coordinates of those vertices which are valid and have tracks && have no muons (= "next-to-miminum bias")
@@ -2183,7 +2185,7 @@ histset[105]->Fill(electrons->size());
 
  }//for(reco::GsfElectronCollection........) ends
  
-  */
+
 //////////////// ----------------------------- D* Meson Analysis ------------------------------ ////////////////
     double MDstar;
     double deltaM;
