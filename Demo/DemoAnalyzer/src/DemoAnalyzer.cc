@@ -1434,8 +1434,8 @@ if(fabs(ite->x()-(itMuon->track())->vx())<=0.1 && fabs(ite->y()-(itMuon->track()
       {
           AdaptiveVertexFitter  theFitter;
           TransientVertex myVertexBS = theFitter.vertex(mytracks, vertexBeamSpot);                        // if you want the beam constraint
-          TransientVertex myVertex = theFitter.vertex(mytracks);                                          // if you don't want the beam constraint
-          cout<< ite->position().z() << " " << myVertex.position().z() <<"  " << myVertexBS.position().z() <<" size = "<<(myVertexBS.originalTracks()).size()<< endl;
+         // TransientVertex myVertex = theFitter.vertex(mytracks);                                          // if you don't want the beam constraint
+          cout << " "<< myVertexBS.position().z() <<" size = "<<(myVertexBS.originalTracks()).size()<< endl;
       } else
       {
           cout << "not enough tracks left" <<std::endl;

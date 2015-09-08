@@ -3,7 +3,7 @@ from RecoMuon.TrackingTools.MuonServiceProxy_cff import *
 import FWCore.ParameterSet.Types as CfgTypes
 import FWCore.PythonUtilities.LumiList as LumiList
 import FWCore.Utilities.FileUtils as FileUtils
-#import PhysicsTools.PythonAnalysis.LumiList as LumiList
+import PhysicsTools.PythonAnalysis.LumiList as LumiList
 
 process = cms.Process("Demo")
 process.load("FWCore.MessageLogger.MessageLogger_cfi")
@@ -18,7 +18,7 @@ process.GlobalTag.globaltag = 'FT_R_42_V10A::All'
 process.load("FWCore.MessageLogger.MessageLogger_cfi")
 process.MessageLogger.cerr.threshold = 'INFO'
 process.MessageLogger.categories.append('Demo')
-process.MessageLogger.cerr.FwkReport.reportEvery = 1000
+process.MessageLogger.cerr.FwkReport.reportEvery = 10
 
 
 #process.load("FWCore.MessageService.MessageLogger_cfi")
